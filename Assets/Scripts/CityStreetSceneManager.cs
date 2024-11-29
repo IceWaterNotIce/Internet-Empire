@@ -1,7 +1,9 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class CityStreet : MonoBehaviour
+public class CityStreetSceneManager : MonoBehaviour
 {
     public DeviceManager deviceManager;
     public ClientManager clientManager;
@@ -13,29 +15,74 @@ public class CityStreet : MonoBehaviour
     public float maxSpawnTime = 5f; // 最大生成時間（秒）
     public float spawnTimeIncrease = 0.3f; // 每次生成後增加的時間
     public float maxSpawnTimeLimit = 10f; // 最大生成等待時間（秒）
+    public float minDistanceBetweenClients = 2f; // 客戶之間的最小距離
+
+    private int currentClientCount = 0; // 當前客戶數量
 
     void Start()
     {
-        GenerateClients();
+        StartCoroutine(GenerateClients());
     }
 
-    void GenerateClients()
+    IEnumerator GenerateClients()
     {
-        for (int i = 0; i < maxClients; i++)
+        while (currentClientCount < maxClients)
         {
-            // 隨機生成位置
-            Vector3 spawnPosition = new Vector3(
-                Random.Range(-spawnAreaWidth / 2, spawnAreaWidth / 2),
-                0, // 假設在地面上生成，Y 軸為 0
-                Random.Range(-spawnAreaHeight / 2, spawnAreaHeight / 2)
-            );
+            Vector3 spawnPosition;
+            bool positionIsValid;
+
+            // 嘗試找到一個有效的生成位置
+            do
+            {
+                spawnPosition = new Vector3(
+                    Random.Range(-spawnAreaWidth / 2, spawnAreaWidth / 2),
+                    0, // 假設在地面上生成，Y 軸為 0
+                    Random.Range(-spawnAreaHeight / 2, spawnAreaHeight / 2)
+                );
+
+                positionIsValid = true;
+
+                // 檢查生成點附近是否有其他客戶
+                foreach (Client client in clientManager.clients)
+                {
+                    if (Vector3.Distance(spawnPosition, client.transform.position) < minDistanceBetweenClients)
+                    {
+                        positionIsValid = false;
+                        break;
+                    }
+                }
+            } while (!positionIsValid);
 
             // 隨機生成device
             DeviceManager.DeviceType deviceType = (DeviceManager.DeviceType)Random.Range(0, 4);
             // 生成客戶 
             ClientManager.ClientType clientType = (ClientManager.ClientType)Random.Range(0, 4);
-            clientManager.GenerateClients($"Client {i + 1}", clientType, deviceType, spawnPosition);
+            clientManager.GenerateClients($"Client {currentClientCount + 1}", clientType, deviceType, spawnPosition);
+
+            currentClientCount++;
+
+            // 等待隨機時間後生成下一個客戶
+            float waitTime = Random.Range(minSpawnTime, maxSpawnTime);
+            yield return new WaitForSeconds(waitTime);
+
+            // 增加生成等待時間範圍
+            minSpawnTime = Mathf.Min(minSpawnTime + spawnTimeIncrease, maxSpawnTimeLimit);
+            maxSpawnTime = Mathf.Min(maxSpawnTime + spawnTimeIncrease, maxSpawnTimeLimit);
         }
     }
-}
 
+    public void SpeedUp(int speed)
+    {
+        Time.timeScale = speed; // 將遊戲速度加倍
+    }
+
+    public void Pause()
+    {
+        Time.timeScale = 0f; // 暫停遊戲
+    }
+
+    public void Resume()
+    {
+        Time.timeScale = 1f; // 恢復正常速度
+    }
+}
