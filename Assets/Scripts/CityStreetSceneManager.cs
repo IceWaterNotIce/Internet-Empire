@@ -22,9 +22,16 @@ public class CityStreetSceneManager : MonoBehaviour
     private Camera mainCamera;
     private Vector3 targetCameraPosition;
 
-    public TMP_Text gameTimeText; // Reference to the UI Text element for game time
-
+    public TMP_Text tmpGameTime; // Reference to the UI Text element for game time
     private DateTime gameTime; // The game time
+
+    public float money; // The player's money
+    public TMP_Text tmpMoney; // Reference to the UI Text element for money
+
+    public float initialRadius; // 初始半徑
+    public float radiusIncreaseRate; // 半徑增加速率
+    public float maxRadius; // 最大半徑
+    private float currentRadius; // 當前半徑
 
     void Start()
     {
@@ -32,7 +39,7 @@ public class CityStreetSceneManager : MonoBehaviour
         targetCameraPosition = mainCamera.transform.position;
         StartCoroutine(GenerateClients());
         gameTime = DateTime.Now; // Initialize game time with the current time
-        UpdateGameTimeText();
+        currentRadius = initialRadius; // Initialize the current radius
     }
 
     void Update()
@@ -40,6 +47,8 @@ public class CityStreetSceneManager : MonoBehaviour
         HandleCameraMovement();
         SmoothCameraMovement();
         UpdateGameTime();
+        UpdateMoneyText();
+        UpdateRadius();
     }
 
     void HandleCameraMovement()
@@ -63,6 +72,11 @@ public class CityStreetSceneManager : MonoBehaviour
         mainCamera.transform.position = Vector3.Lerp(mainCamera.transform.position, targetCameraPosition, Time.unscaledDeltaTime * 5f);
     }
 
+    void UpdateRadius()
+    {
+        currentRadius = Mathf.Min(currentRadius + radiusIncreaseRate * Time.deltaTime, maxRadius);
+    }
+
     IEnumerator GenerateClients()
     {
         while (currentClientCount < maxClients)
@@ -70,7 +84,7 @@ public class CityStreetSceneManager : MonoBehaviour
             Vector3 spawnPosition;
             bool positionIsValid;
 
-            // 嘗試找到一個有效的生成位置
+            // 嘗試找到一個��效的生成位置
             do
             {
                 spawnPosition = GetRandomSpawnPosition();
@@ -108,13 +122,12 @@ public class CityStreetSceneManager : MonoBehaviour
 
     Vector3 GetRandomSpawnPosition()
     {
-        float spawnAreaWidth = mainCamera.orthographicSize * 2 * mainCamera.aspect;
-        float spawnAreaHeight = mainCamera.orthographicSize * 2;
-
+        float angle = UnityEngine.Random.Range(0f, Mathf.PI * 2);
+        float radius = UnityEngine.Random.Range(0f, currentRadius);
         return new Vector3(
-            UnityEngine.Random.Range(-spawnAreaWidth / 2, spawnAreaWidth / 2),
-            0, // 假設在地面上生成，Y 軸為 0
-            UnityEngine.Random.Range(-spawnAreaHeight / 2, spawnAreaHeight / 2)
+            Mathf.Cos(angle) * radius,
+            1, // 假設在地面上生成，Y 軸為 1
+            Mathf.Sin(angle) * radius
         );
     }
 
@@ -141,9 +154,17 @@ public class CityStreetSceneManager : MonoBehaviour
 
     void UpdateGameTimeText()
     {
-        if (gameTimeText != null)
+        if (tmpGameTime != null)
         {
-            gameTimeText.text = gameTime.ToString("yyyy-MM-dd HH:mm");
+            tmpGameTime.text = gameTime.ToString("yyyy-MM-dd HH:mm");
+        }
+    }
+
+    void UpdateMoneyText()
+    {
+        if (tmpMoney != null)
+        {
+            tmpMoney.text = $"${money}";
         }
     }
 }
