@@ -8,19 +8,19 @@ public class CityStreetSceneManager : MonoBehaviour
     public DeviceManager deviceManager;
     public ClientManager clientManager;
 
-    public int maxClients = 10; // 最多客戶數量
-    public float spawnAreaWidth = 10f; // 生成區域寬度
-    public float spawnAreaHeight = 10f; // 生成區域高度
-    public float minSpawnTime = 3f; // 最小生成時間（秒）
-    public float maxSpawnTime = 5f; // 最大生成時間（秒）
-    public float spawnTimeIncrease = 0.3f; // 每次生成後增加的時間
-    public float maxSpawnTimeLimit = 10f; // 最大生成等待時間（秒）
-    public float minDistanceBetweenClients = 2f; // 客戶之間的最小距離
+    public int maxClients; // 最多客戶數量
+    public float minSpawnTime; // 最小生成時間（秒）
+    public float maxSpawnTime; // 最大生成時間（秒）
+    public float spawnTimeIncrease; // 每次生成後增加的時間
+    public float maxSpawnTimeLimit; // 最大生成等待時間（秒）
+    public float minDistanceBetweenClients; // 客戶之間的最小距離
 
-    private int currentClientCount = 0; // 當前客戶數量
+    private int currentClientCount; // 當前客戶數量
+    private Camera mainCamera;
 
     void Start()
     {
+        mainCamera = Camera.main;
         StartCoroutine(GenerateClients());
     }
 
@@ -34,11 +34,7 @@ public class CityStreetSceneManager : MonoBehaviour
             // 嘗試找到一個有效的生成位置
             do
             {
-                spawnPosition = new Vector3(
-                    Random.Range(-spawnAreaWidth / 2, spawnAreaWidth / 2),
-                    0, // 假設在地面上生成，Y 軸為 0
-                    Random.Range(-spawnAreaHeight / 2, spawnAreaHeight / 2)
-                );
+                spawnPosition = GetRandomSpawnPosition();
 
                 positionIsValid = true;
 
@@ -69,6 +65,18 @@ public class CityStreetSceneManager : MonoBehaviour
             minSpawnTime = Mathf.Min(minSpawnTime + spawnTimeIncrease, maxSpawnTimeLimit);
             maxSpawnTime = Mathf.Min(maxSpawnTime + spawnTimeIncrease, maxSpawnTimeLimit);
         }
+    }
+
+    Vector3 GetRandomSpawnPosition()
+    {
+        float spawnAreaWidth = mainCamera.orthographicSize * 2 * mainCamera.aspect;
+        float spawnAreaHeight = mainCamera.orthographicSize * 2;
+
+        return new Vector3(
+            Random.Range(-spawnAreaWidth / 2, spawnAreaWidth / 2),
+            0, // 假設在地面上生成，Y 軸為 0
+            Random.Range(-spawnAreaHeight / 2, spawnAreaHeight / 2)
+        );
     }
 
     public void SpeedUp(int speed)

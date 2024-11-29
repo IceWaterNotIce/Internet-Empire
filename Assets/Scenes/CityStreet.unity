@@ -901,12 +901,11 @@ MonoBehaviour:
   deviceManager: {fileID: 827545940}
   clientManager: {fileID: 827545941}
   maxClients: 10
-  spawnAreaWidth: 10
-  spawnAreaHeight: 10
   minSpawnTime: 3
   maxSpawnTime: 5
   spawnTimeIncrease: 0.3
   maxSpawnTimeLimit: 10
+  minDistanceBetweenClients: 4
 --- !u!114 &827545940
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1042,7 +1041,7 @@ Transform:
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 10, z: 0}
+  m_LocalPosition: {x: 0, y: 20, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

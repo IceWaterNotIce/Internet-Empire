@@ -22,6 +22,7 @@ public class ClientManager : MonoBehaviour
         client.transform.position = spawnPosition;
         Client clientComponent = client.AddComponent<Client>();
         clientComponent.Initialize(clientName, clientType, null);
+        clients.Add(clientComponent);
         return client;
     }
 
