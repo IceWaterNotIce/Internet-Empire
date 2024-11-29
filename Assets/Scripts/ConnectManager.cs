@@ -10,6 +10,7 @@ public class ConnectionManager : MonoBehaviour
     public List<Connection> connections = new List<Connection>();
 
     private Device firstDevice; // First selected device
+    public MessageManager messageManager; // Reference to the MessageManager
 
     void Update()
     {
@@ -46,11 +47,16 @@ public class ConnectionManager : MonoBehaviour
     {
         if (device1 != null && device2 != null)
         {
+            if (device1 == device2)
+            {
+                messageManager.ShowMessage("Cannot connect a device to itself.");
+                return;
+            }
+
             Debug.Log($"Connecting {device1.deviceName} to {device2.deviceName} using {currentMethod}.");
             device1.Connect(device2);
             device2.Connect(device1);
-            Debug.Log($"Connection successful.");
-            Debug.Log($"Device 1 location: {device1.transform.position}, Device 2 location: {device2.transform.position}");
+
             GameObject connectionPrefab = connectionPrefabs[(int)currentMethod];
             GameObject connection = Instantiate(connectionPrefab, device1.transform.position, Quaternion.identity);
             connection.GetComponent<Connection>().Device1 = device1;
