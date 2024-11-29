@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
+using TMPro;
 
 public class CityStreetSceneManager : MonoBehaviour
 {
@@ -19,16 +21,25 @@ public class CityStreetSceneManager : MonoBehaviour
     private Vector3 lastMousePosition;
     private Camera mainCamera;
     private Vector3 targetCameraPosition;
+
+    public TMP_Text gameTimeText; // Reference to the UI Text element for game time
+
+    private DateTime gameTime; // The game time
+
     void Start()
     {
         mainCamera = Camera.main;
         targetCameraPosition = mainCamera.transform.position;
         StartCoroutine(GenerateClients());
+        gameTime = DateTime.Now; // Initialize game time with the current time
+        UpdateGameTimeText();
     }
+
     void Update()
     {
         HandleCameraMovement();
         SmoothCameraMovement();
+        UpdateGameTime();
     }
 
     void HandleCameraMovement()
@@ -78,15 +89,15 @@ public class CityStreetSceneManager : MonoBehaviour
             } while (!positionIsValid);
 
             // 隨機生成device
-            DeviceManager.DeviceType deviceType = (DeviceManager.DeviceType)Random.Range(0, 4);
+            DeviceManager.DeviceType deviceType = (DeviceManager.DeviceType)UnityEngine.Random.Range(0, 4);
             // 生成客戶 
-            ClientManager.ClientType clientType = (ClientManager.ClientType)Random.Range(0, 4);
+            ClientManager.ClientType clientType = (ClientManager.ClientType)UnityEngine.Random.Range(0, 4);
             clientManager.GenerateClients($"Client {currentClientCount + 1}", clientType, deviceType, spawnPosition);
 
             currentClientCount++;
 
             // 等待隨機時間後生成下一個客戶
-            float waitTime = Random.Range(minSpawnTime, maxSpawnTime);
+            float waitTime = UnityEngine.Random.Range(minSpawnTime, maxSpawnTime);
             yield return new WaitForSeconds(waitTime);
 
             // 增加生成等待時間範圍
@@ -101,9 +112,9 @@ public class CityStreetSceneManager : MonoBehaviour
         float spawnAreaHeight = mainCamera.orthographicSize * 2;
 
         return new Vector3(
-            Random.Range(-spawnAreaWidth / 2, spawnAreaWidth / 2),
+            UnityEngine.Random.Range(-spawnAreaWidth / 2, spawnAreaWidth / 2),
             0, // 假設在地面上生成，Y 軸為 0
-            Random.Range(-spawnAreaHeight / 2, spawnAreaHeight / 2)
+            UnityEngine.Random.Range(-spawnAreaHeight / 2, spawnAreaHeight / 2)
         );
     }
 
@@ -120,5 +131,19 @@ public class CityStreetSceneManager : MonoBehaviour
     public void Resume()
     {
         Time.timeScale = 1f; // 恢復正常速度
+    }
+
+    void UpdateGameTime()
+    {
+        gameTime = gameTime.AddSeconds(Time.deltaTime * 60); // 1秒遊戲時間 = 1分鐘現實時間
+        UpdateGameTimeText();
+    }
+
+    void UpdateGameTimeText()
+    {
+        if (gameTimeText != null)
+        {
+            gameTimeText.text = gameTime.ToString("yyyy-MM-dd HH:mm");
+        }
     }
 }
