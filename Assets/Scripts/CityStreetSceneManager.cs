@@ -16,12 +16,40 @@ public class CityStreetSceneManager : MonoBehaviour
     public float minDistanceBetweenClients; // 客戶之間的最小距離
 
     private int currentClientCount; // 當前客戶數量
+    private Vector3 lastMousePosition;
     private Camera mainCamera;
-
+    private Vector3 targetCameraPosition;
     void Start()
     {
         mainCamera = Camera.main;
+        targetCameraPosition = mainCamera.transform.position;
         StartCoroutine(GenerateClients());
+    }
+    void Update()
+    {
+        HandleCameraMovement();
+        SmoothCameraMovement();
+    }
+
+    void HandleCameraMovement()
+    {
+        if (Input.GetMouseButtonDown(2)) // 按下滑鼠滾輪
+        {
+            lastMousePosition = Input.mousePosition;
+        }
+
+        if (Input.GetMouseButton(2)) // 拖動滑鼠滾輪
+        {
+            Vector3 delta = Input.mousePosition - lastMousePosition;
+            Vector3 move = new Vector3(-delta.x, 0, -delta.y) * 10f;
+            targetCameraPosition += move * Time.unscaledDeltaTime;
+            lastMousePosition = Input.mousePosition;
+        }
+    }
+
+    void SmoothCameraMovement()
+    {
+        mainCamera.transform.position = Vector3.Lerp(mainCamera.transform.position, targetCameraPosition, Time.unscaledDeltaTime * 5f);
     }
 
     IEnumerator GenerateClients()
