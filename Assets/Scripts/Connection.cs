@@ -11,4 +11,7 @@ public class Connection : ScriptableObject
     public int reliability;
     public int security;
     public int maxDistance;
+
+    public Sprite sprite;
+
 }

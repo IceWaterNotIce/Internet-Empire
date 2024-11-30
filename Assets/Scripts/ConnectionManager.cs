@@ -34,7 +34,7 @@ public class ConnectionManager : MonoBehaviour
 
     }
 
-    void SetConnectionMethod(Connection connection)
+    public void SetConnectionMethod(Connection connection)
     {
         currentMethod = connection;
     }
