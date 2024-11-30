@@ -1,17 +1,19 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class Device: MonoBehaviour
+[CreateAssetMenu(fileName = "NewDevice", menuName = "Device")]
+public class Device : ScriptableObject
 {
     public string deviceName;
-    public DeviceManager.DeviceType deviceType;
+    public DeviceList.DeviceType deviceType;
 
     public List<Device> connectedDevices = new List<Device>();
 
     public int maxConnections = 1;
 
-    public Material hoverMaterial;
-    private Material originalMaterial;
+
+
+    public Sprite sprite;
 
     public void Connect(Device device)
     {
@@ -25,25 +27,4 @@ public class Device: MonoBehaviour
             Debug.LogWarning($"{deviceName} is already connected to {device.deviceName}.");
         }
     }
-
-    void Start()
-    {
-        originalMaterial = GetComponent<Renderer>().material;
-    }
-
-    void OnMouseOver()
-    {
-        // 懸停時更改材料
-        if (hoverMaterial != null)
-        {
-            GetComponent<Renderer>().material = hoverMaterial;
-        }
-    }
-
-    void OnMouseExit()
-    {
-        // 當鼠標不再懸停時恢復原始材料
-        GetComponent<Renderer>().material = originalMaterial;
-    }
-
 }

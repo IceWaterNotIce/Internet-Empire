@@ -33,6 +33,9 @@ public class CityStreetSceneManager : MonoBehaviour
     public float maxRadius; // 最大半徑
     private float currentRadius; // 當前半徑
 
+    public DeviceList deviceList;
+
+
     void Start()
     {
         mainCamera = Camera.main;
@@ -61,7 +64,7 @@ public class CityStreetSceneManager : MonoBehaviour
         if (Input.GetMouseButton(2)) // 拖動滑鼠滾輪
         {
             Vector3 delta = Input.mousePosition - lastMousePosition;
-            Vector3 move = new Vector3(-delta.x, 0, -delta.y) * 10f;
+            Vector3 move = new Vector3(-delta.x, -delta.y, 0) * 10f;
             targetCameraPosition += move * Time.unscaledDeltaTime;
             lastMousePosition = Input.mousePosition;
         }
@@ -101,11 +104,23 @@ public class CityStreetSceneManager : MonoBehaviour
                 }
             } while (!positionIsValid);
 
-            // 隨機生成device
-            DeviceManager.DeviceType deviceType = (DeviceManager.DeviceType)UnityEngine.Random.Range(0, 4);
+            // 隨機getting device
+            if (deviceList == null)
+            {
+                Debug.LogError("DeviceList is not assigned.");
+                yield break;
+            }
+
+            Device device = deviceList.GetDevice(UnityEngine.Random.Range(0, deviceList.GetCount()));
+            if (device == null)
+            {
+                Debug.LogError("Failed to get a device from DeviceList.");
+                yield break;
+            }
+
             // 生成客戶 
             ClientManager.ClientType clientType = (ClientManager.ClientType)UnityEngine.Random.Range(0, 4);
-            clientManager.GenerateClients($"Client {currentClientCount + 1}", clientType, deviceType, spawnPosition);
+            clientManager.GenerateClients($"Client {currentClientCount + 1}", clientType, device.deviceType, spawnPosition);
 
             currentClientCount++;
 
@@ -125,8 +140,8 @@ public class CityStreetSceneManager : MonoBehaviour
         float radius = UnityEngine.Random.Range(0f, currentRadius);
         return new Vector3(
             Mathf.Cos(angle) * radius,
-            1, // 假設在地面上生成，Y 軸為 1
-            Mathf.Sin(angle) * radius
+            Mathf.Sin(angle) * radius,
+            1
         );
     }
 

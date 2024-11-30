@@ -1,26 +1,41 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-
 public class DeviceManager : MonoBehaviour
 {
-    public enum DeviceType { Computer, Router, Switch, Server }
-    public GameObject[] devicePrefabs; // 裝置預製件
+    public GameObject devicePrefab; // 裝置預製件
+    public DeviceList deviceList; // 參考 DeviceList
 
-    public List<Device> devices = new List<Device>(); 
+    public List<DeviceController> devices = new List<DeviceController>(); 
 
     void Start()
     {
 
     }
 
-    public Device GenerateDevices(string deviceName, DeviceType deviceType, Vector3 spawnPosition)
+    public DeviceController GenerateDevices(DeviceList.DeviceType deviceType, Vector3 spawnPosition)
     {
-        GameObject devicePrefab = devicePrefabs[(int)deviceType];
         GameObject device = Instantiate(devicePrefab, spawnPosition, Quaternion.identity);
-        device.GetComponent<Device>().deviceName = deviceName;
-        device.GetComponent<Device>().deviceType = deviceType;
-        devices.Add(device.GetComponent<Device>());
-        return device.GetComponent<Device>();
+        DeviceController deviceController = device.GetComponent<DeviceController>();
+
+        // 從 DeviceList 中獲取裝置資料
+        Device deviceData = GetDeviceData(deviceType);
+
+        deviceController.DeviceData = deviceData;
+        devices.Add(deviceController);
+        return deviceController;
+    }
+
+    private Device GetDeviceData(DeviceList.DeviceType deviceType)
+    {
+        foreach (Device device in deviceList.devices)
+        {
+            if (device.deviceType == deviceType)
+            {
+                return device;
+            }
+        }
+        Debug.LogWarning($"Device with type {deviceType} not found in DeviceList.");
+        return null;
     }
 }

@@ -9,10 +9,10 @@ public class ClientManager : MonoBehaviour
 
     public List<Client> clients = new List<Client>();
 
-    public void GenerateClients(string clientName, ClientType clientType, DeviceManager.DeviceType deviceType, Vector3 spawnPosition)
+    public void GenerateClients(string clientName, ClientType clientType, DeviceList.DeviceType deviceType, Vector3 spawnPosition)
     {
         GameObject client = CreateClient(clientName, clientType, spawnPosition);
-        Device device = CreateDevice(clientName, deviceType, spawnPosition);
+        DeviceController device = CreateDevice(deviceType, spawnPosition);
         AssignDeviceToClient(client, device);
     }
 
@@ -26,15 +26,15 @@ public class ClientManager : MonoBehaviour
         return client;
     }
 
-    private Device CreateDevice(string clientName, DeviceManager.DeviceType deviceType, Vector3 spawnPosition)
+    private DeviceController CreateDevice(DeviceList.DeviceType deviceType, Vector3 spawnPosition)
     {
-        return deviceManager.GenerateDevices($"{clientName}'s {deviceType}", deviceType, spawnPosition);
+        return deviceManager.GenerateDevices(deviceType, spawnPosition);
     }
 
-    private void AssignDeviceToClient(GameObject client, Device device)
+    private void AssignDeviceToClient(GameObject client, DeviceController device)
     {
         Client clientComponent = client.GetComponent<Client>();
-        clientComponent.device = device;
+        clientComponent.device = device.DeviceData;
         device.transform.parent = client.transform;
     }
 }

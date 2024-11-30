@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3762742661036133964}
   - component: {fileID: 7161356027146271257}
   - component: {fileID: 3825866696504599703}
-  - component: {fileID: 784100185820996775}
+  - component: {fileID: 1028172893794528732}
   m_Layer: 0
   m_Name: server
   m_TagString: Untagged
@@ -123,7 +123,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deviceManager: {fileID: 0}
---- !u!114 &784100185820996775
+  clients: []
+--- !u!114 &1028172893794528732
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -132,11 +133,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7521377226347965300}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09600b92882e1d4499d4779a1a756f56, type: 3}
+  m_Script: {fileID: 11500000, guid: ea57c3f91922b324f8bfe135c0b95398, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deviceName: 
-  deviceType: 3
-  connectedDevices: []
-  maxConnections: 1
-  hoverMaterial: {fileID: 2100000, guid: b83244c9280b9de44a3957c216204349, type: 2}
+  deviceData: {fileID: 0}
