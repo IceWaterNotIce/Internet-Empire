@@ -12,9 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09600b92882e1d4499d4779a1a756f56, type: 3}
   m_Name: Router1
   m_EditorClassIdentifier: 
-  deviceName: Router
+  deviceName: Router1
   deviceType: 1
-  connectedDevices: []
+  connectedDevices:
+  - {fileID: 11400000, guid: f7d705f5c6310a042b45d376b4456533, type: 2}
+  - {fileID: 11400000, guid: c7324bc5319ac654f92f20999b1c0ecc, type: 2}
+  - {fileID: 11400000, guid: fb5cce49c1273f04f83701c0efde15b6, type: 2}
   maxConnections: 1
-  hoverMaterial: {fileID: 2100000, guid: b83244c9280b9de44a3957c216204349, type: 2}
-  sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  sprite: {fileID: 8953743949728075700, guid: 4d3b8737105eef94db916dd1acd8490c, type: 3}

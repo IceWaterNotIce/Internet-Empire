@@ -12,17 +12,6 @@ public class ConnectionPanelController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    void OnEnable()
-    {
         foreach (Connection connection in connectionList.connections)
         {
             Sprite ConnectionPreviewSprite = connection.sprite;
@@ -37,5 +26,11 @@ public class ConnectionPanelController : MonoBehaviour
                 connectionManager.SetConnectionMethod(connection);
             });
         }
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
     }
 }

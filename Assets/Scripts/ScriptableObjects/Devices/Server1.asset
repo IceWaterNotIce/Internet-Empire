@@ -12,9 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09600b92882e1d4499d4779a1a756f56, type: 3}
   m_Name: Server1
   m_EditorClassIdentifier: 
-  deviceName: Server
+  deviceName: Server1
   deviceType: 3
-  connectedDevices: []
+  connectedDevices:
+  - {fileID: 11400000, guid: 971beaf966722e94ba7809fb20192933, type: 2}
+  - {fileID: 11400000, guid: fb5cce49c1273f04f83701c0efde15b6, type: 2}
+  - {fileID: 11400000}
   maxConnections: 1
-  hoverMaterial: {fileID: 2100000, guid: b83244c9280b9de44a3957c216204349, type: 2}
-  sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  sprite: {fileID: 6741775121761640292, guid: 4d3b8737105eef94db916dd1acd8490c, type: 3}

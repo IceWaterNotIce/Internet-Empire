@@ -17,16 +17,17 @@ public class DeviceController : MonoBehaviour
     void Start()
     {
         originalColor = GetComponent<Renderer>().material.color;
+        GetComponent<SpriteRenderer>().sprite = deviceData.sprite;
     }
 
     void OnMouseOver()
     {
-        GetComponent<Renderer>().material.color = Color.yellow;
+        GetComponent<SpriteRenderer>().material.color = Color.yellow;
     }
 
     void OnMouseExit()
     {
-        GetComponent<Renderer>().material.color = originalColor;
+        GetComponent<SpriteRenderer>().material.color = originalColor;
     }
 
     public void Connect(DeviceController otherDevice)
