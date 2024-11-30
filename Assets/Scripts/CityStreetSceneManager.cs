@@ -34,7 +34,7 @@ public class CityStreetSceneManager : MonoBehaviour
     private float currentRadius; // 當前半徑
 
     public DeviceList deviceList;
-
+    private float targetOrthographicSize;
 
     void Start()
     {
@@ -43,6 +43,7 @@ public class CityStreetSceneManager : MonoBehaviour
         StartCoroutine(GenerateClients());
         gameTime = DateTime.Now; // Initialize game time with the current time
         currentRadius = initialRadius; // Initialize the current radius
+        targetOrthographicSize = mainCamera.orthographicSize;
     }
 
     void Update()
@@ -52,6 +53,24 @@ public class CityStreetSceneManager : MonoBehaviour
         UpdateGameTime();
         UpdateMoneyText();
         UpdateRadius();
+        HandleCameraZoom();
+        SmoothCameraZoom();
+    }
+    void HandleCameraZoom()
+    {
+       if (Input.GetAxis("Mouse ScrollWheel") > 0)
+        {
+            targetOrthographicSize = Mathf.Max(targetOrthographicSize - 1, 1);
+        }
+        else if (Input.GetAxis("Mouse ScrollWheel") < 0)
+        {
+            targetOrthographicSize = Mathf.Min(targetOrthographicSize + 1, 20);
+        }
+
+    }
+    void SmoothCameraZoom()
+    {
+        mainCamera.orthographicSize = Mathf.Lerp(mainCamera.orthographicSize, targetOrthographicSize, Time.unscaledDeltaTime * 5f);
     }
 
     void HandleCameraMovement()
@@ -69,6 +88,7 @@ public class CityStreetSceneManager : MonoBehaviour
             lastMousePosition = Input.mousePosition;
         }
     }
+
 
     void SmoothCameraMovement()
     {
@@ -119,7 +139,7 @@ public class CityStreetSceneManager : MonoBehaviour
             }
 
             // 生成客戶 
-            ClientManager.ClientType clientType = (ClientManager.ClientType)UnityEngine.Random.Range(0, 4);
+            ClientList.ClientType clientType = (ClientList.ClientType)UnityEngine.Random.Range(0, 4);
             clientManager.GenerateClients($"Client {currentClientCount + 1}", clientType, device.deviceType, spawnPosition);
 
             currentClientCount++;

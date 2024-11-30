@@ -3,20 +3,19 @@ using System.Collections.Generic;
 
 public class ClientManager : MonoBehaviour
 {
-    public enum ClientType { Home, Office, School, Hospital }
 
     public DeviceManager deviceManager;
 
     public List<Client> clients = new List<Client>();
 
-    public void GenerateClients(string clientName, ClientType clientType, DeviceList.DeviceType deviceType, Vector3 spawnPosition)
+    public void GenerateClients(string clientName, ClientList.ClientType clientType, DeviceList.DeviceType deviceType, Vector3 spawnPosition)
     {
         GameObject client = CreateClient(clientName, clientType, spawnPosition);
         DeviceController device = CreateDevice(deviceType, spawnPosition);
         AssignDeviceToClient(client, device);
     }
 
-    private GameObject CreateClient(string clientName, ClientType clientType, Vector3 spawnPosition)
+    private GameObject CreateClient(string clientName, ClientList.ClientType clientType, Vector3 spawnPosition)
     {
         GameObject client = new GameObject(clientName);
         client.transform.position = spawnPosition;
