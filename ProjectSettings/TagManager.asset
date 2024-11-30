@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 3
   tags:
   - Device
+  - Client
+  - Connection
   layers:
   - Default
   - TransparentFX

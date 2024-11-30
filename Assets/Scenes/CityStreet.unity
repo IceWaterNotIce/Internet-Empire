@@ -549,7 +549,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 456321283}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 827545939}
+        m_TargetAssemblyTypeName: CityStreetSceneManager, Assembly-CSharp
+        m_MethodName: ToggleConnectionPanel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &456321283
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1140,6 +1152,7 @@ MonoBehaviour:
   radiusIncreaseRate: 0.01
   maxRadius: 100
   deviceList: {fileID: 11400000, guid: e58c2794d237d4440a67a1e281601264, type: 2}
+  ConnectionPanel: {fileID: 497893060}
 --- !u!114 &827545940
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1167,7 +1180,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47a5c9f8626729b408ff388799c1bf7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  clientPrefab: {fileID: 1800979598866669647, guid: 5b6d588a608df5c4aa99088f2805e585, type: 3}
   deviceManager: {fileID: 827545940}
+  clientList: {fileID: 11400000, guid: a43659f854811c04ba333c8d442be8eb, type: 2}
   clients: []
 --- !u!114 &827545942
 MonoBehaviour:
@@ -1181,13 +1196,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5aee82c30aaf584a86e08f052cc23a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  connectionPrefabs:
-  - {fileID: 5466792479748075163, guid: cf73706c6d166c24ebbf23cb1cb254f0, type: 3}
-  - {fileID: 3446259314826145575, guid: 96ad6007b7231a44a91eb56a30b1e090, type: 3}
-  currentMethod: 0
   connections: []
   messageManager: {fileID: 1255922319}
+  connectionList: {fileID: 11400000, guid: cb72953026572a64181dd9f2d198d840, type: 2}
+  currentMethod: {fileID: 11400000, guid: b35f223a6ab307942909ea7af0c8076c, type: 2}
   cityStreetSceneManager: {fileID: 827545939}
+  connectionPrefab: {fileID: 3446259314826145575, guid: 96ad6007b7231a44a91eb56a30b1e090, type: 3}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0

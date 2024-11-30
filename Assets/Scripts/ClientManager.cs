@@ -3,26 +3,31 @@ using System.Collections.Generic;
 
 public class ClientManager : MonoBehaviour
 {
-
+    public GameObject clientPrefab;
     public DeviceManager deviceManager;
 
-    public List<Client> clients = new List<Client>();
+    public ClientList clientList;
 
-    public void GenerateClients(string clientName, ClientList.ClientType clientType, DeviceList.DeviceType deviceType, Vector3 spawnPosition)
+    public List<ClientController> clients = new List<ClientController>();
+
+    public void GenerateClients( Client client, Device device, Vector3 spawnPosition)
     {
-        GameObject client = CreateClient(clientName, clientType, spawnPosition);
-        DeviceController device = CreateDevice(deviceType, spawnPosition);
-        AssignDeviceToClient(client, device);
+        GameObject clientObject = CreateClient(client, spawnPosition);
+        DeviceController deviceController = CreateDevice(device.deviceType, spawnPosition);
+        AssignDeviceToClient(clientObject, deviceController);
+
+
+
+
     }
 
-    private GameObject CreateClient(string clientName, ClientList.ClientType clientType, Vector3 spawnPosition)
+    private GameObject CreateClient(Client client, Vector3 spawnPosition)
     {
-        GameObject client = new GameObject(clientName);
-        client.transform.position = spawnPosition;
-        Client clientComponent = client.AddComponent<Client>();
-        clientComponent.Initialize(clientName, clientType, null);
-        clients.Add(clientComponent);
-        return client;
+        GameObject clientObject = Instantiate(clientPrefab, spawnPosition, Quaternion.identity);
+        ClientController clientController = clientObject.GetComponent<ClientController>();
+        clientController.ClientData = client;
+        clients.Add(clientController);
+        return clientObject;
     }
 
     private DeviceController CreateDevice(DeviceList.DeviceType deviceType, Vector3 spawnPosition)
@@ -32,8 +37,8 @@ public class ClientManager : MonoBehaviour
 
     private void AssignDeviceToClient(GameObject client, DeviceController device)
     {
-        Client clientComponent = client.GetComponent<Client>();
-        clientComponent.device = device.DeviceData;
-        device.transform.parent = client.transform;
+        ClientController clientController = client.GetComponent<ClientController>();
+        clientController.ClientData.Device = device.DeviceData;
+
     }
 }

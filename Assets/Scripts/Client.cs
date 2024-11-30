@@ -1,16 +1,18 @@
 using UnityEngine;
 
-public class Client : MonoBehaviour
+[CreateAssetMenu(fileName = "NewClient", menuName = "Client")]
+public class Client : ScriptableObject
 {
     public string clientName;
     public ClientList.ClientType clientType;
-    public Device device;
+    private Device device;
 
-    public void Initialize(string name, ClientList.ClientType type, Device device)
+    public Device Device
     {
-        clientName = name;
-        clientType = type;
-        this.device = device;
+        get { return device; }
+        set { device = value; }
     }
+
+    public int satisfaction;
 }
 

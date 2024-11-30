@@ -36,6 +36,13 @@ public class CityStreetSceneManager : MonoBehaviour
     public DeviceList deviceList;
     private float targetOrthographicSize;
 
+    public GameObject ConnectionPanel;
+
+    public void ToggleConnectionPanel()
+    {
+        ConnectionPanel.SetActive(!ConnectionPanel.activeSelf);
+    }
+
     void Start()
     {
         mainCamera = Camera.main;
@@ -114,9 +121,9 @@ public class CityStreetSceneManager : MonoBehaviour
                 positionIsValid = true;
 
                 // 檢查生成點附近是否有其他客戶
-                foreach (Client client in clientManager.clients)
+                foreach (ClientController existingClient in clientManager.clients)
                 {
-                    if (Vector3.Distance(spawnPosition, client.transform.position) < minDistanceBetweenClients)
+                    if (Vector3.Distance(spawnPosition, existingClient.transform.position) < minDistanceBetweenClients)
                     {
                         positionIsValid = false;
                         break;
@@ -138,9 +145,16 @@ public class CityStreetSceneManager : MonoBehaviour
                 yield break;
             }
 
-            // 生成客戶 
-            ClientList.ClientType clientType = (ClientList.ClientType)UnityEngine.Random.Range(0, 4);
-            clientManager.GenerateClients($"Client {currentClientCount + 1}", clientType, device.deviceType, spawnPosition);
+            Client client = clientManager.clientList.GetClient(UnityEngine.Random.Range(0, clientManager.clientList.GetCount()));
+            if (client == null)
+            {
+                Debug.LogError("Failed to get a client from ClientList.");
+                yield break;
+            }
+
+            clientManager.GenerateClients(client, device, spawnPosition);
+
+           
 
             currentClientCount++;
 

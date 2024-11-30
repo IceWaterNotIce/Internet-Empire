@@ -1,8 +1,9 @@
 using UnityEngine;
 
+[CreateAssetMenu(fileName = "ClientList", menuName = "ClientList")]
 public class ClientList : ScriptableObject
 {
-    public enum ClientType { Normal, VIP, Hacker, Thief }
+    public enum ClientType { Home, Business, Government, School }
     public Client[] clients;
 
     public Client GetClient(int index)

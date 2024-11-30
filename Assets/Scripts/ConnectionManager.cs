@@ -3,33 +3,21 @@ using UnityEngine;
 
 public class ConnectionManager : MonoBehaviour
 {
-    public enum ConnectionMethod { Wire, Wireless }
-
-    public List<GameObject> connectionPrefabs = new List<GameObject>();
-    public ConnectionMethod currentMethod;
     public List<Connection> connections = new List<Connection>();
 
     private DeviceController firstDevice; // First selected device
     public MessageManager messageManager; // Reference to the MessageManager
 
-    public Dictionary<ConnectionMethod, float> connectionCostPerMeter = new Dictionary<ConnectionMethod, float>
-    {
-        { ConnectionMethod.Wire, 10f }, // 每米10元
-        { ConnectionMethod.Wireless, 5f } // 每米5元
-    };
+    public ConnectionList connectionList;
+
+    public Connection currentMethod;
 
     public CityStreetSceneManager cityStreetSceneManager;
 
+    public GameObject connectionPrefab;
+
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            SetConnectionMethod(ConnectionMethod.Wire);
-        }
-        else if (Input.GetKeyDown(KeyCode.E))
-        {
-            SetConnectionMethod(ConnectionMethod.Wireless);
-        }
         if (Input.GetMouseButtonDown(0))
         {
             Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -46,11 +34,11 @@ public class ConnectionManager : MonoBehaviour
 
     }
 
-    void SetConnectionMethod(ConnectionMethod method)
+    void SetConnectionMethod(Connection connection)
     {
-        currentMethod = method;
-        Debug.Log($"Connection method set to: {currentMethod}");
+        currentMethod = connection;
     }
+
 
     void ConnectDevices(DeviceController device1, DeviceController device2)
     {
@@ -66,7 +54,7 @@ public class ConnectionManager : MonoBehaviour
         }
 
         float distance = Vector2.Distance(device1.transform.position, device2.transform.position);
-        float cost = distance * connectionCostPerMeter[currentMethod];
+        float cost = distance * currentMethod.pricePerMeter;
 
         if (cityStreetSceneManager.money >= cost)
         {
@@ -75,11 +63,13 @@ public class ConnectionManager : MonoBehaviour
             device1.Connect(device2);
             device2.Connect(device1);
 
-            GameObject connectionPrefab = connectionPrefabs[(int)currentMethod];
             GameObject connection = Instantiate(connectionPrefab, device1.transform.position, Quaternion.identity);
-            connection.GetComponent<Connection>().Device1 = device1;
-            connection.GetComponent<Connection>().Device2 = device2;
-            connections.Add(connection.GetComponent<Connection>());
+            ConnectionController connectionController = connection.GetComponent<ConnectionController>();
+            connectionController.ConnectionData = currentMethod;
+            connectionController.Device1 = device1;
+            connectionController.Device2 = device2;
+            
+            
         }
         else
         {
