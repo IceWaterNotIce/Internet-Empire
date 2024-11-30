@@ -84,7 +84,6 @@ public class CityStreetSceneManager : MonoBehaviour
             Vector3 spawnPosition;
             bool positionIsValid;
 
-            // 嘗試找到一個��效的生成位置
             do
             {
                 spawnPosition = GetRandomSpawnPosition();
