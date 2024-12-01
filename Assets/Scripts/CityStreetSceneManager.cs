@@ -111,7 +111,7 @@ public class CityStreetSceneManager : MonoBehaviour
     {
         while (currentClientCount < maxClients)
         {
-            Vector3 spawnPosition;
+            Vector2 spawnPosition;
             bool positionIsValid;
 
             do
@@ -123,7 +123,7 @@ public class CityStreetSceneManager : MonoBehaviour
                 // 檢查生成點附近是否有其他客戶
                 foreach (ClientController existingClient in clientManager.clients)
                 {
-                    if (Vector3.Distance(spawnPosition, existingClient.transform.position) < minDistanceBetweenClients)
+                    if (Vector2.Distance(existingClient.transform.position, spawnPosition) < minDistanceBetweenClients)
                     {
                         positionIsValid = false;
                         break;
@@ -168,14 +168,13 @@ public class CityStreetSceneManager : MonoBehaviour
         }
     }
 
-    Vector3 GetRandomSpawnPosition()
+    Vector2 GetRandomSpawnPosition()
     {
         float angle = UnityEngine.Random.Range(0f, Mathf.PI * 2);
         float radius = UnityEngine.Random.Range(0f, currentRadius);
-        return new Vector3(
+        return new Vector2(
             Mathf.Cos(angle) * radius,
-            Mathf.Sin(angle) * radius,
-            1
+            Mathf.Sin(angle) * radius
         );
     }
 

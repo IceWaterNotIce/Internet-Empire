@@ -339,6 +339,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ConnectionStateField: {fileID: 2234863102859904958}
   ConnectionState: {fileID: 4153950950565424601}
+  connectionsCount: 0
 --- !u!60 &4198491616879231340
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -385,8 +386,8 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -0.5, y: 0.5}
-      - {x: -0.5, y: -0.5}
-      - {x: 0.5, y: -0.5}
-      - {x: 0.5, y: 0.5}
+    - - {x: -1.4418603, y: 1.3459823}
+      - {x: -1.6110566, y: -1.3177828}
+      - {x: 1.3967412, y: -1.3403423}
+      - {x: 1.4587798, y: 1.4982591}
   m_UseDelaunayMesh: 0

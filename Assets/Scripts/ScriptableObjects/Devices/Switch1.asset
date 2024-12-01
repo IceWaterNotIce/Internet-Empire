@@ -14,10 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   deviceName: Switch1
   deviceType: 2
-  connectedDevices:
-  - {fileID: 11400000, guid: f7d705f5c6310a042b45d376b4456533, type: 2}
-  - {fileID: 11400000, guid: c7324bc5319ac654f92f20999b1c0ecc, type: 2}
-  - {fileID: 11400000, guid: 971beaf966722e94ba7809fb20192933, type: 2}
-  - {fileID: 11400000}
+  connectedDevices: []
   maxConnections: 12
   sprite: {fileID: -8751529033565529498, guid: 4d3b8737105eef94db916dd1acd8490c, type: 3}

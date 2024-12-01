@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DeviceController : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class DeviceController : MonoBehaviour
 
     [SerializeField] private GameObject ConnectionStateField;
     [SerializeField] private GameObject ConnectionState;
+
+    public int connectionsCount = 0;
 
     void Start()
     {
@@ -37,10 +40,9 @@ public class DeviceController : MonoBehaviour
         GetComponent<SpriteRenderer>().material.color = originalColor;
     }
 
-    public void Connect(DeviceController otherDevice)
+    public void ConnectionAdded()
     {
-        deviceData.Connect(otherDevice.DeviceData);
+        connectionsCount++;
+        ConnectionStateField.transform.GetChild(connectionsCount - 1).GetComponent<RawImage>().color = Color.green;
     }
-
-
 }

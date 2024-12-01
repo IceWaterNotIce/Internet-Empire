@@ -14,10 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   deviceName: Server1
   deviceType: 3
-  connectedDevices:
-  - {fileID: 11400000, guid: 971beaf966722e94ba7809fb20192933, type: 2}
-  - {fileID: 11400000, guid: fb5cce49c1273f04f83701c0efde15b6, type: 2}
-  - {fileID: 11400000}
-  - {fileID: 11400000, guid: c7324bc5319ac654f92f20999b1c0ecc, type: 2}
+  connectedDevices: []
   maxConnections: 1
   sprite: {fileID: -4358710914305771305, guid: 4d3b8737105eef94db916dd1acd8490c, type: 3}
