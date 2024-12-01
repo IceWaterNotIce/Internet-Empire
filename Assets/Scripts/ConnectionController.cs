@@ -31,7 +31,7 @@ namespace InternetEmpire
             // z = 1 to make sure the line is in back of the devices
             transform.position = new Vector3(center.x, center.y, 1);
             transform.right = direction;
-            transform.localScale = new Vector3(direction.magnitude, 1, 1);
+            transform.localScale = new Vector3(direction.magnitude, transform.localScale.y, transform.localScale.z);
 
             // set the connection's color to the original color
             SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
@@ -57,7 +57,7 @@ namespace InternetEmpire
                     messageManager.ShowMessage("Not enough money to remove the connection.");
                     return;
                 }
-                
+
                 ConnectionManager connectionManager = FindFirstObjectByType<ConnectionManager>();
                 connectionManager.RemoveConnection(this);
                 Destroy(gameObject);
