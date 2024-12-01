@@ -14,5 +14,10 @@ public class Client : ScriptableObject
     }
 
     public int satisfaction;
+
+    public float demandGenerationTime;
+    public float minDemand;
+    public float maxDemand;
+    
 }
 

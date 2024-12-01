@@ -125,4 +125,40 @@ public class ConnectionManager : MonoBehaviour
 
         connections.Remove(connection);
     }
+
+    public bool CanConnect(List<ConnectionController> connections, DeviceController start, DeviceController final)
+    {
+        HashSet<DeviceController> visited = new HashSet<DeviceController>();
+        return DFS(connections, start, final, visited);
+    }
+
+    private bool DFS(List<ConnectionController> connections, DeviceController current, DeviceController final, HashSet<DeviceController> visited)
+    {
+        if (current == final)
+        {
+            return true;
+        }
+
+        visited.Add(current);
+
+        foreach (ConnectionController connection in connections)
+        {
+            DeviceController next = null;
+            if (connection.Device1 == current && !visited.Contains(connection.Device2))
+            {
+                next = connection.Device2;
+            }
+            else if (connection.Device2 == current && !visited.Contains(connection.Device1))
+            {
+                next = connection.Device1;
+            }
+
+            if (next != null && DFS(connections, next, final, visited))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

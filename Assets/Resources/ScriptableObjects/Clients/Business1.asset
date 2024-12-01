@@ -10,8 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2b24904a2c8ba0c44af1fdfe550b3095, type: 3}
-  m_Name: Home1
+  m_Name: Business1
   m_EditorClassIdentifier: 
   clientName: abc
   clientType: 0
   satisfaction: 100
+  demandGenerationTime: 5
+  minDemand: 3
+  maxDemand: 5

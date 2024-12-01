@@ -9,11 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09600b92882e1d4499d4779a1a756f56, type: 3}
-  m_Name: Server1
+  m_Script: {fileID: 11500000, guid: 2b24904a2c8ba0c44af1fdfe550b3095, type: 3}
+  m_Name: Government1
   m_EditorClassIdentifier: 
-  deviceName: Server1
-  deviceType: 3
-  connectedDevices: []
-  maxConnections: 1
-  sprite: {fileID: -4358710914305771305, guid: 4d3b8737105eef94db916dd1acd8490c, type: 3}
+  clientName: abc
+  clientType: 2
+  satisfaction: 100
+  demandGenerationTime: 5
+  minDemand: 3
+  maxDemand: 5
