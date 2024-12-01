@@ -24,6 +24,7 @@ namespace InternetEmpire
             { StartCoroutine(GenerateDemand()); }
             // get the device controller from child device
             deviceController = GetComponentInChildren<DeviceController>();
+            deviceController.ConnectionsCount = Random.Range(0, deviceController.DeviceData.maxConnections-1); // at least 1 connection is needed
         }
 
         void Update()

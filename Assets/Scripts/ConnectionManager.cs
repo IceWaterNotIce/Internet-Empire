@@ -59,13 +59,13 @@ namespace InternetEmpire
                 firstDevice = null;
                 return;
             }
-            if (device1.connectionsCount >= device1.DeviceData.maxConnections)
+            if (device1.ConnectionsCount >= device1.DeviceData.maxConnections)
             {
                 messageManager.ShowMessage("First device has reached maximum connections. Connection failed.");
                 firstDevice = null;
                 return;
             }
-            if (device2.connectionsCount >= device2.DeviceData.maxConnections)
+            if (device2.ConnectionsCount >= device2.DeviceData.maxConnections)
             {
                 messageManager.ShowMessage("Second device has reached maximum connections. Connection failed.");
                 firstDevice = null;
@@ -89,8 +89,8 @@ namespace InternetEmpire
             {
                 cityStreetSceneManager.money -= cost;
 
-                device1.ConnectionAdded();
-                device2.ConnectionAdded();
+                device1.ConnectionsCount++;
+                device2.ConnectionsCount++;
 
                 GameObject connection = Instantiate(connectionPrefab);
                 ConnectionController connectionController = connection.GetComponent<ConnectionController>();
@@ -126,8 +126,8 @@ namespace InternetEmpire
             DeviceController device1 = connection.Device1;
             DeviceController device2 = connection.Device2;
 
-            device1.ConnectionRemoved();
-            device2.ConnectionRemoved();
+            device1.ConnectionsCount--;
+            device2.ConnectionsCount--;
 
             connections.Remove(connection);
         }
@@ -137,11 +137,11 @@ namespace InternetEmpire
         {
             List<ConnectionController> connections = new List<ConnectionController>();
             DeviceController startDevice = new GameObject().AddComponent<DeviceController>();
-            startDevice.connectionsCount = 1;
+            startDevice.ConnectionsCount = 1;
             DeviceController finalDevice = new GameObject().AddComponent<DeviceController>();
-            finalDevice.connectionsCount = 2;
+            finalDevice.ConnectionsCount = 2;
             DeviceController device = new GameObject().AddComponent<DeviceController>();
-            device.connectionsCount = 2;
+            device.ConnectionsCount = 2;
             ConnectionController connection1 = new GameObject().AddComponent<ConnectionController>();
             connection1.Device1 = startDevice;
             connection1.Device2 = device;
@@ -154,9 +154,9 @@ namespace InternetEmpire
         {
             List<ConnectionController> connections = new List<ConnectionController>();
             DeviceController startDevice = new GameObject().AddComponent<DeviceController>();
-            startDevice.connectionsCount = 1;
+            startDevice.ConnectionsCount = 1;
             DeviceController finalDevice = new GameObject().AddComponent<DeviceController>();
-            finalDevice.connectionsCount = 2;
+            finalDevice.ConnectionsCount = 2;
             ConnectionController connection1 = new GameObject().AddComponent<ConnectionController>();
             connection1.Device1 = startDevice;
             connection1.Device2 = finalDevice;

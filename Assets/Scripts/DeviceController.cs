@@ -19,6 +19,25 @@ namespace InternetEmpire
         [SerializeField] private GameObject ConnectionState;
 
         public int connectionsCount = 0;
+        public int ConnectionsCount
+        {
+            get { return connectionsCount; }
+            set
+            {
+                if (value < 0)
+                {
+                    Debug.LogError("Connections count cannot be less than 0.");
+                    connectionsCount = 0;
+                }
+                else if (value > deviceData.maxConnections)
+                {
+                    Debug.LogError("Connections count cannot be greater than max connections.");
+                    connectionsCount = deviceData.maxConnections;
+                }
+                connectionsCount = value;
+                UpdateUI();
+            }
+        }
 
         void Start()
         {
@@ -26,10 +45,7 @@ namespace InternetEmpire
             GetComponent<SpriteRenderer>().sprite = deviceData.sprite;
 
             int maxConnections = deviceData.maxConnections;
-            for (int i = 1; i < maxConnections; i++)
-            {
-                Instantiate(ConnectionState, ConnectionStateField.transform);
-            }
+            
         }
 
         void OnMouseOver()
@@ -42,16 +58,16 @@ namespace InternetEmpire
             GetComponent<SpriteRenderer>().material.color = originalColor;
         }
 
-        public void ConnectionAdded()
+        void UpdateUI()
         {
-            connectionsCount++;
-            ConnectionStateField.transform.GetChild(connectionsCount - 1).GetComponent<RawImage>().color = Color.green;
-        }
-
-        public void ConnectionRemoved()
-        {
-            ConnectionStateField.transform.GetChild(connectionsCount - 1).GetComponent<RawImage>().color = Color.white;
-            connectionsCount--;
+            for (int i = ConnectionStateField.transform.childCount; i < deviceData.maxConnections; i++)
+            {
+                Instantiate(ConnectionState, ConnectionStateField.transform);
+            }
+            for (int i = 0; i < deviceData.maxConnections; i++)
+            {
+                ConnectionStateField.transform.GetChild(i).GetComponent<RawImage>().color = i < connectionsCount ? Color.green : Color.white;
+            }
         }
     }
 }
