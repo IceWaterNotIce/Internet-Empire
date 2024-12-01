@@ -4,7 +4,7 @@ using UnityEngine.InputSystem.Utilities;
 
 public class ConnectionManager : MonoBehaviour
 {
-    public ConnectionController[] connections = new ConnectionController[0]; // Array of connections
+    public List<ConnectionController> connections = new List<ConnectionController>(); // List of connections
 
     private DeviceController firstDevice; // First selected device
     public MessageManager messageManager; // Reference to the MessageManager
@@ -113,5 +113,16 @@ public class ConnectionManager : MonoBehaviour
             ConnectDevices(firstDevice, device);
             firstDevice = null;
         }
+    }
+
+    public void RemoveConnection(ConnectionController connection)
+    {
+        DeviceController device1 = connection.Device1;
+        DeviceController device2 = connection.Device2;
+
+        device1.ConnectionRemoved();
+        device2.ConnectionRemoved();
+
+        connections.Remove(connection);
     }
 }

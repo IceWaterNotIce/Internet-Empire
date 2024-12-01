@@ -45,4 +45,10 @@ public class DeviceController : MonoBehaviour
         connectionsCount++;
         ConnectionStateField.transform.GetChild(connectionsCount - 1).GetComponent<RawImage>().color = Color.green;
     }
+
+    public void ConnectionRemoved()
+    {
+        ConnectionStateField.transform.GetChild(connectionsCount - 1).GetComponent<RawImage>().color = Color.white;
+        connectionsCount--;
+    }
 }

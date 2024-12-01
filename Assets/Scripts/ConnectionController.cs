@@ -12,9 +12,10 @@ public class ConnectionController : MonoBehaviour
         get { return connectionData; }
         set { connectionData = value; }
     }
-
     [SerializeField] private Color HoverColor = Color.red;
+    [SerializeField] private Color SelectedColor = Color.green;
     private Color originalColor;
+    private bool isClicked = false;
 
     [SerializeField] private PolygonCollider2D m_collider;
 
@@ -38,17 +39,42 @@ public class ConnectionController : MonoBehaviour
         m_collider.enabled = true;
     }
 
+    void Update()
+    {
+        if (isClicked && Input.GetKeyDown(KeyCode.Delete))
+        {
+            // remove the connection when clicked and delete key is pressed
+            ConnectionManager connectionManager = FindFirstObjectByType<ConnectionManager>();
+            connectionManager.RemoveConnection(this);
+            Destroy(gameObject);
+        }
+    }
+
     void OnMouseOver()
     {
         // change the connection's color when mouse is over the connection
-        SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
-        spriteRenderer.color = HoverColor;
+        if (!isClicked)
+        {
+            SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+            spriteRenderer.color = HoverColor;
+        }
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            // select the connection when clicked
+            isClicked = true;
+            SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+            spriteRenderer.color = SelectedColor;
+        }
     }
 
     void OnMouseExit()
     {
-        // change the connection's color back when mouse is not over the connection
-        SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
-        spriteRenderer.color = originalColor;
+        // change the connection's color back to the original color when mouse is not over the connection
+        if (!isClicked)
+        {
+            SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+            spriteRenderer.color = originalColor;
+        }
     }
 }
