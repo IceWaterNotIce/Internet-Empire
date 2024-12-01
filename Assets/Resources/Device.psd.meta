@@ -100,7 +100,29 @@ ScriptedImporter:
     spritePosition: {x: 0, y: 0}
   multiSpriteImportData: []
   layeredSpriteImportData:
-  - name: Router1
+  - name: Switch1
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 262
+      y: 268
+      width: 256
+      height: 211
+    spriteID: 254adea9ffaf79b41b57661247424058
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 262, y: 268}
+    spritePosition: {x: 1068, y: 0}
+  - name: Server1
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 0
@@ -109,6 +131,28 @@ ScriptedImporter:
     rect:
       serializedVersion: 2
       x: 4
+      y: 4
+      width: 250
+      height: 256
+    spriteID: 52834251fe84abc4686bbd10a3c389cc
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 4}
+    spritePosition: {x: 727, y: 0}
+  - name: Router1
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 262
       y: 4
       width: 244
       height: 256
@@ -120,7 +164,7 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 4, y: 4}
+    uvTransform: {x: 262, y: 4}
     spritePosition: {x: 356, y: 0}
   - name: Computer1
     originalName: 
@@ -130,7 +174,7 @@ ScriptedImporter:
     customData: 
     rect:
       serializedVersion: 2
-      x: 256
+      x: 514
       y: 4
       width: 252
       height: 229
@@ -142,7 +186,7 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 256, y: 4}
+    uvTransform: {x: 514, y: 4}
     spritePosition: {x: 4, y: 21}
   spriteImportData: []
   rigSpriteImportData: []
@@ -183,6 +227,46 @@ ScriptedImporter:
   resliceFromLayer: 0
   pSDLayerImportSetting: []
   psdLayers:
+  - name: Switch
+    spriteName: 
+    isGroup: 1
+    parentIndex: -1
+    spriteID: 45192b22df4cbed44b308724f13f8747
+    layerID: 13
+    mosaicPosition: {x: 0, y: 0}
+    flatten: 0
+    isImported: 0
+    isVisible: 1
+  - name: Switch1
+    spriteName: Switch1
+    isGroup: 0
+    parentIndex: 0
+    spriteID: 254adea9ffaf79b41b57661247424058
+    layerID: 12
+    mosaicPosition: {x: 262, y: 268}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: Server
+    spriteName: 
+    isGroup: 1
+    parentIndex: -1
+    spriteID: a085815158bc51748897a5fdb5966dff
+    layerID: 10
+    mosaicPosition: {x: 0, y: 0}
+    flatten: 0
+    isImported: 0
+    isVisible: 1
+  - name: Server1
+    spriteName: Server1
+    isGroup: 0
+    parentIndex: 2
+    spriteID: 52834251fe84abc4686bbd10a3c389cc
+    layerID: 9
+    mosaicPosition: {x: 4, y: 4}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
   - name: Router
     spriteName: 
     isGroup: 1
@@ -196,10 +280,10 @@ ScriptedImporter:
   - name: Router1
     spriteName: Router1
     isGroup: 0
-    parentIndex: 0
+    parentIndex: 4
     spriteID: 145b0131fe5e5cf42949ec61ed83b153
     layerID: 6
-    mosaicPosition: {x: 4, y: 4}
+    mosaicPosition: {x: 262, y: 4}
     flatten: 0
     isImported: 1
     isVisible: 1
@@ -216,10 +300,10 @@ ScriptedImporter:
   - name: Computer1
     spriteName: Computer1
     isGroup: 0
-    parentIndex: 2
+    parentIndex: 6
     spriteID: 1600122c6de28294ebc3d08d708214d1
     layerID: 2
-    mosaicPosition: {x: 256, y: 4}
+    mosaicPosition: {x: 514, y: 4}
     flatten: 0
     isImported: 1
     isVisible: 1

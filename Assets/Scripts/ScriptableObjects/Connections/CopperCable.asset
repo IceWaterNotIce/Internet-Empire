@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67c6b95984365f441b81bbbd221f4432, type: 3}
   m_Name: CopperCable
   m_EditorClassIdentifier: 
-  pricePerMeter: 0
+  pricePerMeter: 5
   maxSpeed: 0
   latency: 0
   reliability: 0

@@ -18,5 +18,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f7d705f5c6310a042b45d376b4456533, type: 2}
   - {fileID: 11400000, guid: c7324bc5319ac654f92f20999b1c0ecc, type: 2}
   - {fileID: 11400000, guid: fb5cce49c1273f04f83701c0efde15b6, type: 2}
-  maxConnections: 1
+  maxConnections: 4
   sprite: {fileID: 8953743949728075700, guid: 4d3b8737105eef94db916dd1acd8490c, type: 3}

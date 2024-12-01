@@ -68,8 +68,6 @@ public class ConnectionManager : MonoBehaviour
             connectionController.ConnectionData = currentMethod;
             connectionController.Device1 = device1;
             connectionController.Device2 = device2;
-            
-            
         }
         else
         {

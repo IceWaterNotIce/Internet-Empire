@@ -12,12 +12,19 @@ public class DeviceController : MonoBehaviour
 
     private Color originalColor;
 
-
+    [SerializeField] private GameObject ConnectionStateField;
+    [SerializeField] private GameObject ConnectionState;
 
     void Start()
     {
         originalColor = GetComponent<Renderer>().material.color;
         GetComponent<SpriteRenderer>().sprite = deviceData.sprite;
+
+        int maxConnections = deviceData.maxConnections;
+        for (int i = 1; i < maxConnections; i++)
+        {
+            Instantiate(ConnectionState, ConnectionStateField.transform);
+        }
     }
 
     void OnMouseOver()
@@ -34,4 +41,6 @@ public class DeviceController : MonoBehaviour
     {
         deviceData.Connect(otherDevice.DeviceData);
     }
+
+
 }
