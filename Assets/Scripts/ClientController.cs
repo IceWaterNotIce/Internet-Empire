@@ -42,19 +42,20 @@ namespace InternetEmpire
                 ClientManager clientManager = FindFirstObjectByType<ClientManager>();
                 // randomly select a client but not the current client
                 ClientController client = clientManager.clients[Random.Range(0, clientManager.clients.Count)];
-                while (client == this)
+                if (client == this)
                 {
-                    client = clientManager.clients[Random.Range(0, clientManager.clients.Count)];
+                    yield break;
                 }
                 // check the current client can connect to the selected client
                 ConnectionManager connectionManager = FindFirstObjectByType<ConnectionManager>();
-                if (connectionManager.CanConnect(connectionManager.connections, deviceController, client.deviceController))
-                {
-                    Debug.Log(deviceController);
+                 Debug.Log(deviceController);
                     Debug.Log(client.deviceController);
                     Debug.Log(deviceController == client.deviceController);
                     Debug.Log("Connecte " + connectionManager.connections.Count);
                     Debug.Log("Connecte " + connectionManager.CanConnect(connectionManager.connections, deviceController, client.deviceController));
+                if (connectionManager.CanConnect(connectionManager.connections, deviceController, client.deviceController))
+                {
+                   
                     cityStreetSceneManager.money += demand;
                 }
                 else

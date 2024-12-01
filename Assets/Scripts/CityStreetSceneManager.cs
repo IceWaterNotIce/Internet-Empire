@@ -29,7 +29,7 @@ namespace InternetEmpire
         public float initialRadius; // 初始半徑
         public float radiusIncreaseRate; // 半徑增加速率
         public float maxRadius; // 最大半徑
-        private float currentRadius; // 當前半徑
+        public float currentRadius; // 當前半徑
 
         public DeviceList deviceList;
 

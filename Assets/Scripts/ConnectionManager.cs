@@ -97,6 +97,8 @@ namespace InternetEmpire
                 connectionController.ConnectionData = currentMethod;
                 connectionController.Device1 = device1;
                 connectionController.Device2 = device2;
+
+                connections.Add(connectionController);
             }
             else
             {

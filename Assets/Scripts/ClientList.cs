@@ -10,17 +10,17 @@ namespace InternetEmpire
 
         public Client GetClient(int index)
         {
-            if (index < 0 || index >= this.clients.Length)
+            if (clients == null || index < 0 || index >= clients.Length)
             {
-                Debug.LogError("Index out of range.");
+                Debug.LogError($"Index out of range. Index: {index}, Clients Length: {clients?.Length ?? 0}");
                 return null;
             }
-            return this.clients[index];
+            return clients[index];
         }
 
         public int GetCount()
         {
-            return this.clients.Length;
+            return clients?.Length ?? 0;
         }
     }
 }
