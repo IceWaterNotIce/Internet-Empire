@@ -62,7 +62,7 @@ namespace InternetEmpire
             if (Input.GetMouseButton(2)) // 拖動滑鼠滾輪
             {
                 Vector3 delta = Input.mousePosition - lastMousePosition;
-                Vector3 move = new Vector3(-delta.x, -delta.y, 0) * cameraSpeed;
+                Vector3 move = new Vector3(-delta.x, -delta.y, 0) * cameraSpeed * mainCamera.orthographicSize / 10;
                 targetCameraPosition += move * Time.unscaledDeltaTime;
                 lastMousePosition = Input.mousePosition;
             }
