@@ -43,7 +43,19 @@ public class ConnectionController : MonoBehaviour
     {
         if (isClicked && Input.GetKeyDown(KeyCode.Delete))
         {
-            // remove the connection when clicked and delete key is pressed
+            float moneyNeeded = connectionData.pricePerMeter * Vector2.Distance(Device1.transform.position, Device2.transform.position) / 5;
+            CityStreetSceneManager cityStreetSceneManager = FindFirstObjectByType<CityStreetSceneManager>();
+            if (cityStreetSceneManager.money >= moneyNeeded)
+            {
+                cityStreetSceneManager.money -= moneyNeeded;
+            }
+            else
+            {
+                MessageManager messageManager = FindFirstObjectByType<MessageManager>();
+                messageManager.ShowMessage("Not enough money to remove the connection.");
+                return;
+            }
+            
             ConnectionManager connectionManager = FindFirstObjectByType<ConnectionManager>();
             connectionManager.RemoveConnection(this);
             Destroy(gameObject);
