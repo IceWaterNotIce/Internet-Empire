@@ -1,23 +1,26 @@
-using UnityEngine;
-
-[CreateAssetMenu(fileName = "ClientList", menuName = "ClientList")]
-public class ClientList : ScriptableObject
+namespace InternetEmpire
 {
-    public enum ClientType { Home, Business, Government, School }
-    public Client[] clients;
+    using UnityEngine;
 
-    public Client GetClient(int index)
+    [CreateAssetMenu(fileName = "ClientList", menuName = "ClientList")]
+    public class ClientList : ScriptableObject
     {
-        if (index < 0 || index >= this.clients.Length)
+        public enum ClientType { Home, Business, Government, School }
+        public Client[] clients;
+
+        public Client GetClient(int index)
         {
-            Debug.LogError("Index out of range.");
-            return null;
+            if (index < 0 || index >= this.clients.Length)
+            {
+                Debug.LogError("Index out of range.");
+                return null;
+            }
+            return this.clients[index];
         }
-        return this.clients[index];
-    }
 
-    public int GetCount()
-    {
-        return this.clients.Length;
+        public int GetCount()
+        {
+            return this.clients.Length;
+        }
     }
 }

@@ -1,23 +1,25 @@
-using UnityEngine;
-
-[CreateAssetMenu(fileName = "NewClient", menuName = "Client")]
-public class Client : ScriptableObject
+namespace InternetEmpire
 {
-    public string clientName;
-    public ClientList.ClientType clientType;
-    private Device device;
+    using UnityEngine;
 
-    public Device Device
+    [CreateAssetMenu(fileName = "NewClient", menuName = "Client")]
+    public class Client : ScriptableObject
     {
-        get { return device; }
-        set { device = value; }
+        public string clientName;
+        public ClientList.ClientType clientType;
+        private Device device;
+
+        public Device Device
+        {
+            get { return device; }
+            set { device = value; }
+        }
+
+        public int satisfaction;
+
+        public float demandGenerationTime;
+        public float minDemand;
+        public float maxDemand;
     }
-
-    public int satisfaction;
-
-    public float demandGenerationTime;
-    public float minDemand;
-    public float maxDemand;
-    
 }
 
