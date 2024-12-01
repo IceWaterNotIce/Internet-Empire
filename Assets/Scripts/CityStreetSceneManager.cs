@@ -18,9 +18,6 @@ public class CityStreetSceneManager : MonoBehaviour
     public float minDistanceBetweenClients; // 客戶之間的最小距離
 
     private int currentClientCount; // 當前客戶數量
-    private Vector3 lastMousePosition;
-    private Camera mainCamera;
-
     public TMP_Text tmpGameTime; // Reference to the UI Text element for game time
     private DateTime gameTime; // The game time
 
@@ -43,7 +40,6 @@ public class CityStreetSceneManager : MonoBehaviour
 
     void Start()
     {
-        mainCamera = Camera.main;
         StartCoroutine(GenerateClients());
         gameTime = DateTime.Now; // Initialize game time with the current time
         currentRadius = initialRadius; // Initialize the current radius
