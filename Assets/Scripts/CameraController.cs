@@ -1,5 +1,4 @@
-    using NUnit.Framework;
-    using UnityEngine;
+using UnityEngine;
 
 namespace InternetEmpire
 {
@@ -12,7 +11,7 @@ namespace InternetEmpire
         private float targetOrthographicSize;
         private Vector3 lastMousePosition;
 
-    
+        [Range(5, 20)]
         public float cameraSpeed;
 
         public int minCameraSize;

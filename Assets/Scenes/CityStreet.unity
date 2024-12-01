@@ -1162,7 +1162,7 @@ MonoBehaviour:
   maxSpawnTimeLimit: 10
   minDistanceBetweenClients: 4
   tmpGameTime: {fileID: 226970666}
-  money: 500
+  money: 600
   tmpMoney: {fileID: 1363373004}
   initialRadius: 10
   radiusIncreaseRate: 0.1

@@ -65,11 +65,11 @@ namespace InternetEmpire
             {
                 Vector2 spawnPosition;
                 bool positionIsValid;
-
+                int maxAttempts = 5; // 最大嘗試次數
+                int attempts = 0;
                 do
                 {
                     spawnPosition = GetRandomSpawnPosition();
-
                     positionIsValid = true;
 
                     // 檢查生成點附近是否有其他客戶
@@ -80,6 +80,14 @@ namespace InternetEmpire
                             positionIsValid = false;
                             break;
                         }
+                    }
+
+                    attempts++;
+                    if (attempts >= maxAttempts)
+                    {
+                        Debug.LogError("Failed to find a valid spawn position after maximum attempts.");
+                        
+                        yield return new WaitForSeconds(5);
                     }
                 } while (!positionIsValid);
 
