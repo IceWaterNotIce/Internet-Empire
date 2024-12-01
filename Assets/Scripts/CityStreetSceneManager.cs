@@ -20,7 +20,6 @@ public class CityStreetSceneManager : MonoBehaviour
     private int currentClientCount; // 當前客戶數量
     private Vector3 lastMousePosition;
     private Camera mainCamera;
-    private Vector3 targetCameraPosition;
 
     public TMP_Text tmpGameTime; // Reference to the UI Text element for game time
     private DateTime gameTime; // The game time
@@ -34,7 +33,6 @@ public class CityStreetSceneManager : MonoBehaviour
     private float currentRadius; // 當前半徑
 
     public DeviceList deviceList;
-    private float targetOrthographicSize;
 
     public GameObject ConnectionPanel;
 
@@ -46,60 +44,16 @@ public class CityStreetSceneManager : MonoBehaviour
     void Start()
     {
         mainCamera = Camera.main;
-        targetCameraPosition = mainCamera.transform.position;
         StartCoroutine(GenerateClients());
         gameTime = DateTime.Now; // Initialize game time with the current time
         currentRadius = initialRadius; // Initialize the current radius
-        targetOrthographicSize = mainCamera.orthographicSize;
     }
 
     void Update()
     {
-        HandleCameraMovement();
-        SmoothCameraMovement();
         UpdateGameTime();
         UpdateMoneyText();
         UpdateRadius();
-        HandleCameraZoom();
-        SmoothCameraZoom();
-    }
-    void HandleCameraZoom()
-    {
-       if (Input.GetAxis("Mouse ScrollWheel") > 0)
-        {
-            targetOrthographicSize = Mathf.Max(targetOrthographicSize - 1, 1);
-        }
-        else if (Input.GetAxis("Mouse ScrollWheel") < 0)
-        {
-            targetOrthographicSize = Mathf.Min(targetOrthographicSize + 1, 20);
-        }
-
-    }
-    void SmoothCameraZoom()
-    {
-        mainCamera.orthographicSize = Mathf.Lerp(mainCamera.orthographicSize, targetOrthographicSize, Time.unscaledDeltaTime * 5f);
-    }
-
-    void HandleCameraMovement()
-    {
-        if (Input.GetMouseButtonDown(2)) // 按下滑鼠滾輪
-        {
-            lastMousePosition = Input.mousePosition;
-        }
-
-        if (Input.GetMouseButton(2)) // 拖動滑鼠滾輪
-        {
-            Vector3 delta = Input.mousePosition - lastMousePosition;
-            Vector3 move = new Vector3(-delta.x, -delta.y, 0) * 10f;
-            targetCameraPosition += move * Time.unscaledDeltaTime;
-            lastMousePosition = Input.mousePosition;
-        }
-    }
-
-
-    void SmoothCameraMovement()
-    {
-        mainCamera.transform.position = Vector3.Lerp(mainCamera.transform.position, targetCameraPosition, Time.unscaledDeltaTime * 5f);
     }
 
     void UpdateRadius()
