@@ -43,9 +43,7 @@ namespace InternetEmpire
         {
             originalColor = GetComponent<Renderer>().material.color;
             GetComponent<SpriteRenderer>().sprite = deviceData.sprite;
-
-            int maxConnections = deviceData.maxConnections;
-            
+            UpdateUI();
         }
 
         void OnMouseOver()

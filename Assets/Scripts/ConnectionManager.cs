@@ -30,7 +30,7 @@ namespace InternetEmpire
                 if (hit.collider != null)
                 {
                     DeviceController device = hit.collider.GetComponent<DeviceController>();
-                    if (device != null)
+                    if (device != null && currentMethod != null)
                     {
                         SelectDevice(device);
                     }
@@ -47,6 +47,12 @@ namespace InternetEmpire
 
         void ConnectDevices(DeviceController device1, DeviceController device2)
         {
+            if(currentMethod == null)
+            {
+                messageManager.ShowMessage("No connection method selected. Connection failed.");
+                firstDevice = null;
+                return;
+            }
             if (device1 == null || device2 == null)
             {
                 Debug.LogError("One or both devices are null. Connection failed.");

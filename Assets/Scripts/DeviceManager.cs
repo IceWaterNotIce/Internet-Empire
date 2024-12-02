@@ -10,9 +10,25 @@ namespace InternetEmpire
 
         public List<DeviceController> devices = new List<DeviceController>();
 
+        public Device PlayerDevice;
+
         void Start()
         {
 
+        }
+
+        void Update()
+        {
+            if(PlayerDevice != null)
+            {
+                if (Input.GetMouseButtonDown(0))
+                {
+                    Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                    mousePosition.z = 0;
+                    genDevice(PlayerDevice, mousePosition);
+                    PlayerDevice = null;
+                }
+            }
         }
 
         public DeviceController GenerateDevices(DeviceList.DeviceType deviceType, Vector3 spawnPosition)
@@ -39,6 +55,14 @@ namespace InternetEmpire
             }
             Debug.LogWarning($"Device with type {deviceType} not found in DeviceList.");
             return null;
+        }
+
+        public void genDevice(Device device, Vector3 spawnPosition)
+        {
+            GameObject deviceObj = Instantiate(devicePrefab, spawnPosition, Quaternion.identity);
+            DeviceController deviceController = deviceObj.GetComponent<DeviceController>();
+            deviceController.DeviceData = device;
+            devices.Add(deviceController);
         }
     }
 }

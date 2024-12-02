@@ -35,9 +35,20 @@ namespace InternetEmpire
 
         public GameObject ConnectionPanel;
 
+        public GameObject DevicePanel;
+
+        public ConnectionManager connectionManager;
+
         public void ToggleConnectionPanel()
         {
             ConnectionPanel.SetActive(!ConnectionPanel.activeSelf);
+            connectionManager.currentMethod = null;
+        }
+
+        public void ToggleDevicePanel()
+        {
+            DevicePanel.SetActive(!DevicePanel.activeSelf);
+            deviceManager.PlayerDevice = null;
         }
 
         void Start()
