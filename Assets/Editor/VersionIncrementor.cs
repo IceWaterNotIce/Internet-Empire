@@ -3,9 +3,6 @@ using UnityEditor;
 using UnityEditor.Build;
 using UnityEditor.Build.Reporting;
 using System.Diagnostics;
-using System.IO;
-using System.Threading;
-
 
 [InitializeOnLoad]
 public class VersionIncrementor : IPreprocessBuildWithReport
