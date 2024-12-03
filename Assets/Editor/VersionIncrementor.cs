@@ -50,7 +50,7 @@ public class VersionIncrementor : IPreprocessBuildWithReport
             git add . && 
             git commit -m ""Auto commit from Unity Builder.\"" && 
             git tag -a v{versionParts} -m ""Auto tag from Unity Builder.\"" && 
-            git push origin main && git push origin v{versionParts}"));
+            git push origin main && git push origin v{versionParts}");
 
         UnityEngine.Debug.Log("Git commit and push done");
     }
