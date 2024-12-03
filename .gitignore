@@ -79,5 +79,3 @@ crashlytics-build.properties
 
 # utmp
 .utmp/
-Assets/Resources/PerformanceTestRunInfo.json
-Assets/Resources/PerformanceTestRunSettings.json
