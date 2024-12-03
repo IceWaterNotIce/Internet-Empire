@@ -4,6 +4,7 @@ using UnityEditor.Build;
 using UnityEditor.Build.Reporting;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 
 
 [InitializeOnLoad]
@@ -18,11 +19,12 @@ public class VersionIncrementor : IPreprocessBuildWithReport
 
     public void OnPreprocessBuild(BuildReport report)
     {
-        EditProjectSettings(PlayerSettings.bundleVersion);
-        CommitAndPushToGit(PlayerSettings.bundleVersion);
+        string versionParts = string.Join(".", VersionParts());
+        EditProjectSettings(versionParts);
+        CommitAndPushToGit(versionParts);
     }
 
-    private static void UpdateVersion()
+    private static string[] VersionParts()
     {
         string[] versionParts = PlayerSettings.bundleVersion.Split('.');
         if (versionParts.Length == 3)
@@ -30,8 +32,7 @@ public class VersionIncrementor : IPreprocessBuildWithReport
             if (int.TryParse(versionParts[2], out int patchVersion))
             {
                 patchVersion++;
-                PlayerSettings.bundleVersion = $"{versionParts[0]}.{versionParts[1]}.{patchVersion}";
-                UnityEngine.Debug.Log($"Version updated to {PlayerSettings.bundleVersion}");
+                return new string[] { versionParts[0], versionParts[1], patchVersion.ToString() };
             }
             else
             {
@@ -42,6 +43,7 @@ public class VersionIncrementor : IPreprocessBuildWithReport
         {
             UnityEngine.Debug.LogError("Version format is not correct. It should be like 1.0.0");
         }
+        return null;
     }
 
     private static void CommitAndPushToGit(string versionParts)
