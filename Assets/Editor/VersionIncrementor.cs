@@ -48,7 +48,7 @@ public class VersionIncrementor : IPreprocessBuildWithReport
     private static void CommitAndPushToGit(string versionParts)
     {
         RunGitCommand("git add .");
-        RunGitCommand("git remove .meta");
+        RunGitCommand("git commit -m \"Auto commit from Unity Builder. \"");
         RunGitCommand("git tag -a v" + versionParts + " -m \"Auto tag from Unity Builder. \"");
         RunGitCommand("git push origin main");
         RunGitCommand("git push origin v" + versionParts);
