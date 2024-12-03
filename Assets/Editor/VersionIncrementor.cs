@@ -18,6 +18,7 @@ public class VersionIncrementor : IPreprocessBuildWithReport
     private static void OnBuildStart(BuildPlayerOptions options)
     {
         UnityEngine.Debug.Log("Build started.");
+        UpdateVersion();
 
         // 调用原始的构建处理程序
         BuildPipeline.BuildPlayer(options);
@@ -27,7 +28,7 @@ public class VersionIncrementor : IPreprocessBuildWithReport
     }
     public void OnPreprocessBuild(BuildReport report)
     {
-        UpdateVersion();
+        
 
     }
 
