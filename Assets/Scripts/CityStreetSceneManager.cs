@@ -86,6 +86,11 @@ namespace InternetEmpire
                     // 檢查生成點附近是否有其他客戶
                     foreach (ClientController existingClient in clientManager.clients)
                     {
+                        // check the object exists
+                        if (existingClient == null)
+                        {
+                            continue;
+                        }
                         if (Vector2.Distance(existingClient.transform.position, spawnPosition) < minDistanceBetweenClients)
                         {
                             positionIsValid = false;

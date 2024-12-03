@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 
 namespace InternetEmpire
 {
-    
+
 
     public class ClientController : MonoBehaviour
     {
@@ -25,11 +25,11 @@ namespace InternetEmpire
             get { return satisfaction; }
             set
             {
-                if (value < 0)
+                if (value <= 0)
                 {
-                    Debug.LogError("Satisfaction cannot be less than 0.");
                     satisfaction = 0;
-                    // Destroy(gameObject);
+                    Destroy(gameObject);
+                    return;
                 }
                 else if (value > 100)
                 {
@@ -94,7 +94,7 @@ namespace InternetEmpire
                 else
                 {
                     //Todo: decrease the satisfaction of the client
-                    Satisfaction -= 4;
+                    Satisfaction -= 25;
                     Debug.Log("Satisfaction: " + Satisfaction);
                 }
             }
