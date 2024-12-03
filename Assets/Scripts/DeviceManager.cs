@@ -6,11 +6,11 @@ namespace InternetEmpire
     public class DeviceManager : MonoBehaviour
     {
         public GameObject devicePrefab; // 裝置預製件
-        public DeviceList deviceList; // 參考 DeviceList
+        public DeviceTypeList deviceList; // 參考 DeviceList
 
-        public List<DeviceController> devices = new List<DeviceController>();
+        public List<Device> devices = new List<Device>();
 
-        public DeviceType PlayerDevice;
+        public DeviceModel PlayerDevice;
 
         void Start()
         {
@@ -25,30 +25,26 @@ namespace InternetEmpire
                 {
                     Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                     mousePosition.z = 0;
-                    genDevice(PlayerDevice, mousePosition);
+                    GenerateDevices(PlayerDevice, mousePosition);
                     PlayerDevice = null;
                 }
             }
         }
 
-        public DeviceController GenerateDevices(DeviceList.DeviceType deviceType, Vector3 spawnPosition)
+        public GameObject GenerateDevices(DeviceModel model, Vector3 spawnPosition)
         {
-            GameObject device = Instantiate(devicePrefab, spawnPosition, Quaternion.identity);
-            DeviceController deviceController = device.GetComponent<DeviceController>();
-
-            // 從 DeviceList 中獲取裝置資料
-            DeviceType deviceData = GetDeviceData(deviceType);
-
-            deviceController.DeviceData = deviceData;
+            GameObject deviceObj = Instantiate(devicePrefab, spawnPosition, Quaternion.identity);
+            Device deviceController = deviceObj.GetComponent<Device>();
+            deviceController.Model = model;
             devices.Add(deviceController);
-            return deviceController;
+            return deviceObj;
         }
 
-        private DeviceType GetDeviceData(DeviceList.DeviceType deviceType)
+        private DeviceModel GetDeviceData(DeviceTypeList.DeviceType deviceType)
         {
-            foreach (DeviceType device in deviceList.devices)
+            foreach (DeviceModel device in deviceList.devices)
             {
-                if (device.deviceType == deviceType)
+                if (device.Type == deviceType)
                 {
                     return device;
                 }
@@ -57,12 +53,10 @@ namespace InternetEmpire
             return null;
         }
 
-        public void genDevice(DeviceType device, Vector3 spawnPosition)
+        public void RemoveDevice(Device device)
         {
-            GameObject deviceObj = Instantiate(devicePrefab, spawnPosition, Quaternion.identity);
-            DeviceController deviceController = deviceObj.GetComponent<DeviceController>();
-            deviceController.DeviceData = device;
-            devices.Add(deviceController);
+            devices.Remove(device);
+            Destroy(device.gameObject);
         }
     }
 }

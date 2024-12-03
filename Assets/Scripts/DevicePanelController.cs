@@ -5,7 +5,7 @@ namespace InternetEmpire
 {
     public class DevicePanelController : MonoBehaviour
     {
-        [SerializeField] private DeviceList DeviceList;
+        [SerializeField] private DeviceTypeList DeviceList;
         [SerializeField] private GameObject DeviceButtonPrefab;
 
         [SerializeField] private DeviceManager DeviceManager;
@@ -14,9 +14,9 @@ namespace InternetEmpire
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
-            foreach (DeviceType Device in DeviceList.devices)
+            foreach (DeviceModel Device in DeviceList.devices)
             {
-                Sprite DevicePreviewSprite = Device.sprite;
+                Sprite DevicePreviewSprite = Device.Sprite;
                 GameObject DeviceButton = Instantiate(DeviceButtonPrefab, transform);
                 Image image = DeviceButton.GetComponent<Image>();
                 image.sprite = DevicePreviewSprite;

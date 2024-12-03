@@ -1449,7 +1449,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47a5c9f8626729b408ff388799c1bf7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clientPrefab: {fileID: 1800979598866669647, guid: 5b6d588a608df5c4aa99088f2805e585, type: 3}
+  clientPrefab: {fileID: 6353111404459571659, guid: c6d39a0e71ec6714fa141e032ab219ad, type: 3}
+  clientDevicePrefab: {fileID: 1800979598866669647, guid: 5b6d588a608df5c4aa99088f2805e585, type: 3}
   deviceManager: {fileID: 827545940}
   clientList: {fileID: 11400000, guid: a43659f854811c04ba333c8d442be8eb, type: 2}
   clients: []

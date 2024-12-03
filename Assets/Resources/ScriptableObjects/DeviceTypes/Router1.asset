@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09600b92882e1d4499d4779a1a756f56, type: 3}
   m_Name: Router1
   m_EditorClassIdentifier: 
-  deviceName: Router1
-  deviceType: 1
-  maxConnections: 6
+  m_deviceType: 0
+  m_price: 100
+  m_maxConnections: 4
+  m_capacity: 100
   sprite: {fileID: 8953743949728075700, guid: 4d3b8737105eef94db916dd1acd8490c, type: 3}

@@ -5,8 +5,8 @@ namespace InternetEmpire
     public class ConnectionController : MonoBehaviour
     {
 
-        public DeviceController Device1;
-        public DeviceController Device2;
+        public Device Device1;
+        public Device Device2;
         private Connection connectionData;
 
         public Connection ConnectionData

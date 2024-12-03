@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b24904a2c8ba0c44af1fdfe550b3095, type: 3}
   m_Name: Business1
   m_EditorClassIdentifier: 
-  clientName: abc
-  clientType: 0
-  satisfaction: 100
-  demandGenerationTime: 5
-  minDemand: 3
-  maxDemand: 5
+  m_lstDeviceTypesCanUse: 000000000100000002000000
+  m_defaultSatisfaction: 67
+  m_minDemandGenerationTime: 43.4
+  m_maxDemandGenerationTime: 61.7
+  m_minDemand: 15
+  m_maxDemand: 15

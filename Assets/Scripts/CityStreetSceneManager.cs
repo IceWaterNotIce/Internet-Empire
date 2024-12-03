@@ -31,7 +31,7 @@ namespace InternetEmpire
         public float maxRadius; // 最大半徑
         public float currentRadius; // 當前半徑
 
-        public DeviceList deviceList;
+        public DeviceTypeList deviceList;
 
         public GameObject ConnectionPanel;
 
@@ -84,19 +84,23 @@ namespace InternetEmpire
                     positionIsValid = true;
 
                     // 檢查生成點附近是否有其他客戶
-                    foreach (ClientDevice existingClient in clientManager.clients)
+                    foreach(Client existingClient in clientManager.clients)
                     {
-                        // check the object exists
-                        if (existingClient == null)
+                        foreach(ClientDevice existingClientDevice in existingClient.Devices)
                         {
-                            continue;
-                        }
-                        if (Vector2.Distance(existingClient.transform.position, spawnPosition) < minDistanceBetweenClients)
-                        {
-                            positionIsValid = false;
-                            break;
+                            // 檢查物件是否存在
+                            if (existingClientDevice == null)
+                            {
+                                continue;
+                            }
+                            if (Vector2.Distance(existingClientDevice.transform.position, spawnPosition) < minDistanceBetweenClients)
+                            {
+                                positionIsValid = false;
+                                break;
+                            }
                         }
                     }
+                    
 
                     attempts++;
                     if (attempts >= maxAttempts)
@@ -114,7 +118,7 @@ namespace InternetEmpire
                     yield break;
                 }
 
-                global::DeviceType device = deviceList.GetDevice(UnityEngine.Random.Range(0, deviceList.GetCount()));
+                DeviceModel device = deviceList.GetDevice(UnityEngine.Random.Range(0, deviceList.GetCount()));
                 if (device == null)
                 {
                     Debug.LogError("Failed to get a device from DeviceList.");

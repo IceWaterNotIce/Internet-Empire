@@ -9,7 +9,7 @@ namespace InternetEmpire
     {
         public List<ConnectionController> connections = new List<ConnectionController>(); // List of connections
 
-        private DeviceController firstDevice; // First selected device
+        private Device firstDevice; // First selected device
         public InternetEmpire.MessageManager messageManager; // Reference to the MessageManager
 
         public ConnectionList connectionList;
@@ -28,7 +28,7 @@ namespace InternetEmpire
                 RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero);
                 if (hit.collider != null)
                 {
-                    DeviceController device = hit.collider.GetComponent<DeviceController>();
+                    Device device = hit.collider.GetComponent<Device>();
                     if (device != null && currentMethod != null)
                     {
                         SelectDevice(device);
@@ -44,9 +44,9 @@ namespace InternetEmpire
         }
 
 
-        void ConnectDevices(DeviceController device1, DeviceController device2)
+        void ConnectDevices(Device device1, Device device2)
         {
-            if(currentMethod == null)
+            if (currentMethod == null)
             {
                 messageManager.ShowMessage("No connection method selected. Connection failed.");
                 firstDevice = null;
@@ -64,13 +64,13 @@ namespace InternetEmpire
                 firstDevice = null;
                 return;
             }
-            if (device1.ConnectionsCount >= device1.DeviceData.maxConnections)
+            if (device1.ConnectionsCount >= device1.Model.MaxConnections)
             {
                 messageManager.ShowMessage("First device has reached maximum connections. Connection failed.");
                 firstDevice = null;
                 return;
             }
-            if (device2.ConnectionsCount >= device2.DeviceData.maxConnections)
+            if (device2.ConnectionsCount >= device2.Model.MaxConnections)
             {
                 messageManager.ShowMessage("Second device has reached maximum connections. Connection failed.");
                 firstDevice = null;
@@ -113,7 +113,7 @@ namespace InternetEmpire
             }
         }
 
-        void SelectDevice(DeviceController device)
+        void SelectDevice(Device device)
         {
             if (firstDevice == null)
             {
@@ -128,27 +128,43 @@ namespace InternetEmpire
 
         public void RemoveConnection(ConnectionController connection)
         {
-            DeviceController device1 = connection.Device1;
-            DeviceController device2 = connection.Device2;
+            Device device1 = connection.Device1;
+            Device device2 = connection.Device2;
 
             device1.ConnectionsCount--;
             device2.ConnectionsCount--;
 
             connections.Remove(connection);
+            Destroy(connection.gameObject);
+        }
+
+        public void RemoveConnection(Device device)
+        {
+            foreach (ConnectionController connection in connections)
+            {
+                if (connection.Device1 == device)
+                {
+                    RemoveConnection(connection);
+                }
+                else if (connection.Device2 == device)
+                {
+                    RemoveConnection(connection);
+                }
+            }
         }
 
 
         // using A* algorithm to check if two devices can be connected
-        public bool CanConnect(List<ConnectionController> connections, DeviceController startDevice, DeviceController finalDevice)
+        public bool CanConnect(Device startDevice, Device finalDevice)
         {
-            List<DeviceController> openList = new List<DeviceController>();
-            List<DeviceController> closedList = new List<DeviceController>();
+            List<Device> openList = new List<Device>();
+            List<Device> closedList = new List<Device>();
 
             openList.Add(startDevice);
 
             while (openList.Count > 0)
             {
-                DeviceController currentDevice = openList[0];
+                Device currentDevice = openList[0];
                 openList.Remove(currentDevice);
                 closedList.Add(currentDevice);
 
@@ -178,5 +194,7 @@ namespace InternetEmpire
 
             return false;
         }
+
+
     }
 }

@@ -3,42 +3,86 @@ namespace InternetEmpire
     using UnityEngine;
     using System.Collections.Generic;
 
+
     public class ClientManager : MonoBehaviour
     {
         public GameObject clientPrefab;
+
+        public GameObject clientDevicePrefab;
         public DeviceManager deviceManager;
 
         public ClientTypeList clientList;
 
-        public List<ClientDevice> clients = new List<ClientDevice>();
+        public List<Client> clients = new List<Client>();
 
-        public void GenerateClients( ClientType client, global::DeviceType device, Vector3 spawnPosition)
+        public void GenerateClients(ClientType clientType, DeviceModel model, Vector3 spawnPosition)
         {
-            GameObject clientObject = CreateClient(client, spawnPosition);
-            DeviceController deviceController = CreateDevice(device.deviceType, spawnPosition);
-            AssignDeviceToClient(clientObject, deviceController);
+            if (clientType == null)
+            {
+                Debug.LogError("ClientType is null");
+                return;
+            }
+            if (model == null)
+            {
+                Debug.LogError("DeviceModel is null");
+                return;
+            }
+            if (spawnPosition == null)
+            {
+                Debug.LogError("Spawn position is null");
+                return;
+            }
+            GameObject clientObject = CreateClient(clientType, spawnPosition);
+            Client client = clientObject.GetComponent<Client>();
+            GameObject clientDeviceObject = CreateClientDevice(client, model, spawnPosition);
+            AssignDeviceToClient(clientObject, clientDeviceObject);
+
         }
 
-        private GameObject CreateClient(ClientType client, Vector3 spawnPosition)
+        private GameObject CreateClient(ClientType clientType, Vector3 spawnPosition)
         {
             GameObject clientObject = Instantiate(clientPrefab, spawnPosition, Quaternion.identity);
-            ClientDevice clientController = clientObject.GetComponent<ClientDevice>();
-            clientController.ClientData = client;
-            clients.Add(clientController);
+            Client client = clientObject.GetComponent<Client>();
+            client.Type = clientType;
+            clients.Add(client);
             return clientObject;
         }
 
-        private DeviceController CreateDevice(DeviceList.DeviceType deviceType, Vector3 spawnPosition)
+        private GameObject CreateClientDevice(Client client, DeviceModel model, Vector3 spawnPosition)
         {
-            return deviceManager.GenerateDevices(deviceType, spawnPosition);
+            if (client == null)
+            {
+                Debug.LogError("Client is null");
+                return null;
+            }
+            if (model == null)
+            {
+                Debug.LogError("DeviceModel is null");
+                return null;
+            }
+            if (spawnPosition == null)
+            {
+                Debug.LogError("Spawn position is null");
+                return null;
+            }
+            GameObject clientDevice = Instantiate(clientDevicePrefab, spawnPosition, Quaternion.identity);
+            ClientDevice clientDeviceComponent = clientDevice.GetComponent<ClientDevice>();
+            GameObject device = deviceManager.GenerateDevices(model, spawnPosition);
+            Device deviceComponent = device.GetComponent<Device>();
+            Debug.Log(client.Devices);
+            Debug.Log(clientDeviceComponent);
+            Debug.Log(deviceComponent);
+            deviceComponent.transform.SetParent(clientDevice.transform);
+            clientDeviceComponent.Device = deviceComponent;
+            clientDeviceComponent.Client = client;
+            client.Devices.Add(clientDeviceComponent);
+            
+            return clientDevice;
         }
 
-        private void AssignDeviceToClient(GameObject client, DeviceController device)
+        private void AssignDeviceToClient(GameObject client, GameObject clientDevice)
         {
-            ClientDevice clientController = client.GetComponent<ClientDevice>();
-            clientController.ClientData.Device = device.DeviceData;
-            //set the device controller to the client controller child
-            device.transform.SetParent(client.transform);
+            clientDevice.transform.SetParent(client.transform);
         }
     }
 }

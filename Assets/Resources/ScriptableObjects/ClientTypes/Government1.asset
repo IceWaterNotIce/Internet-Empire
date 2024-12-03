@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b24904a2c8ba0c44af1fdfe550b3095, type: 3}
   m_Name: Government1
   m_EditorClassIdentifier: 
-  clientName: abc
-  clientType: 2
-  satisfaction: 100
-  demandGenerationTime: 5
-  minDemand: 3
-  maxDemand: 5
+  m_lstDeviceTypesCanUse: 00000000
+  m_defaultSatisfaction: 28
+  m_minDemandGenerationTime: 1
+  m_maxDemandGenerationTime: 8
+  m_minDemand: 1
+  m_maxDemand: 27.2
