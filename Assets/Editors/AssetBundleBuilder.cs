@@ -2,7 +2,6 @@ using UnityEditor;
 using UnityEngine;
 using System.Diagnostics;
 using System.IO;
-using Unity.Android.Gradle;
 
 public class AssetBundleBuilder
 {
