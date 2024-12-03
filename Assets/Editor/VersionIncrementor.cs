@@ -19,7 +19,6 @@ public class VersionIncrementor : IPreprocessBuildWithReport
 
     }
 
-
     private static void UpdateVersion()
     {
         string[] versionParts = PlayerSettings.bundleVersion.Split('.');
