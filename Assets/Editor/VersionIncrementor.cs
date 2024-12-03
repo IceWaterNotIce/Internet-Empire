@@ -11,25 +11,13 @@ public class VersionIncrementor : IPreprocessBuildWithReport
 
     static VersionIncrementor()
     {
-        // 注册构建事件
-        BuildPlayerWindow.RegisterBuildPlayerHandler(OnBuildStart);
+
     }
 
-    private static void OnBuildStart(BuildPlayerOptions options)
-    {
-        UnityEngine.Debug.Log("Build started.");
-        UpdateVersion();
-
-        // 调用原始的构建处理程序
-        BuildPipeline.BuildPlayer(options);
-        
-        UnityEngine.Debug.Log("Build finished.");
-        CommitAndPushToGit(PlayerSettings.bundleVersion);
-    }
     public void OnPreprocessBuild(BuildReport report)
     {
-        
-
+        UpdateVersion();
+        CommitAndPushToGit(PlayerSettings.bundleVersion);
     }
 
     private static void UpdateVersion()
