@@ -19,6 +19,7 @@ public class VersionIncrementor : IPreprocessBuildWithReport
     public void OnPreprocessBuild(BuildReport report)
     {
         UpdateVersion();
+        EditProjectSettings(PlayerSettings.bundleVersion);
         CommitAndPushToGit(PlayerSettings.bundleVersion);
     }
 
@@ -74,7 +75,7 @@ public class VersionIncrementor : IPreprocessBuildWithReport
     private static void EditProjectSettings(string versionParts)
     {
        // using system io to edit the project settings file
-        string filepath = Application.dataPath + "/ProjectSettings/ProjectSettings.asset";
+        string filepath =  "E:/Documents/UnityProject/Internet Empire/ProjectSettings/ProjectSettings.asset";
         string[] lines = File.ReadAllLines(filepath);
 
         for (int i = 0; i < lines.Length; i++)
