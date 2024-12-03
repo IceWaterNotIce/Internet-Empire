@@ -32,6 +32,8 @@ public class VersionIncrementor : IPreprocessBuildWithReport
                 patchVersion++;
                 PlayerSettings.bundleVersion = $"{versionParts[0]}.{versionParts[1]}.{patchVersion}";
                 UnityEngine.Debug.Log($"Version updated to {PlayerSettings.bundleVersion}");
+                // save the changes
+                AssetDatabase.SaveAssets();
             }
             else
             {
