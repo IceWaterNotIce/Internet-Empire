@@ -12,6 +12,7 @@ public class VersionIncrementor : IPreprocessBuildWithReport
     public void OnPreprocessBuild(BuildReport report)
     {
         UpdateVersion();
+        CommitAndPushToGit(PlayerSettings.bundleVersion);
     }
 
     private static void UpdateVersion()
@@ -23,7 +24,6 @@ public class VersionIncrementor : IPreprocessBuildWithReport
             {
                 patchVersion++;
                 PlayerSettings.bundleVersion = $"{versionParts[0]}.{versionParts[1]}.{patchVersion}";
-                CommitAndPushToGit(PlayerSettings.bundleVersion);
                 UnityEngine.Debug.Log($"Version updated to {PlayerSettings.bundleVersion}");
             }
             else
