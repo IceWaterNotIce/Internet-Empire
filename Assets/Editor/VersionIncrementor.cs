@@ -18,7 +18,6 @@ public class VersionIncrementor : IPreprocessBuildWithReport
 
     public void OnPreprocessBuild(BuildReport report)
     {
-        UpdateVersion();
         EditProjectSettings(PlayerSettings.bundleVersion);
         CommitAndPushToGit(PlayerSettings.bundleVersion);
     }
