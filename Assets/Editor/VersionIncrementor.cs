@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading;
 
+
 [InitializeOnLoad]
 public class VersionIncrementor : IPreprocessBuildWithReport
 {
@@ -46,11 +47,11 @@ public class VersionIncrementor : IPreprocessBuildWithReport
 
     private static void CommitAndPushToGit(string versionParts)
     {
-        RunGitCommand($@"
-            git add . && 
-            git commit -m ""Auto commit from Unity Builder.\"" && 
-            git tag -a v{versionParts} -m ""Auto tag from Unity Builder.\"" && 
-            git push origin main && git push origin v{versionParts}");
+        RunGitCommand("git add .");
+        RunGitCommand("git remove .meta");
+        RunGitCommand("git tag -a v" + versionParts + " -m \"Auto tag from Unity Builder. \"");
+        RunGitCommand("git push origin main");
+        RunGitCommand("git push origin v" + versionParts);
 
         UnityEngine.Debug.Log("Git commit and push done");
     }
