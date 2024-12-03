@@ -3,10 +3,10 @@ namespace InternetEmpire
     using UnityEngine;
 
     [CreateAssetMenu(fileName = "NewClient", menuName = "Client")]
-    public class Client : ScriptableObject
+    public class ClientType : ScriptableObject
     {
         public string clientName;
-        public ClientList.ClientType clientType;
+
         private Device device;
 
         public Device Device

@@ -116,7 +116,7 @@ namespace InternetEmpire
                     yield break;
                 }
 
-                Client client = clientManager.clientList.GetClient(UnityEngine.Random.Range(0, clientManager.clientList.GetCount()));
+                ClientType client = clientManager.clientList.GetClient(UnityEngine.Random.Range(0, clientManager.clientList.GetCount()));
                 if (client == null)
                 {
                     Debug.LogError("Failed to get a client from ClientList.");

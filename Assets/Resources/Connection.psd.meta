@@ -100,7 +100,7 @@ ScriptedImporter:
     spritePosition: {x: 0, y: 0}
   multiSpriteImportData: []
   layeredSpriteImportData:
-  - name: CopperCable
+  - name: WiFi
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 0
@@ -112,7 +112,7 @@ ScriptedImporter:
       y: 4
       width: 256
       height: 256
-    spriteID: b71b45f1f851fc74789e36b9920a9740
+    spriteID: 652a9b68c84a4df4ab4c18f9611a6a22
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -121,6 +121,28 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     uvTransform: {x: 4, y: 4}
+    spritePosition: {x: 0, y: 0}
+  - name: CopperCable
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 268
+      width: 256
+      height: 256
+    spriteID: b71b45f1f851fc74789e36b9920a9740
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 268}
     spritePosition: {x: 0, y: 0}
   spriteImportData: []
   rigSpriteImportData: []
@@ -171,13 +193,23 @@ ScriptedImporter:
     flatten: 0
     isImported: 0
     isVisible: 1
+  - name: WiFi
+    spriteName: WiFi
+    isGroup: 0
+    parentIndex: 0
+    spriteID: 652a9b68c84a4df4ab4c18f9611a6a22
+    layerID: 6
+    mosaicPosition: {x: 4, y: 4}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
   - name: CopperCable
     spriteName: CopperCable
     isGroup: 0
     parentIndex: 0
     spriteID: b71b45f1f851fc74789e36b9920a9740
     layerID: 2
-    mosaicPosition: {x: 4, y: 4}
+    mosaicPosition: {x: 4, y: 268}
     flatten: 0
     isImported: 1
     isVisible: 1

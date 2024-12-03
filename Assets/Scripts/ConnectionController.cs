@@ -21,6 +21,8 @@ namespace InternetEmpire
 
         [SerializeField] private PolygonCollider2D m_collider;
 
+        private SpriteRenderer spriteRenderer;
+
         void Start()
         {
             // getting 2 devices' positions and controll gameobject's position, rotation and scale
@@ -31,7 +33,7 @@ namespace InternetEmpire
             // z = 1 to make sure the line is in back of the devices
             transform.position = new Vector3(center.x, center.y, 1);
             transform.right = direction;
-            transform.localScale = new Vector3(direction.magnitude, transform.localScale.y, transform.localScale.z);
+            transform.localScale = new Vector3(direction.magnitude/3, transform.localScale.y, transform.localScale.z);
 
             // set the connection's color to the original color
             SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
@@ -39,6 +41,8 @@ namespace InternetEmpire
 
             // enable the collider in start to resize the collider to fit the sprite
             m_collider.enabled = true;
+            spriteRenderer = GetComponent<SpriteRenderer>();
+            spriteRenderer.sprite = connectionData.sprite;
         }
 
         void Update()

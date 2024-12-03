@@ -3,12 +3,11 @@ namespace InternetEmpire
     using UnityEngine;
 
     [CreateAssetMenu(fileName = "ClientList", menuName = "ClientList")]
-    public class ClientList : ScriptableObject
+    public class ClientTypeList : ScriptableObject
     {
-        public enum ClientType { Home, Business, Government, School }
-        public Client[] clients;
+        public ClientType[] clients;
 
-        public Client GetClient(int index)
+        public ClientType GetClient(int index)
         {
             if (clients == null || index < 0 || index >= clients.Length)
             {

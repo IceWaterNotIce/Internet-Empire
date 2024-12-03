@@ -5,13 +5,13 @@ using Unity.VisualScripting;
 
 namespace InternetEmpire
 {
-
+    
 
     public class ClientController : MonoBehaviour
     {
-        private Client clientData;
+        private ClientType clientData;
 
-        public Client ClientData
+        public ClientType ClientData
         {
             get { return clientData; }
             set { clientData = value; }
