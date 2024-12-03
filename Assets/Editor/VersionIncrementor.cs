@@ -4,6 +4,7 @@ using UnityEditor.Build;
 using UnityEditor.Build.Reporting;
 using System.Diagnostics;
 using System.IO;
+using TMPro;
 
 [InitializeOnLoad]
 public class VersionIncrementor : IPreprocessBuildWithReport
@@ -14,6 +15,12 @@ public class VersionIncrementor : IPreprocessBuildWithReport
         UpdateVersion();
         CommitAndPushToGit(PlayerSettings.bundleVersion);
     }
+
+    public void OnPostprocessBuild(BuildReport report)
+    {
+        
+    }
+
 
     private static void UpdateVersion()
     {
