@@ -1,14 +1,20 @@
 using UnityEngine;
+using TMPro;
 using UnityEngine.SceneManagement;
+
 public class LobbySceneManager : MonoBehaviour
 {
-    private BundleLoader bundleLoader;
 
-
-    // Start is called before the first frame update
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        bundleLoader = GameObject.Find("BundleLoader").GetComponent<BundleLoader>();
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
     }
 
     public void GoToCityStreet()
@@ -16,5 +22,3 @@ public class LobbySceneManager : MonoBehaviour
         SceneManager.LoadScene("CityStreet");
     }
 }
-
-
