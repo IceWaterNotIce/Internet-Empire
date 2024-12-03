@@ -21,7 +21,7 @@ namespace InternetEmpire
 
         [SerializeField] private PolygonCollider2D m_collider;
 
-        private SpriteRenderer spriteRenderer;
+        [SerializeField] private SpriteRenderer spriteRenderer;
 
         void Start()
         {

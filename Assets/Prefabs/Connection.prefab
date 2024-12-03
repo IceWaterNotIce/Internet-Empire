@@ -79,7 +79,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 501432d64ba9b3e49911de527f43b593, type: 3}
-  m_Color: {r: 0.5754717, g: 0.3176366, b: 0.18729976, a: 1}
+  m_Color: {r: 0.6132076, g: 0.3605969, b: 0.23429158, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -106,6 +106,7 @@ MonoBehaviour:
   HoverColor: {r: 1, g: 0.8549239, b: 0, a: 1}
   SelectedColor: {r: 0, g: 1, b: 0, a: 1}
   m_collider: {fileID: -6750748119241435393}
+  spriteRenderer: {fileID: 877514658674914971}
 --- !u!60 &-6750748119241435393
 PolygonCollider2D:
   m_ObjectHideFlags: 0
