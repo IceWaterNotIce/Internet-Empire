@@ -1,0 +1,29 @@
+ManifestFileVersion: 0
+UnityVersion: 6000.0.25f1
+CRC: 292132981
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: a66a6567637ea8d31536fb1bbc2da8d1
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 35110ecd808a3322050a2198100fb532
+  IncrementalBuildHash:
+    serializedVersion: 2
+    Hash: 6f2af875b53ce7e56a079e513d960b8c
+HashAppended: 0
+ClassTypes:
+- Class: 114
+  Script: {fileID: 11500000, guid: 2b24904a2c8ba0c44af1fdfe550b3095, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: edc632422a33ae448abbba9e6a98ed55, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Resources/ScriptableObjects/Clients/Home1.asset
+- Assets/Resources/ScriptableObjects/Clients/Government1.asset
+- Assets/Resources/ScriptableObjects/Clients/School1.asset
+- Assets/Resources/ScriptableObjects/Clients/Business1.asset
+- Assets/Resources/ScriptableObjects/Clients/ClientTypeList.asset
+Dependencies: []

@@ -1,0 +1,46 @@
+ManifestFileVersion: 0
+UnityVersion: 6000.0.25f1
+CRC: 1046752129
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 50524d68409f20602dc22be0040fd7d9
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: e4e30ba832b85539fa804a70ab21a9fb
+  IncrementalBuildHash:
+    serializedVersion: 2
+    Hash: 52aae545898e8dde8a676b2bc92fc27a
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 74
+  Script: {instanceID: 0}
+- Class: 90
+  Script: {instanceID: 0}
+- Class: 91
+  Script: {instanceID: 0}
+- Class: 95
+  Script: {instanceID: 0}
+- Class: 137
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Prefabs/Character.prefab
+- Assets/Models/Chibi/Salsa Dancing.fbx
+- Assets/Models/Chibi/outUV.png
+- Assets/Models/Chibi/pop_base_pop_base_lambert1.mat
+- Assets/Models/Chibi/Chibi.controller
+- Assets/Models/Chibi/face1.png
+Dependencies: []
