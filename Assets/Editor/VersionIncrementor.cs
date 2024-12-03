@@ -46,7 +46,6 @@ public class VersionIncrementor : IPreprocessBuildWithReport
 
     private static void CommitAndPushToGit(string versionParts)
     {
-        Thread addThread = new Thread(() => 
         RunGitCommand($@"
             git add . && 
             git commit -m ""Auto commit from Unity Builder.\"" && 
@@ -58,7 +57,6 @@ public class VersionIncrementor : IPreprocessBuildWithReport
 
     private static void RunGitCommand(string command)
     {
-        Thread.Sleep(3000);
         ProcessStartInfo processStartInfo = new ProcessStartInfo("cmd.exe", "/c " + command);
         processStartInfo.WorkingDirectory = Application.dataPath;
         processStartInfo.RedirectStandardOutput = true;
