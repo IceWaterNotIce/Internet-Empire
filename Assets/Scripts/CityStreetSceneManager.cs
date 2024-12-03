@@ -84,7 +84,7 @@ namespace InternetEmpire
                     positionIsValid = true;
 
                     // 檢查生成點附近是否有其他客戶
-                    foreach (ClientController existingClient in clientManager.clients)
+                    foreach (ClientDevice existingClient in clientManager.clients)
                     {
                         // check the object exists
                         if (existingClient == null)
@@ -114,7 +114,7 @@ namespace InternetEmpire
                     yield break;
                 }
 
-                Device device = deviceList.GetDevice(UnityEngine.Random.Range(0, deviceList.GetCount()));
+                global::DeviceType device = deviceList.GetDevice(UnityEngine.Random.Range(0, deviceList.GetCount()));
                 if (device == null)
                 {
                     Debug.LogError("Failed to get a device from DeviceList.");

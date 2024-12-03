@@ -10,7 +10,7 @@ namespace InternetEmpire
 
         public List<DeviceController> devices = new List<DeviceController>();
 
-        public Device PlayerDevice;
+        public DeviceType PlayerDevice;
 
         void Start()
         {
@@ -37,16 +37,16 @@ namespace InternetEmpire
             DeviceController deviceController = device.GetComponent<DeviceController>();
 
             // 從 DeviceList 中獲取裝置資料
-            Device deviceData = GetDeviceData(deviceType);
+            DeviceType deviceData = GetDeviceData(deviceType);
 
             deviceController.DeviceData = deviceData;
             devices.Add(deviceController);
             return deviceController;
         }
 
-        private Device GetDeviceData(DeviceList.DeviceType deviceType)
+        private DeviceType GetDeviceData(DeviceList.DeviceType deviceType)
         {
-            foreach (Device device in deviceList.devices)
+            foreach (DeviceType device in deviceList.devices)
             {
                 if (device.deviceType == deviceType)
                 {
@@ -57,7 +57,7 @@ namespace InternetEmpire
             return null;
         }
 
-        public void genDevice(Device device, Vector3 spawnPosition)
+        public void genDevice(DeviceType device, Vector3 spawnPosition)
         {
             GameObject deviceObj = Instantiate(devicePrefab, spawnPosition, Quaternion.identity);
             DeviceController deviceController = deviceObj.GetComponent<DeviceController>();

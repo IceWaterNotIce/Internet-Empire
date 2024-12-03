@@ -5,9 +5,9 @@ namespace InternetEmpire
 
     public class DeviceController : MonoBehaviour
     {
-        private Device deviceData;
+        private global::DeviceType deviceData;
 
-        public Device DeviceData
+        public global::DeviceType DeviceData
         {
             get { return deviceData; }
             set { deviceData = value; }

@@ -10,9 +10,9 @@ namespace InternetEmpire
 
         public ClientTypeList clientList;
 
-        public List<ClientController> clients = new List<ClientController>();
+        public List<ClientDevice> clients = new List<ClientDevice>();
 
-        public void GenerateClients( ClientType client, Device device, Vector3 spawnPosition)
+        public void GenerateClients( ClientType client, global::DeviceType device, Vector3 spawnPosition)
         {
             GameObject clientObject = CreateClient(client, spawnPosition);
             DeviceController deviceController = CreateDevice(device.deviceType, spawnPosition);
@@ -22,7 +22,7 @@ namespace InternetEmpire
         private GameObject CreateClient(ClientType client, Vector3 spawnPosition)
         {
             GameObject clientObject = Instantiate(clientPrefab, spawnPosition, Quaternion.identity);
-            ClientController clientController = clientObject.GetComponent<ClientController>();
+            ClientDevice clientController = clientObject.GetComponent<ClientDevice>();
             clientController.ClientData = client;
             clients.Add(clientController);
             return clientObject;
@@ -35,7 +35,7 @@ namespace InternetEmpire
 
         private void AssignDeviceToClient(GameObject client, DeviceController device)
         {
-            ClientController clientController = client.GetComponent<ClientController>();
+            ClientDevice clientController = client.GetComponent<ClientDevice>();
             clientController.ClientData.Device = device.DeviceData;
             //set the device controller to the client controller child
             device.transform.SetParent(client.transform);

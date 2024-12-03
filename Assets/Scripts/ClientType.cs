@@ -5,11 +5,9 @@ namespace InternetEmpire
     [CreateAssetMenu(fileName = "NewClient", menuName = "Client")]
     public class ClientType : ScriptableObject
     {
-        public string clientName;
+        private global::DeviceType device;
 
-        private Device device;
-
-        public Device Device
+        public global::DeviceType Device
         {
             get { return device; }
             set { device = value; }

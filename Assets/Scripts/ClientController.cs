@@ -7,8 +7,10 @@ namespace InternetEmpire
 {
 
 
-    public class ClientController : MonoBehaviour
+    public class ClientDevice : MonoBehaviour
     {
+
+        
         private ClientType clientData;
 
         public ClientType ClientData
@@ -73,7 +75,7 @@ namespace InternetEmpire
                 CityStreetSceneManager cityStreetSceneManager = FindFirstObjectByType<CityStreetSceneManager>();
                 ClientManager clientManager = FindFirstObjectByType<ClientManager>();
                 // randomly select a client but not the current client
-                ClientController client = clientManager.clients[Random.Range(0, clientManager.clients.Count)];
+                ClientDevice client = clientManager.clients[Random.Range(0, clientManager.clients.Count)];
                 if (client == this)
                 {
                     yield break;

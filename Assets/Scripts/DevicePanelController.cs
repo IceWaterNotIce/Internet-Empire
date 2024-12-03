@@ -14,7 +14,7 @@ namespace InternetEmpire
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
-            foreach (Device Device in DeviceList.devices)
+            foreach (DeviceType Device in DeviceList.devices)
             {
                 Sprite DevicePreviewSprite = Device.sprite;
                 GameObject DeviceButton = Instantiate(DeviceButtonPrefab, transform);
