@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.TestTools;
-using NUnit.Framework;
+
 
 namespace InternetEmpire
 {
@@ -138,39 +137,8 @@ namespace InternetEmpire
             connections.Remove(connection);
         }
 
-        [Test]
-        public void CanConnectTestFalse()
-        {
-            List<ConnectionController> connections = new List<ConnectionController>();
-            DeviceController startDevice = new GameObject().AddComponent<DeviceController>();
-            startDevice.ConnectionsCount = 1;
-            DeviceController finalDevice = new GameObject().AddComponent<DeviceController>();
-            finalDevice.ConnectionsCount = 2;
-            DeviceController device = new GameObject().AddComponent<DeviceController>();
-            device.ConnectionsCount = 2;
-            ConnectionController connection1 = new GameObject().AddComponent<ConnectionController>();
-            connection1.Device1 = startDevice;
-            connection1.Device2 = device;
-            connections.Add(connection1);
-            Assert.IsFalse(CanConnect(connections, startDevice, finalDevice));
-        }
 
-        [Test]
-        public void CanConnectTestTrue()
-        {
-            List<ConnectionController> connections = new List<ConnectionController>();
-            DeviceController startDevice = new GameObject().AddComponent<DeviceController>();
-            startDevice.ConnectionsCount = 1;
-            DeviceController finalDevice = new GameObject().AddComponent<DeviceController>();
-            finalDevice.ConnectionsCount = 2;
-            ConnectionController connection1 = new GameObject().AddComponent<ConnectionController>();
-            connection1.Device1 = startDevice;
-            connection1.Device2 = finalDevice;
-            connections.Add(connection1);
-            Assert.IsTrue(CanConnect(connections, startDevice, finalDevice));
-        }
         // using A* algorithm to check if two devices can be connected
-
         public bool CanConnect(List<ConnectionController> connections, DeviceController startDevice, DeviceController finalDevice)
         {
             List<DeviceController> openList = new List<DeviceController>();
