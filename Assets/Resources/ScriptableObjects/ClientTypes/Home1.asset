@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Home1
   m_EditorClassIdentifier: 
   m_lstDeviceTypesCanUse: 0000000001000000
-  m_defaultSatisfaction: 70
+  m_defaultSatisfaction: 80
   m_minDemandGenerationTime: 1
-  m_maxDemandGenerationTime: 1
-  m_minDemand: 1
-  m_maxDemand: 1
+  m_maxDemandGenerationTime: 3.4
+  m_minDemand: 1.9
+  m_maxDemand: 7.1

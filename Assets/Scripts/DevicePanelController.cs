@@ -18,15 +18,7 @@ namespace InternetEmpire
             {
                 Sprite DevicePreviewSprite = Device.Sprite;
                 GameObject DeviceButton = Instantiate(DeviceButtonPrefab, transform);
-                Image image = DeviceButton.GetComponent<Image>();
-                image.sprite = DevicePreviewSprite;
-
-                // Add a button click listener
-                Button button = DeviceButton.GetComponent<Button>();
-                button.onClick.AddListener(() =>
-                {
-                    DeviceManager.PlayerDevice = Device;
-                });
+                DeviceButton.GetComponent<DevicePanelDeviceButton>().DeviceModel = Device;
             }
         }
 

@@ -59,12 +59,12 @@ namespace InternetEmpire
                 {
                     Debug.Log("Client can connect to the selected client.");
                     cityStreetSceneManager.money += demand;
-                    m_client.Satisfaction += 20;
+                    m_client.Satisfaction += 2;
                 }
                 else
                 {
                     Debug.Log("Client cannot connect to the selected client.");
-                    m_client.Satisfaction -= 20;
+                    m_client.Satisfaction -= 2;
                 }
             }
         }

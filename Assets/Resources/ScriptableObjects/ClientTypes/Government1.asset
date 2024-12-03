@@ -15,6 +15,6 @@ MonoBehaviour:
   m_lstDeviceTypesCanUse: 00000000
   m_defaultSatisfaction: 28
   m_minDemandGenerationTime: 1
-  m_maxDemandGenerationTime: 8
-  m_minDemand: 1
+  m_maxDemandGenerationTime: 4
+  m_minDemand: 3.4
   m_maxDemand: 27.2

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_lstDeviceTypesCanUse: 000000000100000002000000
   m_defaultSatisfaction: 67
-  m_minDemandGenerationTime: 43.4
-  m_maxDemandGenerationTime: 61.7
-  m_minDemand: 15
+  m_minDemandGenerationTime: 1
+  m_maxDemandGenerationTime: 3.3
+  m_minDemand: 8.6
   m_maxDemand: 15
