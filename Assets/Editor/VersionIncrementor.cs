@@ -3,6 +3,8 @@ using UnityEditor;
 using UnityEditor.Build;
 using UnityEditor.Build.Reporting;
 using System.Diagnostics;
+using System.IO;
+
 
 [InitializeOnLoad]
 public class VersionIncrementor : IPreprocessBuildWithReport
@@ -67,5 +69,24 @@ public class VersionIncrementor : IPreprocessBuildWithReport
             process.WaitForExit();
             UnityEngine.Debug.Log(process.StandardOutput.ReadToEnd());
         }
+    }
+
+    private static void EditProjectSettings(string versionParts)
+    {
+       // using system io to edit the project settings file
+        string filepath = Application.dataPath + "/ProjectSettings/ProjectSettings.asset";
+        string[] lines = File.ReadAllLines(filepath);
+
+        for (int i = 0; i < lines.Length; i++)
+        {
+            if (lines[i].Contains("bundleVersion:"))
+            {
+                lines[i] = "  bundleVersion: " + versionParts;
+                break;
+            }
+        }
+
+        File.WriteAllLines(filepath, lines);
+
     }
 }
