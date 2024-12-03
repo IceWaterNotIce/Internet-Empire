@@ -9,16 +9,26 @@ public class VersionIncrementor : IPreprocessBuildWithReport
 {
     public int callbackOrder => 0;
 
+    static VersionIncrementor()
+    {
+        // 注册构建事件
+        BuildPlayerWindow.RegisterBuildPlayerHandler(OnBuildStart);
+    }
+
+    private static void OnBuildStart(BuildPlayerOptions options)
+    {
+        UnityEngine.Debug.Log("Build started.");
+
+        // 调用原始的构建处理程序
+        BuildPipeline.BuildPlayer(options);
+        
+        UnityEngine.Debug.Log("Build finished.");
+        CommitAndPushToGit(PlayerSettings.bundleVersion);
+    }
     public void OnPreprocessBuild(BuildReport report)
     {
         UpdateVersion();
-        SavePlayerSettings(); // Save the PlayerSettings before committing
-        CommitAndPushToGit(PlayerSettings.bundleVersion);
-    }
 
-    public void OnPostprocessBuild(BuildReport report)
-    {
-        
     }
 
     private static void UpdateVersion()
@@ -41,13 +51,6 @@ public class VersionIncrementor : IPreprocessBuildWithReport
         {
             UnityEngine.Debug.LogError("Version format is not correct. It should be like 1.0.0");
         }
-    }
-
-    private static void SavePlayerSettings()
-    {
-        // Mark PlayerSettings as dirty and save
-        AssetDatabase.SaveAssets();
-        UnityEngine.Debug.Log("PlayerSettings saved.");
     }
 
     private static void CommitAndPushToGit(string versionParts)
