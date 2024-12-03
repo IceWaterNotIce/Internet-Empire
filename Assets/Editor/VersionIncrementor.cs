@@ -3,16 +3,16 @@ using UnityEditor;
 using UnityEditor.Build;
 using UnityEditor.Build.Reporting;
 using System.Diagnostics;
-using System.IO;
-using TMPro;
 
 [InitializeOnLoad]
 public class VersionIncrementor : IPreprocessBuildWithReport
 {
     public int callbackOrder => 0;
+
     public void OnPreprocessBuild(BuildReport report)
     {
         UpdateVersion();
+        SavePlayerSettings(); // Save the PlayerSettings before committing
         CommitAndPushToGit(PlayerSettings.bundleVersion);
     }
 
@@ -20,7 +20,6 @@ public class VersionIncrementor : IPreprocessBuildWithReport
     {
         
     }
-
 
     private static void UpdateVersion()
     {
@@ -32,8 +31,6 @@ public class VersionIncrementor : IPreprocessBuildWithReport
                 patchVersion++;
                 PlayerSettings.bundleVersion = $"{versionParts[0]}.{versionParts[1]}.{patchVersion}";
                 UnityEngine.Debug.Log($"Version updated to {PlayerSettings.bundleVersion}");
-                // save the changes
-                AssetDatabase.SaveAssets();
             }
             else
             {
@@ -46,15 +43,22 @@ public class VersionIncrementor : IPreprocessBuildWithReport
         }
     }
 
+    private static void SavePlayerSettings()
+    {
+        // Mark PlayerSettings as dirty and save
+        AssetDatabase.SaveAssets();
+        UnityEngine.Debug.Log("PlayerSettings saved.");
+    }
+
     private static void CommitAndPushToGit(string versionParts)
     {
         RunGitCommand("git add .");
-        RunGitCommand("git commit -m \"Auto commit from Unity Builder. \"");
-        RunGitCommand("git tag -a v" + versionParts + " -m \"Auto tag from Unity Builder. \"");
+        RunGitCommand("git commit -m \"Auto commit from Unity Builder.\"");
+        RunGitCommand("git tag -a v" + versionParts + " -m \"Auto tag from Unity Builder.\"");
         RunGitCommand("git push origin main");
         RunGitCommand("git push origin v" + versionParts);
 
-        UnityEngine.Debug.Log("Git commit and push done");
+        UnityEngine.Debug.Log("Git commit and push done.");
     }
 
     private static void RunGitCommand(string command)
