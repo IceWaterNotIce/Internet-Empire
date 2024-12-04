@@ -18,4 +18,4 @@ MonoBehaviour:
   reliability: 0
   security: 0
   maxDistance: 0
-  sprite: {fileID: 2438879418878224252, guid: 7cbffa37c895265469edb4aee503a70c, type: 3}
+  sprite: {fileID: 21300000, guid: 501432d64ba9b3e49911de527f43b593, type: 3}

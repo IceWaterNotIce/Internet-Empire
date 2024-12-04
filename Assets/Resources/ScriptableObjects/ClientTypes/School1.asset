@@ -16,5 +16,5 @@ MonoBehaviour:
   m_defaultSatisfaction: 32
   m_minDemandGenerationTime: 1
   m_maxDemandGenerationTime: 2.8
-  m_minDemand: 33.3
-  m_maxDemand: 33.3
+  m_minDemand: 1
+  m_maxDemand: 2.9
