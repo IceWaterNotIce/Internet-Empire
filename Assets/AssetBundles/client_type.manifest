@@ -1,16 +1,16 @@
 ManifestFileVersion: 0
 UnityVersion: 6000.0.25f1
-CRC: 292132981
+CRC: 1561364336
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: a66a6567637ea8d31536fb1bbc2da8d1
+    Hash: c7ce083e020d298bd58d3ed8da934e1e
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 35110ecd808a3322050a2198100fb532
+    Hash: 93d47a722b4a470e3353c57edf51df66
   IncrementalBuildHash:
     serializedVersion: 2
-    Hash: 6f2af875b53ce7e56a079e513d960b8c
+    Hash: b4dc69589e5d51b7e51675b14416ea39
 HashAppended: 0
 ClassTypes:
 - Class: 114
@@ -21,9 +21,9 @@ ClassTypes:
   Script: {instanceID: 0}
 SerializeReferenceClassIdentifiers: []
 Assets:
-- Assets/Resources/ScriptableObjects/Clients/Home1.asset
-- Assets/Resources/ScriptableObjects/Clients/Government1.asset
-- Assets/Resources/ScriptableObjects/Clients/School1.asset
-- Assets/Resources/ScriptableObjects/Clients/Business1.asset
-- Assets/Resources/ScriptableObjects/Clients/ClientTypeList.asset
+- Assets/Resources/ScriptableObjects/ClientTypes/Home1.asset
+- Assets/Resources/ScriptableObjects/ClientTypes/Government1.asset
+- Assets/Resources/ScriptableObjects/ClientTypes/School1.asset
+- Assets/Resources/ScriptableObjects/ClientTypes/Business1.asset
+- Assets/Resources/ScriptableObjects/ClientTypes/ClientTypeList.asset
 Dependencies: []
