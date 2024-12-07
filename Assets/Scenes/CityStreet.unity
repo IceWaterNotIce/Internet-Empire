@@ -848,7 +848,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   connectionList: {fileID: 11400000, guid: cb72953026572a64181dd9f2d198d840, type: 2}
   connectionButtonPrefab: {fileID: 9097018946963911261, guid: 14f4c0e7d9f3a9042964e8071ef3a1db, type: 3}
-  connectionManager: {fileID: 827545942}
 --- !u!1 &515902279
 GameObject:
   m_ObjectHideFlags: 0
@@ -1276,7 +1275,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Button
+  m_text: Go To Lobby
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1642,9 +1641,9 @@ RectTransform:
   - {fileID: 767961276}
   m_Father: {fileID: 1975432378}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 450, y: -50}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &851674742

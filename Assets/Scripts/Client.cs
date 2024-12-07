@@ -44,16 +44,23 @@ namespace InternetEmpire
         //Todo:
         void OnDestroy()
         {
+
+            // remove connetions then remove devices , then remove client
             ConnectionManager connectionManager = FindFirstObjectByType<ConnectionManager>();
 
-            ClientManager clientManager = FindFirstObjectByType<ClientManager>();
-            clientManager.clients.Remove(this);
             DeviceManager deviceManager = FindFirstObjectByType<DeviceManager>();
             foreach (ClientDevice device in m_ClientDevices)
             {
                 connectionManager.RemoveConnection(device.Device);
-                deviceManager.RemoveDevice(device.Device);
             }
+
+            foreach (ClientDevice device in m_ClientDevices)
+            {
+                deviceManager.devices.Remove(device.Device);
+            }
+
+            ClientManager clientManager = FindFirstObjectByType<ClientManager>();
+            clientManager.clients.Remove(this);
         }
 
         void Start()
