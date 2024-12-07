@@ -194,5 +194,14 @@ namespace InternetEmpire
                 tmpMoney.text = $"${money}";
             }
         }
+
+        public void GoToLobby()
+        {
+            //save the game
+            CloudSaveManager cloudSaveManager = FindFirstObjectByType<CloudSaveManager>();
+            // cloudSaveManager.SaveObjectList("clients.json", clientManager.clients);
+            // cloudSaveManager.SaveObjectList("devices.json", deviceManager.devices);
+            UnityEngine.SceneManagement.SceneManager.LoadScene("Lobby");
+        }
     }
 }
