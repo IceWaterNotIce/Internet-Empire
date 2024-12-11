@@ -37,6 +37,14 @@ public class DeviceModel : ScriptableObject
     }
 
     [SerializeField]
+    private int m_handleSpeed = 1;
+    public int HandleSpeed
+    {
+        get { return m_handleSpeed; }
+        set { m_handleSpeed = value; }
+    }
+
+    [SerializeField]
     private Sprite sprite;
     public Sprite Sprite
     {

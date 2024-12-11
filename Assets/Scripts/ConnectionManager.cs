@@ -194,7 +194,45 @@ namespace InternetEmpire
 
             return false;
         }
+        public List<Device> Route (Device startDevice, Device finalDevice)
+        {
+            List<Device> openList = new List<Device>();
+            List<Device> closedList = new List<Device>();
 
+            openList.Add(startDevice);
+
+            while (openList.Count > 0)
+            {
+                Device currentDevice = openList[0];
+                openList.Remove(currentDevice);
+                closedList.Add(currentDevice);
+
+                if (currentDevice == finalDevice)
+                {
+                    return closedList;
+                }
+
+                foreach (ConnectionController connection in connections)
+                {
+                    if (connection.Device1 == currentDevice)
+                    {
+                        if (!closedList.Contains(connection.Device2) && !openList.Contains(connection.Device2))
+                        {
+                            openList.Add(connection.Device2);
+                        }
+                    }
+                    else if (connection.Device2 == currentDevice)
+                    {
+                        if (!closedList.Contains(connection.Device1) && !openList.Contains(connection.Device1))
+                        {
+                            openList.Add(connection.Device1);
+                        }
+                    }
+                }
+            }
+
+            return null;
+        }
 
     }
 }

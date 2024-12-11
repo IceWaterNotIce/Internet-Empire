@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 using Unity.VisualScripting;
+using System.Collections.Generic;
 
 namespace InternetEmpire
 {
@@ -58,6 +59,18 @@ namespace InternetEmpire
                 if (connectionManager.CanConnect(m_device, clientDevice.Device))
                 {
                     Debug.Log("Client can connect to the selected client.");
+                    NetworkPacketManager networkPacketManager = FindFirstObjectByType<NetworkPacketManager>();
+                    List<Device> route = connectionManager.Route(m_device, clientDevice.Device);
+                    GameObject packetObject = Instantiate(networkPacketManager.packetPrefab, m_device.transform.position, Quaternion.identity);
+                    NetworkPacket packet = packetObject.GetComponent<NetworkPacket>();
+                    packet.route = route;
+                    packet.source = m_device;
+                    packet.destination = clientDevice.Device;
+                    packet.data = demand.ToString();
+                    networkPacketManager.AddPacket(packet);
+
+
+
                     cityStreetSceneManager.money += demand;
                     m_client.Satisfaction += 2;
                 }

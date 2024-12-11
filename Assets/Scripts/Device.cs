@@ -1,5 +1,6 @@
 namespace InternetEmpire
 {
+    using System.Collections.Generic;
     using UnityEngine;
     using UnityEngine.UI;
 
@@ -16,6 +17,32 @@ namespace InternetEmpire
 
         [SerializeField] private GameObject ConnectionStateField;
         [SerializeField] private GameObject ConnectionState;
+
+        [SerializeField] private Slider m_CapacityRemainSlider;
+
+        private int m_capacityUsed = 0;
+        public int CapacityUsed
+        {
+            get { return m_capacityUsed; }
+            set
+            {
+                if (value < 0)
+                {
+                    Debug.LogError("Capacity used cannot be less than 0.");
+                    m_capacityUsed = 0;
+                }
+                else if (value > m_model.Capacity)
+                {
+                    Debug.LogError("Capacity used cannot be greater than capacity.");
+                    m_capacityUsed = m_model.Capacity;
+                }
+                m_capacityUsed = value;
+                UpdateUI();
+            }
+        }
+
+        public List<NetworkPacket> packets = new List<NetworkPacket>();
+
 
         private int m_connectionsCount = 0;
         public int ConnectionsCount
@@ -66,6 +93,9 @@ namespace InternetEmpire
             {
                 ConnectionStateField.transform.GetChild(i).GetComponent<RawImage>().color = i < m_connectionsCount ? Color.green : Color.white;
             }
+
+            m_CapacityRemainSlider.maxValue = m_model.Capacity;
+            m_CapacityRemainSlider.value = m_model.Capacity - m_capacityUsed;
         }
     }
 }
