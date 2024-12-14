@@ -80,9 +80,9 @@ namespace InternetEmpire
                 UpdateUI();
             }
         }
-        public List<ConnectionController> connections = new List<ConnectionController>();
+        public List<Connection> connections = new List<Connection>();
 
-        public void AddConnection(ConnectionController connection)
+        public void AddConnection(Connection connection)
         {
             if (m_connectionsCount < m_model.MaxConnections)
             {
@@ -97,7 +97,7 @@ namespace InternetEmpire
             }
         }
 
-        public void RemoveConnection(ConnectionController connection)
+        public void RemoveConnection(Connection connection)
         {
             if (connections.Contains(connection))
             {
@@ -160,7 +160,7 @@ namespace InternetEmpire
 
             // get the connection controller between this device and the next device
             float connectSpeed = 1;
-            foreach (ConnectionController connection in connections)
+            foreach (Connection connection in connections)
             {
                 if (connection.Device1 == nextDevice || connection.Device2 == nextDevice)
                 {

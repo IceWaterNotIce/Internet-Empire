@@ -7,14 +7,14 @@ namespace InternetEmpire
 
     public class ConnectionManager : MonoBehaviour
     {
-        public List<ConnectionController> connections = new List<ConnectionController>(); // List of connections
+        public List<Connection> connections = new List<Connection>(); // List of connections
 
         private Device firstDevice; // First selected device
         public InternetEmpire.MessageManager messageManager; // Reference to the MessageManager
 
         public ConnectionList connectionList;
 
-        public Connection currentMethod;
+        public ConnectionMethod currentMethod;
 
         public CityStreetSceneManager cityStreetSceneManager;
 
@@ -38,7 +38,7 @@ namespace InternetEmpire
 
         }
 
-        public void SetConnectionMethod(Connection connection)
+        public void SetConnectionMethod(ConnectionMethod connection)
         {
             currentMethod = connection;
         }
@@ -77,7 +77,7 @@ namespace InternetEmpire
                 return;
             }
             // use connections to check if the devices are already connected
-            foreach (ConnectionController connection in connections)
+            foreach (Connection connection in connections)
             {
                 if (connection.Device1 == device1 && connection.Device2 == device2 ||
                     connection.Device1 == device2 && connection.Device2 == device1)
@@ -98,7 +98,7 @@ namespace InternetEmpire
                 device2.ConnectionsCount++;
 
                 GameObject connection = Instantiate(connectionPrefab);
-                ConnectionController connectionController = connection.GetComponent<ConnectionController>();
+                Connection connectionController = connection.GetComponent<Connection>();
                 connectionController.ConnectionData = currentMethod;
                 connectionController.Device1 = device1;
                 connectionController.Device2 = device2;
@@ -126,7 +126,7 @@ namespace InternetEmpire
             }
         }
 
-        public void RemoveConnection(ConnectionController connection)
+        public void RemoveConnection(Connection connection)
         {
             Device device1 = connection.Device1;
             Device device2 = connection.Device2;
@@ -140,7 +140,7 @@ namespace InternetEmpire
 
         public void RemoveConnection(Device device)
         {
-            foreach (ConnectionController connection in connections)
+            foreach (Connection connection in connections)
             {
                 if (connection.Device1 == device)
                 {
@@ -173,7 +173,7 @@ namespace InternetEmpire
                     return true;
                 }
 
-                foreach (ConnectionController connection in connections)
+                foreach (Connection connection in connections)
                 {
                     if (connection.Device1 == currentDevice)
                     {
@@ -212,7 +212,7 @@ namespace InternetEmpire
                     return closedList;
                 }
 
-                foreach (ConnectionController connection in connections)
+                foreach (Connection connection in connections)
                 {
                     if (connection.Device1 == currentDevice)
                     {

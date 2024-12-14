@@ -5,9 +5,9 @@ namespace InternetEmpire
     [CreateAssetMenu(fileName = "NewConnectionList", menuName = "ConnectionList")]
     public class ConnectionList : ScriptableObject
     {
-        public Connection[] connections;
+        public ConnectionMethod[] connections;
 
-        public Connection GetConnection(int index)
+        public ConnectionMethod GetConnection(int index)
         {
             if (index < 0 || index >= this.connections.Length)
             {

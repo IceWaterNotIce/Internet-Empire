@@ -5,8 +5,8 @@ namespace InternetEmpire
 {
     public class ConnectionPanelConnectionMethodButton : MonoBehaviour
     {
-        private Connection m_connection;
-        public Connection Connection
+        private ConnectionMethod m_connection;
+        public ConnectionMethod Connection
         {
             get { return m_connection; }
             set { m_connection = value; }

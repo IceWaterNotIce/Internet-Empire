@@ -12,7 +12,7 @@ namespace InternetEmpire
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
-            foreach (Connection connection in connectionList.connections)
+            foreach (ConnectionMethod connection in connectionList.connections)
             {
                 GameObject connectionButton = Instantiate(connectionButtonPrefab, transform);
                 connectionButton.GetComponent<ConnectionPanelConnectionMethodButton>().Connection = connection;
