@@ -20,8 +20,8 @@ namespace InternetEmpire
 
         [SerializeField] private Slider m_CapacityRemainSlider;
 
-        private int m_capacityUsed = 0;
-        public int CapacityUsed
+        private float m_capacityUsed = 0;
+        public float CapacityUsed
         {
             get { return m_capacityUsed; }
             set
@@ -41,7 +41,23 @@ namespace InternetEmpire
             }
         }
 
+        private float m_handledSize = 0;
+
         public List<NetworkPacket> packets = new List<NetworkPacket>();
+
+        public void AddPacket(NetworkPacket packet)
+        {
+            if (m_capacityUsed < m_model.Capacity)
+            {
+                packets.Add(packet);
+                m_capacityUsed += packet.size;
+                UpdateUI();
+            }
+            else
+            {
+                Debug.LogError("Cannot add packet. Capacity reached.");
+            }
+        }
 
 
         private int m_connectionsCount = 0;
@@ -62,6 +78,36 @@ namespace InternetEmpire
                 }
                 m_connectionsCount = value;
                 UpdateUI();
+            }
+        }
+        public List<ConnectionController> connections = new List<ConnectionController>();
+
+        public void AddConnection(ConnectionController connection)
+        {
+            if (m_connectionsCount < m_model.MaxConnections)
+            {
+                connections.Add(connection);
+                m_connectionsCount++;
+                UpdateUI();
+
+            }
+            else
+            {
+                Debug.LogError("Cannot add connection. Max connections reached.");
+            }
+        }
+
+        public void RemoveConnection(ConnectionController connection)
+        {
+            if (connections.Contains(connection))
+            {
+                connections.Remove(connection);
+                m_connectionsCount--;
+                UpdateUI();
+            }
+            else
+            {
+                Debug.LogError("Connection not found.");
             }
         }
 
@@ -96,6 +142,57 @@ namespace InternetEmpire
 
             m_CapacityRemainSlider.maxValue = m_model.Capacity;
             m_CapacityRemainSlider.value = m_model.Capacity - m_capacityUsed;
+        }
+
+
+
+        void sendPacket()
+        {
+            if (packets[0] == null)
+            {
+                Debug.Log("Packet is null.");
+                return;
+            }
+
+            // get next target device
+            Device nextDevice = packets[0].route[0];
+            packets[0].route.RemoveAt(0);
+
+            // get the connection controller between this device and the next device
+            float connectSpeed = 1;
+            foreach (ConnectionController connection in connections)
+            {
+                if (connection.Device1 == nextDevice || connection.Device2 == nextDevice)
+                {
+                    connectSpeed = connection.ConnectionData.maxSpeed;
+                    break;
+                }
+            }
+            if (packets[0].route.Count == 0)
+            {
+                Destroy(packets[0].gameObject);
+                packets.RemoveAt(0);
+            }
+            else
+            {
+                // moving the packet to the next device
+                packets[0].transform.position = Vector3.MoveTowards(packets[0].transform.position, nextDevice.transform.position, connectSpeed * Time.deltaTime);
+            }
+
+            m_capacityUsed -= packets[0].size;
+            UpdateUI();
+            
+        }
+
+        void Update()
+        {
+
+            m_handledSize += m_model.HandlingSpeed * Time.deltaTime;
+            if (packets.Count > 0 && m_handledSize >= packets[0].size)
+            {
+                m_handledSize -= packets[0].size;
+                sendPacket();
+            }
         }
     }
 }

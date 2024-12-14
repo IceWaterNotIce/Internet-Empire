@@ -66,9 +66,9 @@ namespace InternetEmpire
                     packet.route = route;
                     packet.source = m_device;
                     packet.destination = clientDevice.Device;
-                    packet.data = demand.ToString();
+                    packet.size = demand;
                     networkPacketManager.AddPacket(packet);
-
+                    m_device.AddPacket(packet);
 
 
                     cityStreetSceneManager.money += demand;

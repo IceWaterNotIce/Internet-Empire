@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09600b92882e1d4499d4779a1a756f56, type: 3}
   m_Name: Computer1
   m_EditorClassIdentifier: 
-  deviceName: Computer1
-  deviceType: 0
-  maxConnections: 2
+  m_deviceType: 0
+  m_price: 100
+  m_maxConnections: 1
+  m_capacity: 100
+  m_handlingSpeed: 5
   sprite: {fileID: 6741775121761640292, guid: 4d3b8737105eef94db916dd1acd8490c, type: 3}

@@ -37,11 +37,11 @@ public class DeviceModel : ScriptableObject
     }
 
     [SerializeField]
-    private int m_handleSpeed = 1;
-    public int HandleSpeed
+    private int m_handlingSpeed = 1;
+    public int HandlingSpeed
     {
-        get { return m_handleSpeed; }
-        set { m_handleSpeed = value; }
+        get { return m_handlingSpeed; }
+        set { m_handlingSpeed = value; }
     }
 
     [SerializeField]

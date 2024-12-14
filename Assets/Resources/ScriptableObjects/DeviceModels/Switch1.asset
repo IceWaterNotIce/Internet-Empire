@@ -16,5 +16,5 @@ MonoBehaviour:
   m_price: 100
   m_maxConnections: 20
   m_capacity: 2000
-  m_handleSpeed: 1
+  m_handlingSpeed: 10
   sprite: {fileID: -8751529033565529498, guid: 4d3b8737105eef94db916dd1acd8490c, type: 3}
