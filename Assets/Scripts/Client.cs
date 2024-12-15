@@ -76,5 +76,6 @@ namespace InternetEmpire
                 device.UpdateUI();
             }
         }
+
     }
 }

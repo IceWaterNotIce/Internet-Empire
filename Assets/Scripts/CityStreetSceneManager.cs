@@ -21,7 +21,7 @@ namespace InternetEmpire
 
         private int currentClientCount; // 當前客戶數量
         public TMP_Text tmpGameTime; // Reference to the UI Text element for game time
-        private DateTime gameTime; // The game time
+        public DateTime gameTime; // The game time
 
         public float money; // The player's money
         public TMP_Text tmpMoney; // Reference to the UI Text element for money
@@ -56,6 +56,11 @@ namespace InternetEmpire
             StartCoroutine(GenerateClients());
             gameTime = DateTime.Now; // Initialize game time with the current time
             currentRadius = initialRadius; // Initialize the current radius
+            SettingPanel settingPanel = FindFirstObjectByType<SettingPanel>();
+            if (settingPanel != null)
+            {
+                settingPanel.LoadGame();
+            }
         }
 
         void Update()
@@ -197,10 +202,7 @@ namespace InternetEmpire
 
         public void GoToLobby()
         {
-            //save the game
-            CloudSaveManager cloudSaveManager = FindFirstObjectByType<CloudSaveManager>();
-            // cloudSaveManager.SaveObjectList("clients.json", clientManager.clients);
-            // cloudSaveManager.SaveObjectList("devices.json", deviceManager.devices);
+
             UnityEngine.SceneManagement.SceneManager.LoadScene("Lobby");
         }
     }

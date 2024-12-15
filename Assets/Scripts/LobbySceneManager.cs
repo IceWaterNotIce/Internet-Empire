@@ -21,4 +21,9 @@ public class LobbySceneManager : MonoBehaviour
     {
         SceneManager.LoadScene("CityStreet");
     }
+
+    public void ClearPlayerPrefs()
+    {
+        PlayerPrefs.DeleteAll();
+    }
 }
