@@ -1,0 +1,33 @@
+ManifestFileVersion: 0
+UnityVersion: 6000.0.25f1
+CRC: 1378497153
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: eb2ad55553d676fe60c73c583bbc0a7a
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: ff17962fc06ded896d35a875f6725200
+  IncrementalBuildHash:
+    serializedVersion: 2
+    Hash: ff5a6d919137c8d5c39059935eb657a6
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: 09600b92882e1d4499d4779a1a756f56, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 94df34bb99347b644a759b4958220bfe, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Resources/ScriptableObjects/DeviceModels/Router1.asset
+- Assets/Resources/ScriptableObjects/DeviceModels/DeviceList.asset
+- Assets/Resources/ScriptableObjects/DeviceModels/Switch1.asset
+- Assets/Resources/ScriptableObjects/DeviceModels/Server1.asset
+- Assets/Resources/ScriptableObjects/DeviceModels/Computer1.asset
+Dependencies: []
