@@ -13,9 +13,8 @@ MonoBehaviour:
   m_Name: WiFi
   m_EditorClassIdentifier: 
   pricePerMeter: 1
-  maxSpeed: 0
-  latency: 0
-  reliability: 0
-  security: 0
-  maxDistance: 0
+  maxSpeed: 1
+  latency: 1
+  reliability: 1
+  maxDistance: 1
   sprite: {fileID: -5590312559297011801, guid: 7cbffa37c895265469edb4aee503a70c, type: 3}

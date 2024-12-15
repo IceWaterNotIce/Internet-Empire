@@ -33,7 +33,7 @@ namespace InternetEmpire
                 }
                 else if (value > 100)
                 {
-                    Debug.LogError("Satisfaction cannot be greater than 100.");
+                    Debug.LogWarning("Satisfaction cannot be greater than 100.");
                     m_satisfaction = 100;
                 }
                 m_satisfaction = value;

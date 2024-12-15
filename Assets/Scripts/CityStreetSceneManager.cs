@@ -158,7 +158,7 @@ namespace InternetEmpire
             );
         }
 
-        public void SpeedUp(int speed)
+        public void SpeedUp(float speed)
         {
             Time.timeScale = speed; // 將遊戲速度加倍
         }
