@@ -105,7 +105,7 @@ namespace InternetEmpire
                     attempts++;
                     if (attempts >= maxAttempts)
                     {
-                        Debug.LogError("Failed to find a valid spawn position after maximum attempts.");
+                        Debug.LogWarning("Failed to find a valid spawn position after maximum attempts.");
                         
                         yield return new WaitForSeconds(5);
                     }

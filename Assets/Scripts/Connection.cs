@@ -25,6 +25,11 @@ namespace InternetEmpire
 
         void Start()
         {
+            if (Device1 == null || Device2 == null)
+            {
+                Debug.LogWarning("Device1 or Device2 is null.");
+                return;
+            }
             // getting 2 devices' positions and controll gameobject's position, rotation and scale
             Vector2 device1Position = Device1.transform.position;
             Vector2 device2Position = Device2.transform.position;

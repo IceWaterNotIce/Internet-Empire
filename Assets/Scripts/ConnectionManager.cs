@@ -20,6 +20,8 @@ namespace InternetEmpire
 
         public GameObject connectionPrefab;
 
+        public Connection linkingConnection;
+
         void Update()
         {
             if (Input.GetMouseButtonDown(0))
@@ -34,6 +36,22 @@ namespace InternetEmpire
                         SelectDevice(device);
                     }
                 }
+            }
+
+            if (Input.GetMouseButtonDown(1))
+            {
+                firstDevice = null;
+                Destroy(linkingConnection.gameObject);
+            }
+
+            if (linkingConnection != null && firstDevice != null)
+            {
+                Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                linkingConnection.Device1 = firstDevice;
+                linkingConnection.Device2 = null;
+                linkingConnection.transform.position = (firstDevice.transform.position + (Vector3)mousePosition) / 2;
+                linkingConnection.transform.right = mousePosition - (Vector2)firstDevice.transform.position;
+                linkingConnection.transform.localScale = new Vector3(Vector2.Distance(firstDevice.transform.position, mousePosition) / 3, linkingConnection.transform.localScale.y, linkingConnection.transform.localScale.z);
             }
 
         }
@@ -115,12 +133,14 @@ namespace InternetEmpire
 
         void SelectDevice(Device device)
         {
-            if (firstDevice == null)
+            if (firstDevice == null && linkingConnection == null)
             {
                 firstDevice = device;
+                linkingConnection = Instantiate(connectionPrefab).GetComponent<Connection>();
             }
             else
             {
+                Destroy(linkingConnection.gameObject);
                 ConnectDevices(firstDevice, device);
                 firstDevice = null;
             }
@@ -140,16 +160,19 @@ namespace InternetEmpire
 
         public void RemoveConnection(Device device)
         {
+            List<Connection> connectionsToRemove = new List<Connection>();
+
             foreach (Connection connection in connections)
             {
-                if (connection.Device1 == device)
+                if (connection.Device1 == device || connection.Device2 == device)
                 {
-                    RemoveConnection(connection);
+                    connectionsToRemove.Add(connection);
                 }
-                else if (connection.Device2 == device)
-                {
-                    RemoveConnection(connection);
-                }
+            }
+
+            foreach (Connection connection in connectionsToRemove)
+            {
+                RemoveConnection(connection);
             }
         }
 
@@ -194,7 +217,7 @@ namespace InternetEmpire
 
             return false;
         }
-        public List<Device> Route (Device startDevice, Device finalDevice)
+        public List<Device> Route(Device startDevice, Device finalDevice)
         {
             List<Device> openList = new List<Device>();
             List<Device> closedList = new List<Device>();
