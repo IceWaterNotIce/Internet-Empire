@@ -186,7 +186,7 @@ namespace InternetEmpire
 
         void Update()
         {
-
+            Debug.Log("m_handledSize: " + m_handledSize);
             m_handledSize += m_model.HandlingSpeed * Time.deltaTime;
             if (packets.Count > 0 && m_handledSize >= packets[0].size)
             {
