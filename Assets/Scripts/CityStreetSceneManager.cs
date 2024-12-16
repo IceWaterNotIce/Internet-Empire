@@ -56,7 +56,6 @@ namespace InternetEmpire
             StartCoroutine(GenerateClients());
             gameTime = DateTime.Now; // Initialize game time with the current time
             currentRadius = initialRadius; // Initialize the current radius
-            SettingPanel settingPanel = FindFirstObjectByType<SettingPanel>();
             LoadGame();
 
         }
@@ -219,7 +218,7 @@ namespace InternetEmpire
             PlayerPrefs.SetString("gameTime", gameTime.ToString());
             PlayerPrefs.SetFloat("currentRadius", currentRadius);
             // save all ClientDevice
-            
+
             // Save all the devices and clients
             DeviceManager deviceManager = FindFirstObjectByType<DeviceManager>();
             //Get all the devices
@@ -337,9 +336,26 @@ namespace InternetEmpire
             }
             connectionManager.connections = connections;
 
-    
+
             Debug.Log("Game Loaded");
         }
 
+    }
+    [System.Serializable]
+    public class GameData
+    {
+        public Vector3 position;
+        public Quaternion rotation;
+        public object obj;
+    }
+    [System.Serializable]
+    public class GameDataList
+    {
+        public List<GameData> datas;
+
+        public GameDataList(List<GameData> datadtas)
+        {
+            this.datas = datadtas;
+        }
     }
 }
