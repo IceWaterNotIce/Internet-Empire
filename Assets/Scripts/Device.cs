@@ -3,7 +3,7 @@ namespace InternetEmpire
     using System.Collections.Generic;
     using UnityEngine;
     using UnityEngine.UI;
-
+     
     public class Device : MonoBehaviour
     {
         private DeviceModel m_model;
@@ -113,6 +113,11 @@ namespace InternetEmpire
 
         void Start()
         {
+             if (Model == null)
+            {
+                Debug.LogError("Model is not assigned");
+                return;
+            }
             originalColor = GetComponent<Renderer>().material.color;
             
             UpdateUI();
@@ -130,6 +135,11 @@ namespace InternetEmpire
 
         void UpdateUI()
         {
+            if (Model == null)
+            {
+                Debug.LogError("Model is not assigned");
+                return;
+            }
             GetComponent<SpriteRenderer>().sprite = m_model.Sprite;
             for (int i = ConnectionStateField.transform.childCount; i < m_model.MaxConnections; i++)
             {
@@ -186,7 +196,6 @@ namespace InternetEmpire
 
         void Update()
         {
-            Debug.Log("m_handledSize: " + m_handledSize);
             m_handledSize += m_model.HandlingSpeed * Time.deltaTime;
             if (packets.Count > 0 && m_handledSize >= packets[0].size)
             {

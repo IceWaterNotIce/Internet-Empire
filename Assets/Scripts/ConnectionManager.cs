@@ -10,7 +10,7 @@ namespace InternetEmpire
         public List<Connection> connections = new List<Connection>(); // List of connections
 
         private Device firstDevice; // First selected device
-        public InternetEmpire.MessageManager messageManager; // Reference to the MessageManager
+        public MessageManager messageManager; // Reference to the MessageManager
 
         public ConnectionList connectionList;
 

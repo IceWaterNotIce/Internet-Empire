@@ -6,6 +6,7 @@ namespace InternetEmpire
     using UnityEngine.UI;
     using System;
     using TMPro;
+    using System.Linq;
 
     public class CityStreetSceneManager : MonoBehaviour
     {
@@ -212,150 +213,136 @@ namespace InternetEmpire
 
         public void SaveGame()
         {
-            // save time and money currentRadius
-
-            PlayerPrefs.SetFloat("money", money);
-            PlayerPrefs.SetString("gameTime", gameTime.ToString());
-            PlayerPrefs.SetFloat("currentRadius", currentRadius);
-            // save all ClientDevice
-
-            // Save all the devices and clients
-            DeviceManager deviceManager = FindFirstObjectByType<DeviceManager>();
-            //Get all the devices
-            List<Device> devices = deviceManager.devices;
-            // save each device location
-            List<GameData> deviceData = new List<GameData>();
-            foreach (Device device in devices)
-            {
-                GameData data = new GameData();
-                data.position = device.transform.position;
-                data.rotation = device.transform.rotation;
-                data.obj = device.Model;
-                deviceData.Add(data);
-            }
-            Debug.Log(deviceData.Count);
-            //Save all the devices to json
-            GameDataList deviceDataList = new GameDataList(deviceData);
-            string devicesJson = JsonUtility.ToJson(deviceDataList);
-
-            Debug.Log(devicesJson);
-            PlayerPrefs.SetString("deviceData", devicesJson);
-            ClientManager clientManager = FindFirstObjectByType<ClientManager>();
-            //Get all the clients
-            List<Client> clients = clientManager.clients;
             List<GameData> clientData = new List<GameData>();
-            foreach (Client client in clients)
+            foreach (Client client in clientManager.clients)
             {
-                GameData data = new GameData();
-                data.position = client.transform.position;
-                data.rotation = client.transform.rotation;
-                data.obj = client.Type;
-                clientData.Add(data);
+                foreach (ClientDevice clientDevice in client.Devices)
+                {
+                    GameData data = new GameData();
+                    data.position = clientDevice.transform.position;
+                    data.rotation = clientDevice.transform.rotation;
+                    data.objType = "ClientDevice";
+                    data.clientType = client.Type.name;
+                    data.deviceModel = clientDevice.Device.Model.name;
+                    data.satisfaction = client.Satisfaction;
+                    clientData.Add(data);
+                }
             }
-            //Save all the clients to json
+
             GameDataList clientDataList = new GameDataList(clientData);
             string clientsJson = JsonUtility.ToJson(clientDataList);
             PlayerPrefs.SetString("clientData", clientsJson);
 
-            ConnectionManager connectionManager = FindFirstObjectByType<ConnectionManager>();
-            //Get all the connections
-            List<Connection> connections = connectionManager.connections;
+            List<GameData> deviceData = new List<GameData>();
+            foreach (Device device in deviceManager.devices)
+            {
+                GameData data = new GameData();
+                data.position = device.transform.position;
+                data.rotation = device.transform.rotation;
+                data.objType = "Device";
+                data.deviceModel = device.Model.name;
+                deviceData.Add(data);
+            }
+
+            GameDataList deviceDataList = new GameDataList(deviceData);
+            string devicesJson = JsonUtility.ToJson(deviceDataList);
+            PlayerPrefs.SetString("deviceData", devicesJson);
+
             List<GameData> connectionData = new List<GameData>();
-            foreach (Connection connection in connections)
+            foreach (Connection connection in connectionManager.connections)
             {
                 GameData data = new GameData();
                 data.position = connection.transform.position;
                 data.rotation = connection.transform.rotation;
-                data.obj = connection;
+                data.objType = "Connection";
+                data.clientType = connection.ConnectionData.name;
                 connectionData.Add(data);
             }
-            //Save all the connections to json
+
             GameDataList connectionDataList = new GameDataList(connectionData);
             string connectionsJson = JsonUtility.ToJson(connectionDataList);
             PlayerPrefs.SetString("connectionData", connectionsJson);
 
-
-
             PlayerPrefs.Save();
             Debug.Log("Game Saved");
-
         }
 
         public void LoadGame()
         {
-
-            // Load time and money
-
-            money = PlayerPrefs.GetFloat("money");
-            gameTime = System.DateTime.Parse(PlayerPrefs.GetString("gameTime"));
-            currentRadius = PlayerPrefs.GetFloat("currentRadius");
-
-            // Load all the devices and clients
-            DeviceManager deviceManager = FindFirstObjectByType<DeviceManager>();
-            //Get all the devices
-            Debug.Log(PlayerPrefs.GetString("deviceData"));
-            GameDataList deviceDataList = JsonUtility.FromJson<GameDataList>(PlayerPrefs.GetString("deviceData"));
-            List<GameData> deviceData = deviceDataList.datas;
-            Debug.Log(deviceData.Count);
-            List<Device> devices = new List<Device>();
-            foreach (GameData data in deviceData)
-            {
-                GameObject deviceObject = deviceManager.GenerateDevices((DeviceModel)data.obj, data.position);
-                Device device = deviceObject.GetComponent<Device>();
-                device.transform.rotation = data.rotation;
-                devices.Add(device);
-                Debug.Log("Device Loaded");
-            }
-            deviceManager.devices = devices;
-
-            ClientManager clientManager = FindFirstObjectByType<ClientManager>();
-            //Get all the clients
-            GameDataList clientDataList = JsonUtility.FromJson<GameDataList>(PlayerPrefs.GetString("clientData"));
+            string clientsJson = PlayerPrefs.GetString("clientData");
+            GameDataList clientDataList = JsonUtility.FromJson<GameDataList>(clientsJson);
             List<GameData> clientData = clientDataList.datas;
-            List<Client> clients = new List<Client>();
+
             foreach (GameData data in clientData)
             {
-                GameObject clientObject = Instantiate(clientManager.clientPrefab, data.position, data.rotation);
-                Client client = clientObject.GetComponent<Client>();
-                client.Type = (ClientType)data.obj;
-                clients.Add(client);
+                if (data.objType == "ClientDevice")
+                {
+                    ClientType clientType = clientManager.clientList.clients.FirstOrDefault(c => c.name == data.clientType);
+                    DeviceModel deviceModel = deviceManager.deviceList.devices.FirstOrDefault(d => d.name == data.deviceModel);
+                    if (clientType != null && deviceModel != null)
+                    {
+                        clientManager.GenerateClients(clientType, deviceModel, data.position);
+                        Client client = clientManager.clients.Last();
+                        client.Satisfaction = data.satisfaction;
+                    }
+                }
             }
-            clientManager.clients = clients;
 
-            ConnectionManager connectionManager = FindFirstObjectByType<ConnectionManager>();
-            //Get all the connections
-            GameDataList connectionDataList = JsonUtility.FromJson<GameDataList>(PlayerPrefs.GetString("connectionData"));
+            string devicesJson = PlayerPrefs.GetString("deviceData");
+            GameDataList deviceDataList = JsonUtility.FromJson<GameDataList>(devicesJson);
+            List<GameData> deviceData = deviceDataList.datas;
+
+            foreach (GameData data in deviceData)
+            {
+                if (data.objType == "Device")
+                {
+                    DeviceModel deviceModel = deviceManager.deviceList.devices.FirstOrDefault(d => d.name == data.deviceModel);
+                    if (deviceModel != null)
+                    {
+                        GameObject deviceObject = Instantiate(deviceManager.devicePrefab, data.position, data.rotation);
+                        Device device = deviceObject.GetComponent<Device>();
+                        device.Model = deviceModel;
+                        deviceManager.devices.Add(device);
+                    }
+                }
+            }
+
+            string connectionsJson = PlayerPrefs.GetString("connectionData");
+            GameDataList connectionDataList = JsonUtility.FromJson<GameDataList>(connectionsJson);
             List<GameData> connectionData = connectionDataList.datas;
-            List<Connection> connections = new List<Connection>();
+
             foreach (GameData data in connectionData)
             {
-                GameObject connectionObject = Instantiate(connectionManager.connectionPrefab, data.position, data.rotation);
-                Connection connection = connectionObject.GetComponent<Connection>();
-                connection.ConnectionData = (ConnectionMethod)data.obj;
-                connections.Add(connection);
+                if (data.objType == "Connection")
+                {
+                    GameObject connectionObject = Instantiate(connectionManager.connectionPrefab, data.position, data.rotation);
+                    Connection connection = connectionObject.GetComponent<Connection>();
+                    connection.ConnectionData = connectionManager.connectionList.connections.FirstOrDefault(c => c.name == data.clientType);
+                    connectionManager.connections.Add(connection);
+                }
             }
-            connectionManager.connections = connections;
-
 
             Debug.Log("Game Loaded");
         }
+    }
 
-    }
-    [System.Serializable]
-    public class GameData
-    {
-        public Vector3 position;
-        public Quaternion rotation;
-        public object obj;
-    }
     [System.Serializable]
     public class GameDataList
     {
         public List<GameData> datas;
 
-        public GameDataList(List<GameData> datadtas)
+        public GameDataList(List<GameData> datas)
         {
-            this.datas = datadtas;
+            this.datas = datas;
         }
+    }
+    public class GameData
+    {
+        public Vector3 position;
+        public Quaternion rotation;
+        public string objType;
+        public string clientType;
+        public string deviceModel;
+        public int satisfaction;
     }
 }

@@ -60,7 +60,10 @@ namespace InternetEmpire
             }
 
             ClientManager clientManager = FindFirstObjectByType<ClientManager>();
-            clientManager.clients.Remove(this);
+             if (clientManager != null)
+            {
+                clientManager.clients.Remove(this);
+            }
         }
 
         void Start()
