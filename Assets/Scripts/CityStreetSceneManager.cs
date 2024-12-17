@@ -323,6 +323,21 @@ namespace InternetEmpire
             }
 
             Debug.Log("Game Loaded");
+
+
+
+            // the step of loading the game
+            // 1. Load the client and instantiate the client object
+            // 2. Load the client device and instantiate the client device object
+            // 3. Set the client device parent to its client
+            // 4. Load the device and instantiate the device object
+            // 5. Load the connection and instantiate the connection object to connect the devices
+            // 6. Load the network packet and instantiate the network packet object to transfer data between devices
+            clientManager.LoadClients();
+            deviceManager.LoadDevices();
+            connectionManager.LoadConnections();
+            
+
         }
     }
 

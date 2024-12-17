@@ -4,10 +4,42 @@ using UnityEngine;
 
 namespace InternetEmpire
 {
-
     public class ConnectionManager : MonoBehaviour
     {
         public List<Connection> connections = new List<Connection>(); // List of connections
+
+        /*
+        a list of connection : [ the index of device1 in device list, the index of device2 in device list, the connection method index in ConnectionList*/
+        public List<int[]> connectionsList = new List<int[]>();
+        public string SaveConnectionList()
+        {
+            DeviceManager deviceManager = FindFirstObjectByType<DeviceManager>();
+
+            connectionsList.Clear();
+            foreach (Connection connection in connections)
+            {
+                int device1Index = deviceManager.devices.IndexOf(connection.Device1);
+                int device2Index = deviceManager.devices.IndexOf(connection.Device2);
+                int connectionMethodIndex = System.Array.IndexOf(connectionList.connections, connection.ConnectionData);
+                connectionsList.Add(new int[] { device1Index, device2Index, connectionMethodIndex });
+            }
+
+            return JsonUtility.ToJson(connectionsList);
+        }
+
+        public void LoadConnectionList(string json)
+        {
+            DeviceManager deviceManager = FindFirstObjectByType<DeviceManager>();
+
+            connectionsList = JsonUtility.FromJson<List<int[]>>(json);
+            foreach (int[] connectionData in connectionsList)
+            {
+                Device device1 = deviceManager.devices[connectionData[0]];
+                Device device2 = deviceManager.devices[connectionData[1]];
+                ConnectionMethod connectionMethod = connectionList.GetConnection(connectionData[2]);
+                createConnection(device1, device2, connectionMethod);
+            }
+        }
 
         private Device firstDevice; // First selected device
         public MessageManager messageManager; // Reference to the MessageManager
@@ -15,7 +47,6 @@ namespace InternetEmpire
         public ConnectionList connectionList;
 
         public ConnectionMethod currentMethod;
-
         public CityStreetSceneManager cityStreetSceneManager;
 
         public GameObject connectionPrefab;
@@ -112,16 +143,7 @@ namespace InternetEmpire
             {
                 cityStreetSceneManager.money -= cost;
 
-                device1.ConnectionsCount++;
-                device2.ConnectionsCount++;
-
-                GameObject connection = Instantiate(connectionPrefab);
-                Connection connectionController = connection.GetComponent<Connection>();
-                connectionController.ConnectionData = currentMethod;
-                connectionController.Device1 = device1;
-                connectionController.Device2 = device2;
-
-                connections.Add(connectionController);
+                createConnection(device1, device2, currentMethod);
             }
             else
             {
@@ -129,6 +151,20 @@ namespace InternetEmpire
                 Debug.LogWarning("Not enough money to make the connection.");
                 firstDevice = null;
             }
+        }
+
+        public void createConnection(Device device1, Device device2, ConnectionMethod connectionMethod)
+        {
+            device1.ConnectionsCount++;
+            device2.ConnectionsCount++;
+
+            GameObject connection = Instantiate(connectionPrefab);
+            Connection connectionController = connection.GetComponent<Connection>();
+            connectionController.ConnectionData = connectionMethod;
+            connectionController.Device1 = device1;
+            connectionController.Device2 = device2;
+
+            connections.Add(connectionController);
         }
 
         void SelectDevice(Device device)
