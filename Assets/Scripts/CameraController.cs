@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace InternetEmpire
 {
@@ -36,13 +37,14 @@ namespace InternetEmpire
 
         void HandleCameraZoom()
         {
-            if (Input.GetAxis("Mouse ScrollWheel") > 0)
+            var scrollValue = Mouse.current.scroll.ReadValue().y;
+            if (scrollValue > 0)
             {
-                targetOrthographicSize = Mathf.Max(targetOrthographicSize - 1, minCameraSize);
+            targetOrthographicSize = Mathf.Max(targetOrthographicSize - 1, minCameraSize);
             }
-            else if (Input.GetAxis("Mouse ScrollWheel") < 0)
+            else if (scrollValue < 0)
             {
-                targetOrthographicSize = Mathf.Min(targetOrthographicSize + 1, maxCameraSize);
+            targetOrthographicSize = Mathf.Min(targetOrthographicSize + 1, maxCameraSize);
             }
         }
 
@@ -53,17 +55,17 @@ namespace InternetEmpire
 
         void HandleCameraMovement()
         {
-            if (Input.GetMouseButtonDown(2)) // 按下滑鼠滾輪
+            if (Mouse.current.middleButton.wasPressedThisFrame)
             {
-                lastMousePosition = Input.mousePosition;
+                lastMousePosition = Mouse.current.position.ReadValue();
             }
 
-            if (Input.GetMouseButton(2)) // 拖動滑鼠滾輪
+            if (Mouse.current.middleButton.isPressed)
             {
-                Vector3 delta = Input.mousePosition - lastMousePosition;
+                Vector3 delta = (Vector3)Mouse.current.position.ReadValue() - lastMousePosition;
                 Vector3 move = new Vector3(-delta.x, -delta.y, 0) * cameraSpeed * mainCamera.orthographicSize / 10;
                 targetCameraPosition += move * Time.unscaledDeltaTime;
-                lastMousePosition = Input.mousePosition;
+                lastMousePosition = Mouse.current.position.ReadValue();
             }
         }
 

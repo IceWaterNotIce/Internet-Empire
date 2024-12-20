@@ -1,6 +1,7 @@
 namespace InternetEmpire
 {
     using UnityEngine;
+    using UnityEngine.InputSystem;
 
     public class Connection : MonoBehaviour
     {
@@ -52,7 +53,7 @@ namespace InternetEmpire
 
         void Update()
         {
-            if (isClicked && Input.GetKeyDown(KeyCode.Delete))
+            if (isClicked && Keyboard.current.deleteKey.wasPressedThisFrame)
             {
                 float moneyNeeded = connectionData.pricePerMeter * Vector2.Distance(Device1.transform.position, Device2.transform.position) / 5;
                 CityStreetSceneManager cityStreetSceneManager = FindFirstObjectByType<CityStreetSceneManager>();
@@ -82,7 +83,7 @@ namespace InternetEmpire
                 spriteRenderer.color = HoverColor;
             }
 
-            if (Input.GetMouseButtonDown(0))
+            if (Mouse.current.leftButton.wasPressedThisFrame)
             {
                 // select the connection when clicked
                 isClicked = true;

@@ -1,5 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.InputSystem;
+
 namespace InternetEmpire
 {
 
@@ -21,9 +23,9 @@ namespace InternetEmpire
         {
             if(PlayerDevice != null)
             {
-                if (Input.GetMouseButtonDown(0))
+                if (Mouse.current.leftButton.wasPressedThisFrame)
                 {
-                    Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                    Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
                     mousePosition.z = 0;
                     GenerateDevices(PlayerDevice, mousePosition);
                     PlayerDevice = null;

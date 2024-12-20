@@ -4,6 +4,7 @@ using System.Reflection;
 using System.Diagnostics;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.InputSystem;
 
 namespace InternetEmpire
 {
@@ -37,9 +38,9 @@ namespace InternetEmpire
 
         void Update()
         {
-             if (Input.GetMouseButtonDown(0))
+             if (Mouse.current.leftButton.wasPressedThisFrame)
             {
-                Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
                 RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero);
                 if (hit.collider != null)
                 {

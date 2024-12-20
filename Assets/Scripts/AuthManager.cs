@@ -113,7 +113,7 @@ public class AuthManager : MonoBehaviour
         {
             // Compare error code to AuthenticationErrorCodes
             // Notify the player with the proper error message
-            Debug.LogException(ex);
+            Debug.LogException(ex); 
         }
         catch (RequestFailedException ex)
         {

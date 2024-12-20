@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 
 namespace InternetEmpire
@@ -55,9 +56,9 @@ namespace InternetEmpire
 
         void Update()
         {
-            if (Input.GetMouseButtonDown(0))
+            if (Mouse.current.leftButton.wasPressedThisFrame)
             {
-                Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
                 RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero);
                 if (hit.collider != null)
                 {
@@ -68,8 +69,9 @@ namespace InternetEmpire
                     }
                 }
             }
+           
 
-            if (Input.GetMouseButtonDown(1))
+            if (Mouse.current.rightButton.wasPressedThisFrame)
             {
                 firstDevice = null;
                 Destroy(linkingConnection.gameObject);
@@ -77,7 +79,7 @@ namespace InternetEmpire
 
             if (linkingConnection != null && firstDevice != null)
             {
-                Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
                 linkingConnection.Device1 = firstDevice;
                 linkingConnection.Device2 = null;
                 linkingConnection.transform.position = (firstDevice.transform.position + (Vector3)mousePosition) / 2;
