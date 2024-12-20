@@ -540,8 +540,8 @@ MonoBehaviour:
   versionInfo:
     latestVersion: 
     downloadURL: 
-  networkpanel: {fileID: 0}
-  updatepanel: {fileID: 0}
+  networkpanel: {fileID: 859737732}
+  updatepanel: {fileID: 287546500}
 --- !u!1 &738796786
 GameObject:
   m_ObjectHideFlags: 0
