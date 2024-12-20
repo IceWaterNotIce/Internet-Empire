@@ -4,11 +4,12 @@ using System.Collections;
 
 public class VersionChecker : MonoBehaviour
 {
-    private const string versionCheckURL = "https://icewaternotice.com/games/Internet%20Empire/android/version.json";
+    private string versionCheckURL;
     private string currentVersion = Application.version;
 
     void Start()
     {
+        versionCheckURL = "https://raw.github.com/IceWaterNotIce/Internet-Empire/tree/main/Assets/StreamingAssets/version.json";
         StartCoroutine(CheckForUpdate());
     }
 
@@ -19,23 +20,23 @@ public class VersionChecker : MonoBehaviour
 
         if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
         {
-            Debug.Log("错误: " + www.error);
+            Debug.Log("錯誤: " + www.error);
         }
         else
         {
-            // 解析 JSON 响应
+            // 解析 JSON 響應
             var jsonResponse = www.downloadHandler.text;
             var versionInfo = JsonUtility.FromJson<VersionInfo>(jsonResponse);
 
             if (versionInfo.latestVersion != currentVersion)
             {
                 Debug.Log("有新版本可用: " + versionInfo.latestVersion);
-                // 可以提示用户下载新版本
+                // 可以提示用戶下載新版本
                 // Application.OpenURL(versionInfo.downloadURL);
             }
             else
             {
-                Debug.Log("您正在运行最新版本.");
+                Debug.Log("您正在運行最新版本.");
             }
         }
     }
