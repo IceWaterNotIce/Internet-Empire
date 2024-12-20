@@ -1,10 +1,12 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace InternetEmpire
 {
     public class InitializeSceneManager : MonoBehaviour
     {
-        bool isAssetBundleSyncDone = false;
+        public bool isAssetBundleReady = false;
+        public bool isVersionChecked = false;
         void Start()
         {
             // Check for updates
@@ -19,6 +21,20 @@ namespace InternetEmpire
         void Update()
         {
 
+        }
+
+        public void Check()
+        {
+            if (isAssetBundleReady && isVersionChecked)
+            {
+                // Load the lobby scene
+                SceneManager.LoadScene("Lobby");
+            }
+        }
+
+        public void OnClickQuit()
+        {
+            Application.Quit();
         }
     }
 }

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using UnityEngine.Networking;
+using UnityEngine.PlayerLoop;
+using InternetEmpire;
 
 public class AssetBundleManager : MonoBehaviour
 {
@@ -26,7 +28,9 @@ public class AssetBundleManager : MonoBehaviour
     {
         yield return StartCoroutine(CheckAndUpdateBundles());
         // Load the lobby scene
-        UnityEngine.SceneManagement.SceneManager.LoadScene("Lobby");
+        InitializeSceneManager initializeSceneManager = GameObject.FindFirstObjectByType<InitializeSceneManager>();
+        initializeSceneManager.isAssetBundleReady = true;
+        initializeSceneManager.Check();
     }
 
     IEnumerator CheckAndUpdateBundles()
