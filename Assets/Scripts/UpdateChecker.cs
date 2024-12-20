@@ -2,13 +2,14 @@ using UnityEngine;
 using UnityEngine.Networking;
 using System.Collections;
 
-public class VersionChecker : MonoBehaviour
+public class UpdateChecker : MonoBehaviour
 {
     private string versionCheckURL;
-    private string currentVersion = Application.version;
+    private string currentVersion;
 
     void Start()
     {
+        currentVersion = Application.version;
         versionCheckURL = "https://raw.githubusercontent.com/IceWaterNotIce/Internet-Empire/main/Assets/StreamingAssets/version.json";
         StartCoroutine(CheckForUpdate());
     }
@@ -32,11 +33,13 @@ public class VersionChecker : MonoBehaviour
             {
                 Debug.Log("有新版本可用: " + versionInfo.latestVersion);
                 // 可以提示用戶下載新版本
-                // Application.OpenURL(versionInfo.downloadURL);
+                Application.OpenURL(versionInfo.downloadURL);
+
             }
             else
             {
                 Debug.Log("您正在運行最新版本.");
+                Application.OpenURL(versionInfo.downloadURL);
             }
         }
     }
