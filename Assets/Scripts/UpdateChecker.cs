@@ -34,12 +34,12 @@ public class UpdateChecker : MonoBehaviour
                 Debug.Log("有新版本可用: " + versionInfo.latestVersion);
                 // 可以提示用戶下載新版本
                 Application.OpenURL(versionInfo.downloadURL);
-
+                Application.Quit();
             }
             else
             {
                 Debug.Log("您正在運行最新版本.");
-                Application.OpenURL(versionInfo.downloadURL);
+
             }
         }
     }
