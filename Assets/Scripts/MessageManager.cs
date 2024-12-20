@@ -2,27 +2,25 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using TMPro;
+using Unity.VisualScripting;
 
 namespace InternetEmpire
 {
     public class MessageManager : Singleton<MessageManager>
     {
+        [SerializeField] private GameObject Canvas;
+        [SerializeField] private GameObject panelprefab;
+        [SerializeField] private GameObject tmpTextPrefab;
+        [SerializeField] private GameObject buttonPrefab;
+        [SerializeField] private GameObject buttonClosePrefab;
 
-        private GameObject panelprefab;
-        private GameObject tmpTextPrefab;
-        private GameObject buttonPrefab;
-        private GameObject buttonClosePrefab;
         void Start()
         {
-            panelprefab = Resources.Load<GameObject>("Prefabs/Messages/Panel");
-            tmpTextPrefab = Resources.Load<GameObject>("Prefabs/Messages/TMP_Text");
-            buttonPrefab = Resources.Load<GameObject>("Prefabs/Messages/Button");
-            buttonClosePrefab = Resources.Load<GameObject>("Prefabs/Messages/ButtonClose");
         }
 
         public void CreateYesNoMessage(string message, System.Action onYes, System.Action onNo)
         {
-            GameObject panel = Instantiate(panelprefab, transform);
+            GameObject panel = Instantiate(panelprefab, Canvas.transform);
             GameObject tmpText = Instantiate(tmpTextPrefab, panel.transform);
             tmpText.GetComponent<TMP_Text>().text = message;
             GameObject buttonYes = Instantiate(buttonPrefab, panel.transform);
@@ -43,7 +41,7 @@ namespace InternetEmpire
 
         public void ToastMessage(string message, float duration = 2f)
         {
-            GameObject panel = Instantiate(panelprefab, transform);
+            GameObject panel = Instantiate(panelprefab, Canvas.transform);
             GameObject tmpText = Instantiate(tmpTextPrefab, panel.transform);
             tmpText.GetComponent<TMP_Text>().text = message;
             StartCoroutine(DestroyAfter(panel, duration));
@@ -57,7 +55,7 @@ namespace InternetEmpire
 
         public void CreateCloseMessage(string message, System.Action onClose)
         {
-            GameObject panel = Instantiate(panelprefab, transform);
+            GameObject panel = Instantiate(panelprefab, Canvas.transform);
             GameObject tmpText = Instantiate(tmpTextPrefab, panel.transform);
             tmpText.GetComponent<TMP_Text>().text = message;
             GameObject buttonClose = Instantiate(buttonClosePrefab, panel.transform);

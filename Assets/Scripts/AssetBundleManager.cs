@@ -38,7 +38,13 @@ public class AssetBundleManager : MonoBehaviour
         // Load local version
         VersionConfig localConfig = new VersionConfig();
 
-        #if UNITY_ANDROID
+        # if UNITY_EDITOR
+            if (File.Exists(localVersionPath))
+            {
+                string localJson = File.ReadAllText(localVersionPath);
+                localConfig = JsonUtility.FromJson<VersionConfig>(localJson);
+            }
+        #elif UNITY_ANDROID
             UnityWebRequest localRequest = UnityWebRequest.Get(localVersionPath);
             yield return localRequest.SendWebRequest();
             if (localRequest.result == UnityWebRequest.Result.Success)

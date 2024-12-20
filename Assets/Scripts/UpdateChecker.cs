@@ -18,28 +18,21 @@ namespace InternetEmpire
         {
             currentVersion = Application.version;
             versionCheckURL = "https://raw.githubusercontent.com/IceWaterNotIce/Internet-Empire/main/Assets/StreamingAssets/version.json";
+            StartCoroutine(CheckForUpdate());
         }
 
         public IEnumerator CheckForUpdate()
         {
             UnityWebRequest www = UnityWebRequest.Get(versionCheckURL);
-            var operation = www.SendWebRequest();
+            yield return www.SendWebRequest();
 
-            float timer = 0;
-            while (!operation.isDone)
-            {
-                timer += Time.deltaTime;
-                if (timer > 10)
-                {
-                    Debug.Log("錯誤: 請求超時");
-                    yield break;
-                }
-                yield return null;
-            }
 
             if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
             {
                 Debug.Log("錯誤: " + www.error);
+                // 無法連接到伺服器，可能是網絡問題
+                // 這裡可以提示用戶檢查網絡連接
+                MessageManager.Instance.CreateYesNoMessage("Unable to connect to the server. Please check your network connection.", QuitGame, QuitGame);
             }
             else
             {
