@@ -4,12 +4,22 @@ using UnityEngine;
 using System.IO;
 using UnityEngine.Networking;
 
-
 public class AssetBundleManager : MonoBehaviour
 {
-    private string localVersionPath = Path.Combine(Application.streamingAssetsPath, "Bundles/version.json");
+    private string localVersionPath;
     private string remoteVersionUrl = "https://raw.githubusercontent.com/IceWaterNotIce/Internet-Empire/main/Assets/StreamingAssets/Bundles/version.json";
-    private string downloadPath = Path.Combine(Application.streamingAssetsPath, "Bundles");
+    private string downloadPath;
+
+    void Awake()
+    {
+        #if UNITY_ANDROID
+            localVersionPath = Path.Combine(Application.persistentDataPath, "Bundles/version.json");
+            downloadPath = Path.Combine(Application.persistentDataPath, "Bundles");
+        #else
+            localVersionPath = Path.Combine(Application.streamingAssetsPath, "Bundles/version.json");
+            downloadPath = Path.Combine(Application.streamingAssetsPath, "Bundles");
+        #endif
+    }
 
     // Start is called before the first frame update
     IEnumerator Start()
@@ -19,15 +29,12 @@ public class AssetBundleManager : MonoBehaviour
         UnityEngine.SceneManagement.SceneManager.LoadScene("Lobby");
     }
 
-
     IEnumerator CheckAndUpdateBundles()
     {
         // Load local version
         VersionConfig localConfig = new VersionConfig();
-        
+
         #if UNITY_ANDROID
-            // localVersionPath = Path.Combine(Application.persistentDataPath, "Bundles/version.json");
-            // downloadPath = Path.Combine(Application.persistentDataPath, "Bundles");
             UnityWebRequest localRequest = UnityWebRequest.Get(localVersionPath);
             yield return localRequest.SendWebRequest();
             if (localRequest.result == UnityWebRequest.Result.Success)
@@ -40,7 +47,6 @@ public class AssetBundleManager : MonoBehaviour
                 Debug.Log("local version.json not exist.");
                 yield break;
             }
-        
         #else
             // Check the local version config file exists
             if (File.Exists(localVersionPath))
@@ -98,8 +104,8 @@ public class AssetBundleManager : MonoBehaviour
             Debug.Log($"{bundleName} downloaded successfully.");
         }
     }
-
 }
+
 [System.Serializable]
 public class VersionConfig
 {
@@ -112,4 +118,3 @@ public class VersionConfig
     }
     public List<AssetBundleInfo> bundles;
 }
-
