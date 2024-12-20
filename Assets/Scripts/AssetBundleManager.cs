@@ -24,17 +24,31 @@ public class AssetBundleManager : MonoBehaviour
     {
         // Load local version
         VersionConfig localConfig = new VersionConfig();
-
-        // Check the local version config file exists
-        if (File.Exists(localVersionPath))
-        {
-            string localJson = File.ReadAllText(localVersionPath);
-            localConfig = JsonUtility.FromJson<VersionConfig>(localJson);
-        }
-        else
-        {
-            Debug.Log("local version.json not exist.");
-        }
+        
+        #if UNITY_ANDROID
+            // localVersionPath = Path.Combine(Application.persistentDataPath, "Bundles/version.json");
+            // downloadPath = Path.Combine(Application.persistentDataPath, "Bundles");
+            UnityWebRequest localRequest = UnityWebRequest.Get(localVersionPath);
+            yield return localRequest.SendWebRequest();
+            if (localRequest.result == UnityWebRequest.Result.Success)
+            {
+                string localJson = localRequest.downloadHandler.text;
+                localConfig = JsonUtility.FromJson<VersionConfig>(localJson);
+            }
+            else
+            {
+                Debug.Log("local version.json not exist.");
+                yield break;
+            }
+        
+        #else
+            // Check the local version config file exists
+            if (File.Exists(localVersionPath))
+            {
+                string localJson = File.ReadAllText(localVersionPath);
+                localConfig = JsonUtility.FromJson<VersionConfig>(localJson);
+            }
+        #endif
 
         // Fetch remote version
         UnityWebRequest.ClearCookieCache();
