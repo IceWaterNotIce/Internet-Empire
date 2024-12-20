@@ -9,7 +9,7 @@ public class VersionChecker : MonoBehaviour
 
     void Start()
     {
-        versionCheckURL = "https://raw.github.com/IceWaterNotIce/Internet-Empire/tree/main/Assets/StreamingAssets/version.json";
+        versionCheckURL = "https://raw.githubusercontent.com/IceWaterNotIce/Internet-Empire/main/Assets/StreamingAssets/version.json";
         StartCoroutine(CheckForUpdate());
     }
 
