@@ -1,21 +1,23 @@
 ManifestFileVersion: 0
 UnityVersion: 6000.0.25f1
-CRC: 30849915
+CRC: 1334806443
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 9557553cab8973f2d7d5c896298bf45c
+    Hash: b83cb4e0017b371661b5686f91da8d4d
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 9af418dcd7bcbd1cd8dba6b7860607b5
+    Hash: a8cad897ae4ee330b398af4359d70cf6
   IncrementalBuildHash:
     serializedVersion: 2
-    Hash: e8e476d8c3a0778b7552aeff308b8cf1
+    Hash: 553fedf432bf387c1386ba036e85682b
 HashAppended: 0
 ClassTypes:
 - Class: 1
   Script: {instanceID: 0}
 - Class: 4
+  Script: {instanceID: 0}
+- Class: 49
   Script: {instanceID: 0}
 - Class: 95
   Script: {instanceID: 0}
@@ -23,5 +25,11 @@ ClassTypes:
   Script: {instanceID: 0}
 SerializeReferenceClassIdentifiers: []
 Assets:
+- Assets/AssetBundles/device_model.manifest
 - Assets/Prefabs/Character.prefab
+- Assets/AssetBundles/AssetBundles.manifest
+- Assets/AssetBundles/connection_method.manifest
+- Assets/AssetBundles/ui.manifest
+- Assets/AssetBundles/client_type.manifest
+- Assets/AssetBundles/model.manifest
 Dependencies: []

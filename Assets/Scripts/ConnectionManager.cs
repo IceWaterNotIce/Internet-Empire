@@ -43,7 +43,6 @@ namespace InternetEmpire
         }
 
         private Device firstDevice; // First selected device
-        public MessageManager messageManager; // Reference to the MessageManager
 
         public ConnectionList connectionList;
 
@@ -99,31 +98,31 @@ namespace InternetEmpire
         {
             if (currentMethod == null)
             {
-                messageManager.ShowMessage("No connection method selected. Connection failed.");
+                MessageManager.Instance.ToastMessage("Please select a connection method.");
                 firstDevice = null;
                 return;
             }
             if (device1 == null || device2 == null)
             {
-                Debug.LogError("One or both devices are null. Connection failed.");
+                MessageManager.Instance.ToastMessage("Please select two devices to connect.");
                 firstDevice = null;
                 return;
             }
             if (device1.gameObject == device2.gameObject)
             {
-                messageManager.ShowMessage("Cannot connect a device to itself. Connection failed.");
+                MessageManager.Instance.ToastMessage("Cannot connect a device to itself.");
                 firstDevice = null;
                 return;
             }
             if (device1.ConnectionsCount >= device1.Model.MaxConnections)
             {
-                messageManager.ShowMessage("First device has reached maximum connections. Connection failed.");
+               MessageManager.Instance.ToastMessage("The first device has reached the maximum number of connections.");
                 firstDevice = null;
                 return;
             }
             if (device2.ConnectionsCount >= device2.Model.MaxConnections)
             {
-                messageManager.ShowMessage("Second device has reached maximum connections. Connection failed.");
+                MessageManager.Instance.ToastMessage("The second device has reached the maximum number of connections.");
                 firstDevice = null;
                 return;
             }
@@ -133,7 +132,7 @@ namespace InternetEmpire
                 if (connection.Device1 == device1 && connection.Device2 == device2 ||
                     connection.Device1 == device2 && connection.Device2 == device1)
                 {
-                    messageManager.ShowMessage("Devices are already connected. Connection failed.");
+                   MessageManager.Instance.ToastMessage("The devices are already connected.");
                     firstDevice = null;
                     return;
                 }
@@ -149,7 +148,7 @@ namespace InternetEmpire
             }
             else
             {
-                messageManager.ShowMessage("Not enough money to make the connection.");
+                MessageManager.Instance.ToastMessage("Not enough money to make the connection.");
                 Debug.LogWarning("Not enough money to make the connection.");
                 firstDevice = null;
             }

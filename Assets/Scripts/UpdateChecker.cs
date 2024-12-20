@@ -12,27 +12,34 @@ namespace InternetEmpire
 
         public VersionInfo versionInfo;
 
-        [SerializeField] private GameObject networkpanel;
 
-        [SerializeField] private GameObject updatepanel;
 
         void Start()
         {
             currentVersion = Application.version;
             versionCheckURL = "https://raw.githubusercontent.com/IceWaterNotIce/Internet-Empire/main/Assets/StreamingAssets/version.json";
-            StartCoroutine(CheckForUpdate());
         }
 
-        private IEnumerator CheckForUpdate()
+        public IEnumerator CheckForUpdate()
         {
             UnityWebRequest www = UnityWebRequest.Get(versionCheckURL);
-            yield return www.SendWebRequest();
+            var operation = www.SendWebRequest();
+
+            float timer = 0;
+            while (!operation.isDone)
+            {
+                timer += Time.deltaTime;
+                if (timer > 10)
+                {
+                    Debug.Log("錯誤: 請求超時");
+                    yield break;
+                }
+                yield return null;
+            }
 
             if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
             {
                 Debug.Log("錯誤: " + www.error);
-                networkpanel.SetActive(true);
-                
             }
             else
             {
@@ -44,18 +51,15 @@ namespace InternetEmpire
                 {
                     Debug.Log("有新版本可用: " + versionInfo.latestVersion);
                     // 可以提示用戶下載新版本
-                    updatepanel.SetActive(true);
-
+                    MessageManager.Instance.CreateYesNoMessage("There is a new version available. This game needs to run on the latest version. Do you want to update now?", UpdateGame, QuitGame);
                 }
                 else
                 {
-                    Debug.Log("您正在運行最新版本.");
                     InitializeSceneManager initializeSceneManager = GameObject.FindFirstObjectByType<InitializeSceneManager>();
                     initializeSceneManager.isVersionChecked = true;
                     initializeSceneManager.Check();
                 }
             }
-
         }
 
         [System.Serializable]
@@ -71,6 +75,9 @@ namespace InternetEmpire
             Application.Quit();
         }
 
-        
+        public void QuitGame()
+        {
+            Application.Quit();
+        }
     }
 }

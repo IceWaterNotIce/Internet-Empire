@@ -5,16 +5,13 @@ namespace InternetEmpire
 {
     public class InitializeSceneManager : MonoBehaviour
     {
+        public bool isNeedNetwork = false;
         public bool isAssetBundleReady = false;
         public bool isVersionChecked = false;
+
         void Start()
         {
-            // Check for updates
-            // UpdateChecker updateChecker = new UpdateChecker();
-            // updateChecker.CheckForUpdate();
-            // Check for version
-            // VersionChecker versionChecker = new VersionChecker();
-            // versionChecker.CheckForUpdate();
+            CheckNetwork();
         }
 
         // Update is called once per frame
@@ -32,9 +29,24 @@ namespace InternetEmpire
             }
         }
 
-        public void OnClickQuit()
+        public void QuitGame()
         {
             Application.Quit();
         }
+
+        void CheckNetwork()
+        {
+            if (isNeedNetwork)
+            {
+                // Check network
+                if (Application.internetReachability == NetworkReachability.NotReachable)
+                {
+                    // Show network error panel
+                    MessageManager.Instance.CreateCloseMessage("No network connection. Please check your network settings first.", QuitGame);
+                }
+            }
+        }
+
+
     }
 }

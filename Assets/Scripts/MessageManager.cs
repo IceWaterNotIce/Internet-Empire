@@ -5,36 +5,68 @@ using TMPro;
 
 namespace InternetEmpire
 {
-    public class MessageManager : MonoBehaviour
+    public class MessageManager : Singleton<MessageManager>
     {
-        public GameObject messagePanel; // Reference to the UI Panel containing the Text element
-        public TMP_Text messageText; // Reference to the UI Text element
 
+        private GameObject panelprefab;
+        private GameObject tmpTextPrefab;
+        private GameObject buttonPrefab;
+        private GameObject buttonClosePrefab;
         void Start()
         {
-            if (messagePanel != null)
-            {
-                messagePanel.SetActive(false); // 禁用 UI 物件
-            }
+            panelprefab = Resources.Load<GameObject>("Prefabs/Messages/Panel");
+            tmpTextPrefab = Resources.Load<GameObject>("Prefabs/Messages/TMP_Text");
+            buttonPrefab = Resources.Load<GameObject>("Prefabs/Messages/Button");
+            buttonClosePrefab = Resources.Load<GameObject>("Prefabs/Messages/ButtonClose");
         }
 
-        public void ShowMessage(string message, float duration = 2f)
+        public void CreateYesNoMessage(string message, System.Action onYes, System.Action onNo)
         {
-            if (messagePanel != null && messageText != null)
+            GameObject panel = Instantiate(panelprefab, transform);
+            GameObject tmpText = Instantiate(tmpTextPrefab, panel.transform);
+            tmpText.GetComponent<TMP_Text>().text = message;
+            GameObject buttonYes = Instantiate(buttonPrefab, panel.transform);
+            buttonYes.GetComponentInChildren<TMP_Text>().text = "Yes";
+            buttonYes.GetComponent<Button>().onClick.AddListener(() =>
             {
-                messagePanel.SetActive(true); // 激活 UI 物件
-                messageText.text = message;
-                StartCoroutine(ClearMessageAfterDelay(duration));
-            }
+                onYes?.Invoke();
+                Destroy(panel);
+            });
+            GameObject buttonNo = Instantiate(buttonPrefab, panel.transform);
+            buttonNo.GetComponentInChildren<TMP_Text>().text = "No";
+            buttonNo.GetComponent<Button>().onClick.AddListener(() =>
+            {
+                onNo?.Invoke();
+                Destroy(panel);
+            });
         }
 
-        private IEnumerator ClearMessageAfterDelay(float delay)
+        public void ToastMessage(string message, float duration = 2f)
         {
-            yield return new WaitForSeconds(delay);
-            if (messagePanel != null)
+            GameObject panel = Instantiate(panelprefab, transform);
+            GameObject tmpText = Instantiate(tmpTextPrefab, panel.transform);
+            tmpText.GetComponent<TMP_Text>().text = message;
+            StartCoroutine(DestroyAfter(panel, duration));
+        }
+
+        private IEnumerator DestroyAfter(GameObject panel, float duration)
+        {
+            yield return new WaitForSeconds(duration);
+            Destroy(panel);
+        }
+
+        public void CreateCloseMessage(string message, System.Action onClose)
+        {
+            GameObject panel = Instantiate(panelprefab, transform);
+            GameObject tmpText = Instantiate(tmpTextPrefab, panel.transform);
+            tmpText.GetComponent<TMP_Text>().text = message;
+            GameObject buttonClose = Instantiate(buttonClosePrefab, panel.transform);
+            buttonClose.GetComponentInChildren<TMP_Text>().text = "Close";
+            buttonClose.GetComponent<Button>().onClick.AddListener(() =>
             {
-                messagePanel.SetActive(false); // 禁用 UI 物件
-            }
+                onClose?.Invoke();
+                Destroy(panel);
+            });
         }
     }
 }

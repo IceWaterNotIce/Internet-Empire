@@ -63,8 +63,7 @@ namespace InternetEmpire
                 }
                 else
                 {
-                    MessageManager messageManager = FindFirstObjectByType<MessageManager>();
-                    messageManager.ShowMessage("Not enough money to remove the connection.");
+                    MessageManager.Instance.ToastMessage("Not enough money to remove connection.");
                     return;
                 }
 
