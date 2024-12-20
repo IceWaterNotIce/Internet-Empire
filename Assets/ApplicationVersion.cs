@@ -7,12 +7,12 @@ public class ApplicationVersion : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        TmpApplicationVersion.text = Application.version;
+        TmpApplicationVersion.text = "Version: " + Application.version;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }
