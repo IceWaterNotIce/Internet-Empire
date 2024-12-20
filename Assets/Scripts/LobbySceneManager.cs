@@ -8,6 +8,7 @@ public class LobbySceneManager : MonoBehaviour
     [SerializeField] private GameObject LoginPanel;
     [SerializeField] private GameObject UserProfilePanel;
     [SerializeField] private GameObject SavedGamePanel;
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
