@@ -55,9 +55,9 @@ namespace InternetEmpire
 
         void Update()
         {
-
             //#region Select Device
             RaycastHit2D hit = new RaycastHit2D();
+            Debug.Log("Touch count: " + Input.touchCount);
 #if UNITY_ANDROID
             if (Input.touchCount > 0)
             {
