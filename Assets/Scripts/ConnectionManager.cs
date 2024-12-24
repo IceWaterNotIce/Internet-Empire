@@ -55,26 +55,47 @@ namespace InternetEmpire
 
         void Update()
         {
+
+            //#region Select Device
+            RaycastHit2D hit = new RaycastHit2D();
+#if UNITY_ANDROID
+            if (Input.touchCount > 0)
+            {
+                Debug.Log("Touch detected");
+                Touch touch = Input.GetTouch(0);
+                Vector2 touchPosition = Camera.main.ScreenToWorldPoint(touch.position);
+                hit = Physics2D.Raycast(touchPosition, Vector2.zero);
+            }
+
+
+#else
             if (Mouse.current.leftButton.wasPressedThisFrame)
             {
                 Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-                RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero);
-                if (hit.collider != null)
+                hit = Physics2D.Raycast(mousePosition, Vector2.zero);
+            }
+            
+#endif
+            if (hit.collider != null)
+            {
+                Device device = hit.collider.GetComponent<Device>();
+                if (device != null && currentMethod != null)
                 {
-                    Device device = hit.collider.GetComponent<Device>();
-                    if (device != null && currentMethod != null)
-                    {
-                        SelectDevice(device);
-                    }
+                    SelectDevice(device);
                 }
             }
-           
+            //#endregion
 
+
+            // only works on PC
+#if UNITY_ANDROID
+#else
             if (Mouse.current.rightButton.wasPressedThisFrame)
             {
                 firstDevice = null;
                 Destroy(linkingConnection.gameObject);
             }
+#endif
 
             if (linkingConnection != null && firstDevice != null)
             {
@@ -86,6 +107,12 @@ namespace InternetEmpire
                 linkingConnection.transform.localScale = new Vector3(Vector2.Distance(firstDevice.transform.position, mousePosition) / 3, linkingConnection.transform.localScale.y, linkingConnection.transform.localScale.z);
             }
 
+        }
+
+        public void cancelConnection()
+        {
+            firstDevice = null;
+            Destroy(linkingConnection.gameObject);
         }
 
         public void SetConnectionMethod(ConnectionMethod connection)
@@ -116,7 +143,7 @@ namespace InternetEmpire
             }
             if (device1.ConnectionsCount >= device1.Model.MaxConnections)
             {
-               MessageManager.Instance.ToastMessage("The first device has reached the maximum number of connections.");
+                MessageManager.Instance.ToastMessage("The first device has reached the maximum number of connections.");
                 firstDevice = null;
                 return;
             }
@@ -132,7 +159,7 @@ namespace InternetEmpire
                 if (connection.Device1 == device1 && connection.Device2 == device2 ||
                     connection.Device1 == device2 && connection.Device2 == device1)
                 {
-                   MessageManager.Instance.ToastMessage("The devices are already connected.");
+                    MessageManager.Instance.ToastMessage("The devices are already connected.");
                     firstDevice = null;
                     return;
                 }
@@ -174,12 +201,18 @@ namespace InternetEmpire
             {
                 firstDevice = device;
                 linkingConnection = Instantiate(connectionPrefab).GetComponent<Connection>();
+                ConnectionPanelController connectionPanelController = FindFirstObjectByType<ConnectionPanelController>();
+                connectionPanelController.toggleConnectionCancelButton(true);
+                Debug.Log("First device selected.");
             }
             else
             {
                 Destroy(linkingConnection.gameObject);
                 ConnectDevices(firstDevice, device);
                 firstDevice = null;
+                ConnectionPanelController connectionPanelController = FindFirstObjectByType<ConnectionPanelController>();
+                connectionPanelController.toggleConnectionCancelButton(false);
+                Debug.Log("Second device selected.");
             }
         }
 

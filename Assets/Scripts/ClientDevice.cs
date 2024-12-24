@@ -42,7 +42,7 @@ namespace InternetEmpire
             {
                 yield return new WaitForSeconds(Client.Type.MinDemandGenTime);
                 float demand = Random.Range(Client.Type.MinDemand, Client.Type.MaxDemand);
-                Debug.Log("Demand: " + demand);
+                //Debug.Log("Demand: " + demand);
                 CityStreetSceneManager cityStreetSceneManager = FindFirstObjectByType<CityStreetSceneManager>();
                 ClientManager clientManager = FindFirstObjectByType<ClientManager>();
                 // randomly select a client but not the current client
