@@ -58,7 +58,7 @@ namespace InternetEmpire
             //#region Select Device
             RaycastHit2D hit = new RaycastHit2D();
             Debug.Log("Touch count: " + Input.touchCount);
-#if UNITY_ANDROID
+
             if (Input.touchCount > 0)
             {
                 Debug.Log("Touch detected");
@@ -68,14 +68,14 @@ namespace InternetEmpire
             }
 
 
-#else
+
             if (Mouse.current.leftButton.wasPressedThisFrame)
             {
                 Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
                 hit = Physics2D.Raycast(mousePosition, Vector2.zero);
             }
-            
-#endif
+
+
             if (hit.collider != null)
             {
                 Device device = hit.collider.GetComponent<Device>();
@@ -88,14 +88,13 @@ namespace InternetEmpire
 
 
             // only works on PC
-#if UNITY_ANDROID
-#else
+
             if (Mouse.current.rightButton.wasPressedThisFrame)
             {
                 firstDevice = null;
                 Destroy(linkingConnection.gameObject);
             }
-#endif
+
 
             if (linkingConnection != null && firstDevice != null)
             {
