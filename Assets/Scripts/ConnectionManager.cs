@@ -53,29 +53,28 @@ namespace InternetEmpire
 
         public Connection linkingConnection;
 
-        void Update()
+        private InputManager inputManager;
+
+        private void Awake()
         {
-            //#region Select Device
-            RaycastHit2D hit = new RaycastHit2D();
-            Debug.Log("Touch count: " + Input.touchCount);
+            inputManager = InputManager.Instance;
+        }
 
-            if (Input.touchCount > 0)
-            {
-                Debug.Log("Touch detected");
-                Touch touch = Input.GetTouch(0);
-                Vector2 touchPosition = Camera.main.ScreenToWorldPoint(touch.position);
-                hit = Physics2D.Raycast(touchPosition, Vector2.zero);
-            }
+        private void OnEnable()
+        {
+            inputManager.OnStartTouch += TouchSelectDevice;
+        }
 
+        private void OnDisable()
+        {
+            inputManager.OnStartTouch -= TouchSelectDevice;
+        }
 
-
-            if (Mouse.current.leftButton.wasPressedThisFrame)
-            {
-                Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-                hit = Physics2D.Raycast(mousePosition, Vector2.zero);
-            }
-
-
+        private void TouchSelectDevice(Vector2 position, float time)
+        {
+            Vector2 TouchPosition = Camera.main.ScreenToWorldPoint(position);
+            Debug.Log("Touch position: " + position);
+            RaycastHit2D hit = Physics2D.Raycast(TouchPosition, Vector2.zero);
             if (hit.collider != null)
             {
                 Device device = hit.collider.GetComponent<Device>();
@@ -84,6 +83,67 @@ namespace InternetEmpire
                     SelectDevice(device);
                 }
             }
+
+            inputManager.OnMoveTouch += TouchMoveConnection;
+            inputManager.OnEndTouch += TouchEndConnection;
+        }
+
+        private void TouchEndConnection(Vector2 position, float time)
+        {
+            Vector2 TouchPosition = Camera.main.ScreenToWorldPoint(position);
+            Debug.Log("Touch position: " + position);
+            Debug.Log("Touch position: " + TouchPosition);
+            RaycastHit2D hit = Physics2D.Raycast(TouchPosition, Vector2.zero);
+            if (hit.collider != null)
+            {
+                Device device = hit.collider.GetComponent<Device>();
+                if (device != null && currentMethod != null)
+                {
+                    SelectDevice(device);
+                }
+            }
+            else
+            {
+                cancelConnection();
+            }
+
+            inputManager.OnMoveTouch -= TouchMoveConnection;
+            inputManager.OnEndTouch -= TouchEndConnection;
+        }
+
+        private void TouchMoveConnection(Vector2 position, float time)
+        {
+            Vector2 TouchPosition = Camera.main.ScreenToWorldPoint(position);
+            Debug.Log("Touch position: " + position);
+            Debug.Log("Touch position: " + TouchPosition);
+            if (linkingConnection != null && firstDevice != null)
+            {
+                linkingConnection.Device1 = firstDevice;
+                linkingConnection.Device2 = null;
+                linkingConnection.transform.position = (firstDevice.transform.position + (Vector3)TouchPosition) / 2;
+                linkingConnection.transform.right = TouchPosition - (Vector2)firstDevice.transform.position;
+                linkingConnection.transform.localScale = new Vector3(Vector2.Distance(firstDevice.transform.position, TouchPosition) / 3, linkingConnection.transform.localScale.y, linkingConnection.transform.localScale.z);
+            }
+        }
+
+        void Update()
+        {
+            if (Mouse.current.leftButton.wasPressedThisFrame)
+            {
+                Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+                RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero);
+                if (hit.collider != null)
+                {
+                    Device device = hit.collider.GetComponent<Device>();
+                    if (device != null && currentMethod != null)
+                    {
+                        SelectDevice(device);
+                    }
+                }
+            }
+
+
+
             //#endregion
 
 
@@ -96,7 +156,8 @@ namespace InternetEmpire
             }
 
 
-            if (linkingConnection != null && firstDevice != null)
+
+            if (linkingConnection != null && firstDevice != null && Mouse.current.leftButton.wasPressedThisFrame)
             {
                 Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
                 linkingConnection.Device1 = firstDevice;
@@ -107,6 +168,8 @@ namespace InternetEmpire
             }
 
         }
+
+        
 
         public void cancelConnection()
         {
