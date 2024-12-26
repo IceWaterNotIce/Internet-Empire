@@ -34,8 +34,8 @@ namespace InternetEmpire
         {
             HandleCameraMovement();
             SmoothCameraMovement();
-            var scrollValue = Mouse.current.scroll.ReadValue().y;
-            HandleCameraZoom(scrollValue, Time.unscaledTime);
+            // var scrollValue = Mouse.current.scroll.ReadValue().y;
+            // HandleCameraZoom(scrollValue, Time.unscaledTime);
             SmoothCameraZoom();
         }
 
