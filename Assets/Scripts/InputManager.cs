@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.EnhancedTouch;
+using System.Collections.Generic;
+using System.Linq;
 
 [DefaultExecutionOrder(-1)]
 public class InputManager : Singleton<InputManager>
@@ -14,7 +16,8 @@ public class InputManager : Singleton<InputManager>
 
     public delegate void EndTouchEvent(Vector2 position, float time);
     public event EndTouchEvent OnEndTouch;
-
+    public delegate void MultiFingerTouchEvent(List<Vector2> positions, float time);
+    public event MultiFingerTouchEvent OnMultiFingerTouch;
     private InputSystem_Actions m_touchController;
 
     protected override void Awake()
@@ -72,16 +75,23 @@ public class InputManager : Singleton<InputManager>
             Debug.Log(touch.phase == UnityEngine.InputSystem.TouchPhase.Began);
         }
 
-         // Check for active touches
+        // Check for active touches
         foreach (var touch in UnityEngine.InputSystem.EnhancedTouch.Touch.activeTouches)
         {
             // If the touch is ongoing, call MoveTouch
             if (touch.phase == UnityEngine.InputSystem.TouchPhase.Moved || touch.phase == UnityEngine.InputSystem.TouchPhase.Stationary)
             {
                 Debug.Log("Touch position");
-                if (OnMoveTouch != null) 
+                if (OnMoveTouch != null)
                     OnMoveTouch(touch.screenPosition, Time.time);
             }
+        }
+
+        // Handle multi-finger touch
+        if (UnityEngine.InputSystem.EnhancedTouch.Touch.activeTouches.Count > 1)
+        {
+            if (OnMultiFingerTouch != null)
+                OnMultiFingerTouch(UnityEngine.InputSystem.EnhancedTouch.Touch.activeTouches.Select(t => t.screenPosition).ToList(), Time.time);
         }
     }
 }

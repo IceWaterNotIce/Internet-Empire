@@ -25,7 +25,10 @@ namespace InternetEmpire
             mainCamera = Camera.main;
             targetCameraPosition = mainCamera.transform.position;
             targetOrthographicSize = mainCamera.orthographicSize;
+            InputManager.Instance.OnMultiFingerTouch += HandleMultiFingerTouch;
         }
+
+
 
         void Update()
         {
@@ -47,6 +50,32 @@ namespace InternetEmpire
             targetOrthographicSize = Mathf.Min(targetOrthographicSize + 1, maxCameraSize);
             }
         }
+
+
+        private float TouchDistance;
+        private void HandleMultiFingerTouch(System.Collections.Generic.List<Vector2> touches, float time)
+    {
+        if (touches.Count == 2)
+        {
+            Vector2 touch0 = touches[0];
+            Vector2 touch1 = touches[1];
+
+            float currentTouchDistance = Vector2.Distance(touch0, touch1);
+            
+            if (TouchDistance == 0)
+            {
+                TouchDistance = currentTouchDistance;
+            }
+
+            float delta = currentTouchDistance - TouchDistance;
+            targetOrthographicSize = Mathf.Clamp(targetOrthographicSize - delta, minCameraSize, maxCameraSize);
+            TouchDistance = currentTouchDistance;
+
+            
+
+
+        }
+    }
 
         void SmoothCameraZoom()
         {
