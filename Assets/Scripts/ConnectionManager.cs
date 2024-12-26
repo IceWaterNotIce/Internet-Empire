@@ -175,6 +175,10 @@ namespace InternetEmpire
         {
             firstDevice = null;
             Destroy(linkingConnection.gameObject);
+            //disable the connection cancel button
+            ConnectionPanelController connectionPanelController = FindFirstObjectByType<ConnectionPanelController>();
+            connectionPanelController.toggleConnectionCancelButton(false);
+            
         }
 
         public void SetConnectionMethod(ConnectionMethod connection)

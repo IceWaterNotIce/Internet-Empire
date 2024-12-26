@@ -3,6 +3,8 @@ using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.EnhancedTouch;
 using System.Collections.Generic;
 using System.Linq;
+using System.Collections;
+
 
 [DefaultExecutionOrder(-1)]
 public class InputManager : Singleton<InputManager>
@@ -18,6 +20,9 @@ public class InputManager : Singleton<InputManager>
     public event EndTouchEvent OnEndTouch;
     public delegate void MultiFingerTouchEvent(List<Vector2> positions, float time);
     public event MultiFingerTouchEvent OnMultiFingerTouch;
+
+    public delegate void ZoomEvent(float delta, float time);
+    public event ZoomEvent OnZoom;
     private InputSystem_Actions m_touchController;
 
     protected override void Awake()
@@ -40,6 +45,9 @@ public class InputManager : Singleton<InputManager>
     {
         m_touchController.Touch.TouchPress.started += ctx => StartTouch(ctx);
         m_touchController.Touch.TouchPress.canceled += ctx => EndTouch(ctx);
+        m_touchController.Touch.SecondaryTouchContact.started += _ => ZoomStart();
+        m_touchController.Touch.SecondaryTouchContact.canceled += _ => ZoomEnd();
+
     }
 
     private void StartTouch(InputAction.CallbackContext ctx)
@@ -65,6 +73,41 @@ public class InputManager : Singleton<InputManager>
     {
         Debug.Log("Finger down");
         if (OnStartTouch != null) OnStartTouch(finger.screenPosition, Time.time);
+    }
+
+
+    private Coroutine zoomCoroutine;
+    private void ZoomStart()
+    {
+        Debug.Log("Zoom started");
+        zoomCoroutine = StartCoroutine(ZoomDetection());
+    }
+
+    private void ZoomEnd()
+    {
+        Debug.Log("Zoom ended");
+        if (zoomCoroutine != null)
+        {
+            StopCoroutine(zoomCoroutine);
+            zoomCoroutine = null;
+        }
+    }
+
+    IEnumerator ZoomDetection()
+    {
+        float previousDistance = 0f, distance = 0f;
+        while (true)
+        {
+            distance = Vector2.Distance(m_touchController.Touch.TouchPosition.ReadValue<Vector2>(), m_touchController.Touch.SecondaryTouchPosition.ReadValue<Vector2>());
+            // Zoom out
+            if(distance != previousDistance)
+            {
+                if (OnZoom != null) OnZoom(distance - previousDistance, Time.time);
+            }
+            previousDistance = distance;
+            
+        }
+
     }
 
     private void Update()
