@@ -28,6 +28,13 @@ namespace InternetEmpire
             
         }
 
+        void OnDisable()
+        {
+            ConnectionManager connectionManager = FindFirstObjectByType<ConnectionManager>();
+            connectionManager.currentMethod = null;
+            connectionManager.cancelConnection();
+        }
+
         public void toggleConnectionCancelButton(bool bol)
         {
             connectionCancelButton.gameObject.SetActive(bol);
