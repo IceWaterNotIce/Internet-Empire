@@ -1039,6 +1039,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "FirstTouchPosition",
+                    "type": "Value",
+                    "id": "661e849c-fa29-43d9-935f-9b678e270065",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -1094,6 +1103,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "SecondaryTouchPosition",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a1dcc7f6-c750-4d25-b643-7c57932b8b82",
+                    "path": "<Touchscreen>/touch0/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "FirstTouchPosition",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

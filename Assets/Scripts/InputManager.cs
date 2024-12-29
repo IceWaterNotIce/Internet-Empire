@@ -98,7 +98,7 @@ public class InputManager : Singleton<InputManager>
         float previousDistance = 0f, distance = 0f;
         while (true)
         {
-            distance = Vector2.Distance(m_touchController.Touch.TouchPosition.ReadValue<Vector2>(), m_touchController.Touch.SecondaryTouchPosition.ReadValue<Vector2>());
+            distance = Vector2.Distance(m_touchController.Touch.FirstTouchPosition.ReadValue<Vector2>(), m_touchController.Touch.SecondaryTouchPosition.ReadValue<Vector2>());
             // Zoom out
             if(distance != previousDistance)
             {
