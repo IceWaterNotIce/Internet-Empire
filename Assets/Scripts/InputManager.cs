@@ -102,7 +102,8 @@ public class InputManager : Singleton<InputManager>
             // Zoom out
             if(distance != previousDistance)
             {
-                if (OnZoom != null) OnZoom(distance - previousDistance, Time.time);
+                // if (OnZoom != null) OnZoom(distance - previousDistance, Time.time);
+                Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize - (distance - previousDistance) * 0.01f, 5, 20);
             }
             previousDistance = distance;
             
