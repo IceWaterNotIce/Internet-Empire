@@ -163,9 +163,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23dd204ed09c94847a4c56bc5e8c9800, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  versionInfo:
-    latestVersion: 
-    downloadURL: 
+  versionCheckURL: https://raw.githubusercontent.com/IceWaterNotIce/Internet-Empire/main/Assets/StreamingAssets/version.json
 --- !u!1 &738796786
 GameObject:
   m_ObjectHideFlags: 0

@@ -7,21 +7,20 @@ namespace InternetEmpire
 {
     public class UpdateChecker : MonoBehaviour
     {
-        private string versionCheckURL;
-        private string currentVersion;
 
-        public VersionInfo versionInfo;
+        public string versionCheckURL;
+        private string currentVersion;
+        private VersionInfo versionInfo;
 
 
 
         void Start()
         {
             currentVersion = Application.version;
-            versionCheckURL = "https://raw.githubusercontent.com/IceWaterNotIce/Internet-Empire/main/Assets/StreamingAssets/version.json";
             StartCoroutine(CheckForUpdate());
         }
 
-        public IEnumerator CheckForUpdate()
+        private IEnumerator CheckForUpdate()
         {
             UnityWebRequest www = UnityWebRequest.Get(versionCheckURL);
             yield return www.SendWebRequest();

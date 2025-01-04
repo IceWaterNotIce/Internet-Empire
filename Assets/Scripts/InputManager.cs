@@ -95,17 +95,29 @@ public class InputManager : Singleton<InputManager>
 
     IEnumerator ZoomDetection()
     {
-        float previousDistance = 0f, distance = 0f;
+       float previousDistance = 0f, distance = 0f;
         while (true)
         {
             distance = Vector2.Distance(m_touchController.Touch.FirstTouchPosition.ReadValue<Vector2>(), m_touchController.Touch.SecondaryTouchPosition.ReadValue<Vector2>());
             // Zoom out
             if(distance != previousDistance)
             {
-                // if (OnZoom != null) OnZoom(distance - previousDistance, Time.time);
-                Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize - (distance - previousDistance) * 0.01f, 5, 20);
+                if(distance > previousDistance)
+                {
+                    Debug.Log("Zoom out");
+                    Camera camera = Camera.main;
+                    camera.orthographicSize = Mathf.Lerp(camera.orthographicSize, camera.orthographicSize - 1, Time.deltaTime);
+                }
+                // Zoom in
+                else
+                {
+                    Debug.Log("Zoom in");
+                    Camera camera = Camera.main;
+                    camera.orthographicSize = Mathf.Lerp(camera.orthographicSize, camera.orthographicSize + 1, Time.deltaTime);
+                }
             }
             previousDistance = distance;
+            yield return null;
             
         }
 
