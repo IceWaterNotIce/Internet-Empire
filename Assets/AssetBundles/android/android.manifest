@@ -1,21 +1,21 @@
 ManifestFileVersion: 0
 UnityVersion: 6000.0.25f1
-CRC: 2059780475
+CRC: 4034948436
 HashAppended: 0
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
-      Name: model
-      Dependencies: {}
-    Info_1:
-      Name: ui
-      Dependencies: {}
-    Info_2:
       Name: client_type
       Dependencies: {}
+    Info_1:
+      Name: model
+      Dependencies: {}
+    Info_2:
+      Name: device_model
+      Dependencies: {}
     Info_3:
-      Name: connection_method
+      Name: ui
       Dependencies: {}
     Info_4:
-      Name: device_model
+      Name: connection_method
       Dependencies: {}
