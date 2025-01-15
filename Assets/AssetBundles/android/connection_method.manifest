@@ -1,0 +1,31 @@
+ManifestFileVersion: 0
+UnityVersion: 6000.0.25f1
+CRC: 2097354018
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 7bb5b04b31a0691556c7b726253b7a18
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 887993a32be538d1aa43923833eb620c
+  IncrementalBuildHash:
+    serializedVersion: 2
+    Hash: 8c28fc28b4d246501b1ccc3350276546
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: 67c6b95984365f441b81bbbd221f4432, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 3e22a2a34f07cc446b21c7e1d94483ec, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Resources/ScriptableObjects/ConnectionMethods/ConnectionList.asset
+- Assets/Resources/ScriptableObjects/ConnectionMethods/WiFi.asset
+- Assets/Resources/ScriptableObjects/ConnectionMethods/CopperCable.asset
+Dependencies: []
