@@ -41,7 +41,7 @@ public class AssetBundleManager : MonoBehaviour
             platform = System.IO.File.ReadAllText(platformFilePath);
         }
 
-        remoteVersionUrl = "https://icewaternotice.com/games/Internet%20Empire/AssetBundles/" + platform + "/version.json";
+        remoteVersionUrl = "https://icewaternotice.com/games/Internet Empire/AssetBundles/" + platform + "/version.json";
 
         if (Application.platform == RuntimePlatform.Android)
         {

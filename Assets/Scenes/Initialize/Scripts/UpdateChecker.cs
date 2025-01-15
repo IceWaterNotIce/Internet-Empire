@@ -18,6 +18,7 @@ namespace InternetEmpire
 
         void Start()
         {
+            Debug.Log("Checking for update.");
             currentVersion = Application.version;
             versionCheckURL = "https://raw.githubusercontent.com/IceWaterNotIce/Internet-Empire/main/Assets/StreamingAssets/version.json";
             StartCoroutine(CheckForUpdate());
@@ -25,6 +26,7 @@ namespace InternetEmpire
 
         public IEnumerator CheckForUpdate()
         {
+            Debug.Log("Checking for update.");
             UnityWebRequest www = UnityWebRequest.Get(versionCheckURL);
             yield return www.SendWebRequest();
 
@@ -93,6 +95,8 @@ namespace InternetEmpire
                     }
                 }
             }
+
+            Debug.Log("Update check completed.");
         }
 
         [System.Serializable]
