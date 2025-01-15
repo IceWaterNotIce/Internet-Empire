@@ -9,18 +9,52 @@ using InternetEmpire;
 public class AssetBundleManager : MonoBehaviour
 {
     private string localVersionPath;
-    private string remoteVersionUrl = "https://raw.githubusercontent.com/IceWaterNotIce/Internet-Empire/main/Assets/StreamingAssets/Bundles/version.json";
+    private string remoteVersionUrl;
     private string downloadPath;
 
     void Awake()
     {
-        #if UNITY_ANDROID
+        string platform = new string("");
+        string platformFilePath = new string("");
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            platformFilePath = Path.Combine(Application.persistentDataPath, "platform.txt");
+        }
+        else
+        {
+            platformFilePath = Path.Combine(Application.streamingAssetsPath, "platform.txt");
+        }
+
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            // if file does not exist, create it
+            if (!System.IO.File.Exists(platformFilePath))
+            {
+                System.IO.File.Create(platformFilePath).Close();
+                System.IO.File.WriteAllText(platformFilePath, "android");
+            }
+        }
+
+        // Check the local version config file exists
+        if (System.IO.File.Exists(platformFilePath))
+        {
+            platform = System.IO.File.ReadAllText(platformFilePath);
+        }
+
+        remoteVersionUrl = "https://icewaternotice.com/games/Word%20Curse/AssetBundles/" + platform + "/version.json";
+
+        if (Application.platform == RuntimePlatform.Android)
+        {
             localVersionPath = Path.Combine(Application.persistentDataPath, "Bundles/version.json");
             downloadPath = Path.Combine(Application.persistentDataPath, "Bundles");
-        #else
+            
+        }
+        else
+        {
             localVersionPath = Path.Combine(Application.streamingAssetsPath, "Bundles/version.json");
             downloadPath = Path.Combine(Application.streamingAssetsPath, "Bundles");
-        #endif
+        }
+
     }
 
     // Start is called before the first frame update
@@ -29,8 +63,8 @@ public class AssetBundleManager : MonoBehaviour
         yield return StartCoroutine(CheckAndUpdateBundles());
         // Load the lobby scene
         InitializeSceneManager initializeSceneManager = GameObject.FindFirstObjectByType<InitializeSceneManager>();
-        initializeSceneManager.isAssetBundleReady = true;
-        initializeSceneManager.Check();
+        initializeSceneManager.SetAssetBundleReady(true);
+        Debug.Log("AssetBundleManager is ready");
     }
 
     IEnumerator CheckAndUpdateBundles()
@@ -38,34 +72,12 @@ public class AssetBundleManager : MonoBehaviour
         // Load local version
         VersionConfig localConfig = new VersionConfig();
 
-        # if UNITY_EDITOR
-            if (File.Exists(localVersionPath))
-            {
-                string localJson = File.ReadAllText(localVersionPath);
-                localConfig = JsonUtility.FromJson<VersionConfig>(localJson);
-            }
-        #elif UNITY_ANDROID
-            UnityWebRequest localRequest = UnityWebRequest.Get(localVersionPath);
-            yield return localRequest.SendWebRequest();
-            if (localRequest.result == UnityWebRequest.Result.Success)
-            {
-                string localJson = localRequest.downloadHandler.text;
-                localConfig = JsonUtility.FromJson<VersionConfig>(localJson);
-            }
-            else
-            {
-                Debug.Log("local version.json not exist.");
-                yield break;
-            }
-        #else
-            // Check the local version config file exists
-            if (File.Exists(localVersionPath))
-            {
-                string localJson = File.ReadAllText(localVersionPath);
-                localConfig = JsonUtility.FromJson<VersionConfig>(localJson);
-            }
-        #endif
 
+        if (File.Exists(localVersionPath))
+        {
+            string localJson = File.ReadAllText(localVersionPath);
+            localConfig = JsonUtility.FromJson<VersionConfig>(localJson);
+        }
         // Fetch remote version
         UnityWebRequest.ClearCookieCache();
         UnityWebRequest request = UnityWebRequest.Get(remoteVersionUrl);
@@ -75,7 +87,8 @@ public class AssetBundleManager : MonoBehaviour
 
         if (request.result != UnityWebRequest.Result.Success)
         {
-            Debug.LogError("Failed to fetch remote version: " + request.error);
+            Debug.LogError("Failed to fetch remote version: " + request.error +
+            "\n remoteVersionUrl: " + remoteVersionUrl);
             yield break;
         }
 

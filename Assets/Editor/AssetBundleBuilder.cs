@@ -144,7 +144,7 @@ public class AssetBundleBuilder
         UnityEngine.Debug.Log("Asset Bundles pushed to git");
     }
     private static void UploadToFTP()
-    {
+    {   
         string localFolderPath = "Assets/AssetBundles/" + BuildProfile.GetActiveBuildProfile().name + "/";
         string remoteFolderPath = "AssetBundles/" + BuildProfile.GetActiveBuildProfile().name + "/";
         FTP_Controller.UploadDirectory(localFolderPath, remoteFolderPath);
